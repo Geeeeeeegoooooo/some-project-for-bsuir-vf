@@ -1,0 +1,4479 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@test.com",
+      "password": "$2a$10$GRcFHkRa5JKLp2QgqgglteuUbRbFSm8BJ/Py.VoJWELn2Jri6drhO",
+      "username": "Admin",
+      "created_at": "2026-02-13T12:18:05.628Z"
+    },
+    {
+      "id": 2,
+      "email": "lilepilse@gmail.com",
+      "password": "$2a$10$QAkh6cKrTnhbK5cHlr16ZOXd3uwOCU5b3joHViDk8DRVnTprmRa56",
+      "username": "BOBAH",
+      "created_at": "2026-02-13T12:19:46.375Z"
+    },
+    {
+      "id": 3,
+      "email": "kik@mail.ru",
+      "password": "$2a$10$6PiHfOWwD2jWi7upMp4dcO4gTLj2g5sjdwq3fSnsV7yZUdw2N.ZzS",
+      "username": "ABOBA",
+      "created_at": "2026-02-28T07:25:44.907Z"
+    },
+    {
+      "id": 4,
+      "email": "aboba@gmai.com",
+      "password": "$2a$10$RdX82rQ6g06j4OOZ8AtJMOtTVoU43/0yGsgiUdUpEAfnu9bpV6EO6",
+      "username": "vladimir",
+      "created_at": "2026-02-28T09:11:18.396Z"
+    },
+    {
+      "id": 5,
+      "email": "afasf@gmail.com",
+      "password": "$2a$10$vOdwhvcmq99L4tLS/uXsu.AP9hZdHSoOnQrqvqrns45kLDtgyECrq",
+      "username": "22222",
+      "created_at": "2026-02-28T09:14:13.761Z"
+    }
+  ],
+  "scores": [
+    {
+      "id": 1,
+      "user_id": 2,
+      "score": 100,
+      "created_at": "2026-02-13T12:20:38.971Z"
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "score": 100,
+      "created_at": "2026-02-13T12:43:50.077Z"
+    },
+    {
+      "id": 3,
+      "user_id": 2,
+      "score": 60,
+      "created_at": "2026-02-13T13:08:47.626Z"
+    },
+    {
+      "id": 4,
+      "user_id": 2,
+      "score": 100,
+      "created_at": "2026-02-16T13:00:48.449Z"
+    },
+    {
+      "id": 5,
+      "user_id": 2,
+      "score": 0,
+      "created_at": "2026-02-16T13:01:01.639Z"
+    },
+    {
+      "id": 6,
+      "user_id": 2,
+      "score": 60,
+      "created_at": "2026-02-16T19:22:30.715Z"
+    },
+    {
+      "id": 7,
+      "user_id": 2,
+      "score": 100,
+      "created_at": "2026-02-16T19:34:35.935Z"
+    },
+    {
+      "id": 8,
+      "user_id": 3,
+      "score": 10,
+      "created_at": "2026-02-28T09:01:50.369Z"
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Военная присяга",
+      "translation": "Торжественное обещание на верность народу Республики Беларусь",
+      "wrong1": "Приказ командира",
+      "wrong2": "Учебная тревога",
+      "wrong3": "План занятий",
+      "lang": "uvs",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 2,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Суточный наряд",
+      "translation": "Лица, назначенные для поддержания внутреннего порядка и службы",
+      "wrong1": "Группа увольнения",
+      "wrong2": "Спортивный взвод",
+      "wrong3": "Ремонтная бригада",
+      "lang": "uvs",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 3,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Внутренний порядок",
+      "translation": "Установленные правила размещения, быта и службы в подразделении",
+      "wrong1": "Расписание отпусков",
+      "wrong2": "План строительства",
+      "wrong3": "Штатное расписание",
+      "lang": "uvs",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 4,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Военнослужащий обязан бережно относиться к ___ и военной технике.",
+      "correct": "оружию",
+      "wrong1": "документам",
+      "wrong2": "обмундированию",
+      "wrong3": "инвентарю",
+      "lang": "uvs",
+      "level": 1,
+      "type": "sentence"
+    },
+    {
+      "id": 5,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "День принесения Военной присяги является ___ для воинской части.",
+      "correct": "праздничным",
+      "wrong1": "выходным",
+      "wrong2": "учебным",
+      "wrong3": "строевым",
+      "lang": "uvs",
+      "level": 1,
+      "type": "sentence"
+    },
+    {
+      "id": 6,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Внутренняя служба",
+      "translation": "Деятельность по обеспечению порядка, дисциплины и жизнедеятельности части",
+      "wrong1": "Боевая стрельба",
+      "wrong2": "Инженерная разведка",
+      "wrong3": "Марш-бросок",
+      "lang": "uvs",
+      "level": 2,
+      "type": "word"
+    },
+    {
+      "id": 7,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Командир подразделения",
+      "translation": "Должностное лицо, отвечающее за подготовку, дисциплину и порядок в подразделении",
+      "wrong1": "Дежурный по столовой",
+      "wrong2": "Старшина караула",
+      "wrong3": "Начальник склада",
+      "lang": "uvs",
+      "level": 2,
+      "type": "word"
+    },
+    {
+      "id": 8,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Перед приведением к Военной присяге проводится ___ работа о ее значении.",
+      "correct": "разъяснительная",
+      "wrong1": "строевая",
+      "wrong2": "ремонтная",
+      "wrong3": "медицинская",
+      "lang": "uvs",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 9,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Списки принявших присягу хранятся в ___ воинской части.",
+      "correct": "штабе",
+      "wrong1": "карауле",
+      "wrong2": "парке",
+      "wrong3": "клубе",
+      "lang": "uvs",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 10,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Устав внутренней службы регулирует порядок взаимоотношений между ___.",
+      "correct": "военнослужащими",
+      "wrong1": "гражданскими лицами",
+      "wrong2": "подрядчиками",
+      "wrong3": "гостями",
+      "lang": "uvs",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 11,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Приведение к Военной присяге может проводиться у ___ воинов.",
+      "correct": "братских могил",
+      "wrong1": "учебных классов",
+      "wrong2": "спортивных площадок",
+      "wrong3": "гаражей",
+      "lang": "uvs",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 12,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Командир части определяет военную форму одежды и порядок ___ личного состава.",
+      "correct": "построения",
+      "wrong1": "поощрения",
+      "wrong2": "перевода",
+      "wrong3": "увольнения",
+      "lang": "uvs",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 13,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "По окончании церемонии оркестр исполняет Государственный ___ Республики Беларусь.",
+      "correct": "гимн",
+      "wrong1": "марш",
+      "wrong2": "сигнал",
+      "wrong3": "рапорт",
+      "lang": "uvs",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 14,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Устав требует поддерживать уставные взаимоотношения и крепкую воинскую ___.",
+      "correct": "дисциплину",
+      "wrong1": "маскировку",
+      "wrong2": "секретность",
+      "wrong3": "скорость",
+      "lang": "uvs",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 15,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "При низкой температуре церемония принесения присяги может быть проведена в ___.",
+      "correct": "помещении",
+      "wrong1": "парке техники",
+      "wrong2": "поле",
+      "wrong3": "лесу",
+      "lang": "uvs",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 16,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Воинская дисциплина",
+      "translation": "Строгое и точное соблюдение порядка и требований военной службы",
+      "wrong1": "Только строевая подготовка",
+      "wrong2": "Физическая подготовка",
+      "wrong3": "Спортивный режим",
+      "lang": "du",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 17,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Поощрение",
+      "translation": "Мера поощрительного воздействия за образцовую службу",
+      "wrong1": "Вид взыскания",
+      "wrong2": "Форма рапорта",
+      "wrong3": "График дежурств",
+      "lang": "du",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 18,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Дисциплинарное взыскание",
+      "translation": "Мера ответственности за дисциплинарный проступок",
+      "wrong1": "Очередное увольнение",
+      "wrong2": "Плановый отпуск",
+      "wrong3": "Ежедневный развод",
+      "lang": "du",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 19,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Командир обязан быть примером соблюдения воинской ___.",
+      "correct": "дисциплины",
+      "wrong1": "формы",
+      "wrong2": "выправки",
+      "wrong3": "скорости",
+      "lang": "du",
+      "level": 1,
+      "type": "sentence"
+    },
+    {
+      "id": 20,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Поощрение применяется за отличия в службе и ___ обязанностей.",
+      "correct": "добросовестное выполнение",
+      "wrong1": "перераспределение",
+      "wrong2": "сокращение",
+      "wrong3": "переименование",
+      "lang": "du",
+      "level": 1,
+      "type": "sentence"
+    },
+    {
+      "id": 21,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Дисциплинарный проступок",
+      "translation": "Нарушение воинской дисциплины или порядка службы",
+      "wrong1": "Успешная сдача зачета",
+      "wrong2": "Назначение в наряд",
+      "wrong3": "Получение поощрения",
+      "lang": "du",
+      "level": 2,
+      "type": "word"
+    },
+    {
+      "id": 22,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Подчиненность",
+      "translation": "Установленные отношения начальников и подчиненных",
+      "wrong1": "Порядок увольнения",
+      "wrong2": "Состав караула",
+      "wrong3": "Схема связи",
+      "lang": "du",
+      "level": 2,
+      "type": "word"
+    },
+    {
+      "id": 23,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "При выборе взыскания учитываются характер проступка и личность ___.",
+      "correct": "военнослужащего",
+      "wrong1": "дежурного",
+      "wrong2": "гостя",
+      "wrong3": "инструктора",
+      "lang": "du",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 24,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Взыскание должно быть справедливым и соответствовать тяжести ___.",
+      "correct": "проступка",
+      "wrong1": "праздника",
+      "wrong2": "учения",
+      "wrong3": "наряда",
+      "lang": "du",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 25,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Начальник отвечает за поддержание дисциплины в ___.",
+      "correct": "подразделении",
+      "wrong1": "общежитии",
+      "wrong2": "музее",
+      "wrong3": "архиве",
+      "lang": "du",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 26,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Дисциплинарная практика должна способствовать предупреждению новых ___.",
+      "correct": "нарушений",
+      "wrong1": "поощрений",
+      "wrong2": "учений",
+      "wrong3": "построений",
+      "lang": "du",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 27,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Командир обязан сочетать требовательность с заботой о ___.",
+      "correct": "подчиненных",
+      "wrong1": "архивах",
+      "wrong2": "помещениях",
+      "wrong3": "документах",
+      "lang": "du",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 28,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Воинская дисциплина основывается на сознательном исполнении воинского ___.",
+      "correct": "долга",
+      "wrong1": "контракта",
+      "wrong2": "расписания",
+      "wrong3": "маршрута",
+      "lang": "du",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 29,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Оценка дисциплины подразделения учитывает состояние службы и наличие ___.",
+      "correct": "правонарушений",
+      "wrong1": "наград",
+      "wrong2": "командировок",
+      "wrong3": "отпусков",
+      "lang": "du",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 30,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Дисциплинарное взыскание объявляется в порядке, установленном ___.",
+      "correct": "уставом",
+      "wrong1": "расписанием",
+      "wrong2": "приказом дежурного",
+      "wrong3": "договором",
+      "lang": "du",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 31,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Караул",
+      "translation": "Вооруженное подразделение для охраны и обороны объектов",
+      "wrong1": "Учебный взвод",
+      "wrong2": "Спортивная группа",
+      "wrong3": "Медицинский пост",
+      "lang": "gks",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 32,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Пост",
+      "translation": "Место или участок, порученный часовому для охраны",
+      "wrong1": "Командирская должность",
+      "wrong2": "Учебная аудитория",
+      "wrong3": "Личный кабинет",
+      "lang": "gks",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 33,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Часовой",
+      "translation": "Военнослужащий, выполняющий задачу по охране поста",
+      "wrong1": "Дежурный по столовой",
+      "wrong2": "Секретарь части",
+      "wrong3": "Водитель",
+      "lang": "gks",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 34,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Часовой подчиняется начальнику караула и своему ___.",
+      "correct": "разводящему",
+      "wrong1": "сослуживцу",
+      "wrong2": "повару",
+      "wrong3": "дневальному",
+      "lang": "gks",
+      "level": 1,
+      "type": "sentence"
+    },
+    {
+      "id": 35,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Часовой обязан бдительно охранять и стойко оборонять ___.",
+      "correct": "пост",
+      "wrong1": "расписание",
+      "wrong2": "строй",
+      "wrong3": "спортзал",
+      "lang": "gks",
+      "level": 1,
+      "type": "sentence"
+    },
+    {
+      "id": 36,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Развод караулов",
+      "translation": "Построение и проверка личного состава перед несением службы",
+      "wrong1": "Обеденный перерыв",
+      "wrong2": "Спортивный норматив",
+      "wrong3": "Медицинский осмотр",
+      "lang": "gks",
+      "level": 2,
+      "type": "word"
+    },
+    {
+      "id": 37,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Начальник караула",
+      "translation": "Лицо, руководящее действиями караула",
+      "wrong1": "Старший по столовой",
+      "wrong2": "Начальник клуба",
+      "wrong3": "Секретарь штаба",
+      "lang": "gks",
+      "level": 2,
+      "type": "word"
+    },
+    {
+      "id": 38,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "При смене часового пост передается по установленному ___.",
+      "correct": "порядку",
+      "wrong1": "желанию",
+      "wrong2": "графику отпусков",
+      "wrong3": "расписанию занятий",
+      "lang": "gks",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 39,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Караульная служба требует постоянной готовности к отражению ___.",
+      "correct": "посягательства",
+      "wrong1": "марша",
+      "wrong2": "соревнования",
+      "wrong3": "построения",
+      "lang": "gks",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 40,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Личный состав караула обязан знать сигналы оповещения и меры ___.",
+      "correct": "безопасности",
+      "wrong1": "поощрения",
+      "wrong2": "перевода",
+      "wrong3": "премирования",
+      "lang": "gks",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 41,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "При обнаружении нарушения на посту часовой действует в соответствии с ___.",
+      "correct": "уставом",
+      "wrong1": "личным мнением",
+      "wrong2": "советом товарища",
+      "wrong3": "расписанием",
+      "lang": "gks",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 42,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Караул несет службу непрерывно в течение установленного времени и несет личную ___.",
+      "correct": "ответственность",
+      "wrong1": "инициативу",
+      "wrong2": "премию",
+      "wrong3": "отчетность",
+      "lang": "gks",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 43,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Охрана Боевого Знамени относится к задачам особой ___.",
+      "correct": "важности",
+      "wrong1": "сложности",
+      "wrong2": "скорости",
+      "wrong3": "срочности",
+      "lang": "gks",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 44,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Начальник караула обязан проверять несение службы часовыми и состояние ___.",
+      "correct": "постов",
+      "wrong1": "казарм",
+      "wrong2": "классов",
+      "wrong3": "столовой",
+      "lang": "gks",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 45,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Смена караула проводится в точно установленное командиром ___.",
+      "correct": "время",
+      "wrong1": "место",
+      "wrong2": "порядок",
+      "wrong3": "маршрут",
+      "lang": "gks",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 46,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Строй",
+      "translation": "Установленное размещение военнослужащих для совместных действий",
+      "wrong1": "Распорядок дня",
+      "wrong2": "Список наряда",
+      "wrong3": "Курс подготовки",
+      "lang": "su",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 47,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Интервал",
+      "translation": "Расстояние по фронту между военнослужащими",
+      "wrong1": "Время отдыха",
+      "wrong2": "Высота шага",
+      "wrong3": "Длина команды",
+      "lang": "su",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 48,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Дистанция",
+      "translation": "Расстояние в глубину между военнослужащими или подразделениями",
+      "wrong1": "Скорость движения",
+      "wrong2": "Промежуток между занятиями",
+      "wrong3": "Дальность стрельбы",
+      "lang": "su",
+      "level": 1,
+      "type": "word"
+    },
+    {
+      "id": 49,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "По команде «Смирно» военнослужащий принимает ___ строевую стойку.",
+      "correct": "правильную",
+      "wrong1": "произвольную",
+      "wrong2": "свободную",
+      "wrong3": "сидячую",
+      "lang": "su",
+      "level": 1,
+      "type": "sentence"
+    },
+    {
+      "id": 50,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Повороты на месте выполняются четко и по установленному ___.",
+      "correct": "счету",
+      "wrong1": "времени",
+      "wrong2": "маршруту",
+      "wrong3": "желанию",
+      "lang": "su",
+      "level": 1,
+      "type": "sentence"
+    },
+    {
+      "id": 51,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Фронт",
+      "translation": "Сторона строя, в которую военнослужащие обращены лицом",
+      "wrong1": "Тыловая сторона казармы",
+      "wrong2": "Передняя часть машины",
+      "wrong3": "Линия связи",
+      "lang": "su",
+      "level": 2,
+      "type": "word"
+    },
+    {
+      "id": 52,
+      "content_theme": "vsrb-charters-v1",
+      "word": "Фланг",
+      "translation": "Правая или левая оконечность строя",
+      "wrong1": "Центр строя",
+      "wrong2": "Командный пункт",
+      "wrong3": "Задняя шеренга",
+      "lang": "su",
+      "level": 2,
+      "type": "word"
+    },
+    {
+      "id": 53,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Команды в строю подаются громко, четко и ___.",
+      "correct": "понятно",
+      "wrong1": "быстро",
+      "wrong2": "тихо",
+      "wrong3": "коротко",
+      "lang": "su",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 54,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "При движении строевым шагом сохраняются интервал и ___.",
+      "correct": "дистанция",
+      "wrong1": "температура",
+      "wrong2": "скорость речи",
+      "wrong3": "частота дыхания",
+      "lang": "su",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 55,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Построение подразделения проводится в соответствии с ___ устава.",
+      "correct": "требованиями",
+      "wrong1": "советами",
+      "wrong2": "расписанием",
+      "wrong3": "обычаями",
+      "lang": "su",
+      "level": 2,
+      "type": "sentence"
+    },
+    {
+      "id": 56,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Действия в строю должны быть согласованными и выполняться по единой ___.",
+      "correct": "команде",
+      "wrong1": "инициативе",
+      "wrong2": "очереди",
+      "wrong3": "скорости",
+      "lang": "su",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 57,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "При прохождении торжественным маршем подразделение соблюдает равнение и ___ шага.",
+      "correct": "ритм",
+      "wrong1": "направление рук",
+      "wrong2": "скорость речи",
+      "wrong3": "дистанцию голоса",
+      "lang": "su",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 58,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Строевая подготовка формирует дисциплинированность, выправку и согласованность ___.",
+      "correct": "действий",
+      "wrong1": "выступлений",
+      "wrong2": "докладов",
+      "wrong3": "переговоров",
+      "lang": "su",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 59,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Командир обязан контролировать выполнение команд и исправлять ___.",
+      "correct": "ошибки",
+      "wrong1": "оценки",
+      "wrong2": "награды",
+      "wrong3": "документы",
+      "lang": "su",
+      "level": 3,
+      "type": "sentence"
+    },
+    {
+      "id": 60,
+      "content_theme": "vsrb-charters-v1",
+      "sentence": "Требования строевого устава обязательны для всех категорий ___.",
+      "correct": "военнослужащих",
+      "wrong1": "посетителей",
+      "wrong2": "гражданских подрядчиков",
+      "wrong3": "экскурсантов",
+      "lang": "su",
+      "level": 3,
+      "type": "sentence"
+    }
+  ],
+  "user_states": {
+    "2": {
+      "xp_total": 240,
+      "hearts_current": 5,
+      "hearts_max": 5,
+      "streak_current": 1,
+      "streak_last_day": "2026-02-16",
+      "freeze_count": 1,
+      "daily_goal_xp": 50,
+      "hearts_refill_started_at": null,
+      "hearts_next_refill_at": null,
+      "hearts_refill_interval_ms": 60000
+    },
+    "3": {
+      "xp_total": 20,
+      "hearts_current": 5,
+      "hearts_max": 5,
+      "hearts_refill_started_at": null,
+      "hearts_next_refill_at": null,
+      "hearts_refill_interval_ms": 60000,
+      "streak_current": 1,
+      "streak_last_day": "2026-02-28",
+      "freeze_count": 1,
+      "daily_goal_xp": 50
+    },
+    "4": {
+      "xp_total": 0,
+      "hearts_current": 5,
+      "hearts_max": 5,
+      "hearts_refill_started_at": null,
+      "hearts_next_refill_at": null,
+      "hearts_refill_interval_ms": 60000,
+      "streak_current": 0,
+      "streak_last_day": null,
+      "freeze_count": 1,
+      "daily_goal_xp": 50
+    },
+    "5": {
+      "xp_total": 0,
+      "hearts_current": 5,
+      "hearts_max": 5,
+      "hearts_refill_started_at": null,
+      "hearts_next_refill_at": null,
+      "hearts_refill_interval_ms": 60000,
+      "streak_current": 0,
+      "streak_last_day": null,
+      "freeze_count": 1,
+      "daily_goal_xp": 50
+    }
+  },
+  "lesson_attempts": [
+    {
+      "id": "2-1771269733826-13274",
+      "user_id": 2,
+      "status": "completed",
+      "lang": "en",
+      "level": 1,
+      "started_at": "2026-02-16T19:22:13.826Z",
+      "completed_at": "2026-02-16T19:22:30.706Z",
+      "answered_count": 10,
+      "correct_count": 6,
+      "hearts_lost": 4,
+      "xp_awarded": 70,
+      "exercises": [
+        {
+          "exercise_id": "3-0",
+          "type": "word",
+          "word": "Thank you",
+          "options": [
+            "Спасибо",
+            "Пожалуйста",
+            "Да",
+            "Извините"
+          ],
+          "correct": "Спасибо"
+        },
+        {
+          "exercise_id": "1-1",
+          "type": "word",
+          "word": "Hello",
+          "options": [
+            "Пожалуйста",
+            "Привет",
+            "Пока",
+            "Спасибо"
+          ],
+          "correct": "Привет"
+        },
+        {
+          "exercise_id": "4-2",
+          "type": "word",
+          "word": "Water",
+          "options": [
+            "Молоко",
+            "Хлеб",
+            "Вода",
+            "Сок"
+          ],
+          "correct": "Вода"
+        },
+        {
+          "exercise_id": "2-3",
+          "type": "word",
+          "word": "Goodbye",
+          "options": [
+            "Нет",
+            "Привет",
+            "До свидания",
+            "Да"
+          ],
+          "correct": "До свидания"
+        },
+        {
+          "exercise_id": "9-4",
+          "type": "word",
+          "word": "Sun",
+          "options": [
+            "Луна",
+            "Небо",
+            "Звезда",
+            "Солнце"
+          ],
+          "correct": "Солнце"
+        },
+        {
+          "exercise_id": "8-5",
+          "type": "word",
+          "word": "Dog",
+          "options": [
+            "Собака",
+            "Рыба",
+            "Кошка",
+            "Птица"
+          ],
+          "correct": "Собака"
+        },
+        {
+          "exercise_id": "6-6",
+          "type": "word",
+          "word": "House",
+          "options": [
+            "Город",
+            "Дом",
+            "Машина",
+            "Улица"
+          ],
+          "correct": "Дом"
+        },
+        {
+          "exercise_id": "7-7",
+          "type": "word",
+          "word": "Apple",
+          "options": [
+            "Яблоко",
+            "Банан",
+            "Груша",
+            "Апельсин"
+          ],
+          "correct": "Яблоко"
+        },
+        {
+          "exercise_id": "10-8",
+          "type": "word",
+          "word": "Friend",
+          "options": [
+            "Друг",
+            "Знакомый",
+            "Враг",
+            "Сосед"
+          ],
+          "correct": "Друг"
+        },
+        {
+          "exercise_id": "5-9",
+          "type": "word",
+          "word": "Book",
+          "options": [
+            "Стул",
+            "Стол",
+            "Книга",
+            "Окно"
+          ],
+          "correct": "Книга"
+        }
+      ],
+      "answers": [
+        {
+          "exercise_id": "3-0",
+          "answer": "Спасибо",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:22:15.172Z"
+        },
+        {
+          "exercise_id": "1-1",
+          "answer": "Привет",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:22:16.599Z"
+        },
+        {
+          "exercise_id": "4-2",
+          "answer": "Вода",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:22:19.162Z"
+        },
+        {
+          "exercise_id": "2-3",
+          "answer": "Нет",
+          "is_correct": false,
+          "answered_at": "2026-02-16T19:22:20.849Z"
+        },
+        {
+          "exercise_id": "9-4",
+          "answer": "Луна",
+          "is_correct": false,
+          "answered_at": "2026-02-16T19:22:23.948Z"
+        },
+        {
+          "exercise_id": "8-5",
+          "answer": "Собака",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:22:25.474Z"
+        },
+        {
+          "exercise_id": "6-6",
+          "answer": "Город",
+          "is_correct": false,
+          "answered_at": "2026-02-16T19:22:26.611Z"
+        },
+        {
+          "exercise_id": "7-7",
+          "answer": "Яблоко",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:22:27.634Z"
+        },
+        {
+          "exercise_id": "10-8",
+          "answer": "Друг",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:22:28.731Z"
+        },
+        {
+          "exercise_id": "5-9",
+          "answer": "Стул",
+          "is_correct": false,
+          "answered_at": "2026-02-16T19:22:29.882Z"
+        }
+      ]
+    },
+    {
+      "id": "2-1771269787764-66920",
+      "user_id": 2,
+      "status": "in_progress",
+      "lang": "en",
+      "level": 1,
+      "started_at": "2026-02-16T19:23:07.764Z",
+      "completed_at": null,
+      "answered_count": 0,
+      "correct_count": 0,
+      "hearts_lost": 0,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "1-0",
+          "type": "word",
+          "word": "Hello",
+          "options": [
+            "Привет",
+            "Пока",
+            "Спасибо",
+            "Пожалуйста"
+          ],
+          "correct": "Привет"
+        },
+        {
+          "exercise_id": "4-1",
+          "type": "word",
+          "word": "Water",
+          "options": [
+            "Хлеб",
+            "Сок",
+            "Молоко",
+            "Вода"
+          ],
+          "correct": "Вода"
+        },
+        {
+          "exercise_id": "2-2",
+          "type": "word",
+          "word": "Goodbye",
+          "options": [
+            "До свидания",
+            "Привет",
+            "Да",
+            "Нет"
+          ],
+          "correct": "До свидания"
+        },
+        {
+          "exercise_id": "5-3",
+          "type": "word",
+          "word": "Book",
+          "options": [
+            "Стул",
+            "Книга",
+            "Окно",
+            "Стол"
+          ],
+          "correct": "Книга"
+        },
+        {
+          "exercise_id": "7-4",
+          "type": "word",
+          "word": "Apple",
+          "options": [
+            "Груша",
+            "Апельсин",
+            "Банан",
+            "Яблоко"
+          ],
+          "correct": "Яблоко"
+        },
+        {
+          "exercise_id": "9-5",
+          "type": "word",
+          "word": "Sun",
+          "options": [
+            "Звезда",
+            "Луна",
+            "Солнце",
+            "Небо"
+          ],
+          "correct": "Солнце"
+        },
+        {
+          "exercise_id": "8-6",
+          "type": "word",
+          "word": "Dog",
+          "options": [
+            "Кошка",
+            "Рыба",
+            "Собака",
+            "Птица"
+          ],
+          "correct": "Собака"
+        },
+        {
+          "exercise_id": "10-7",
+          "type": "word",
+          "word": "Friend",
+          "options": [
+            "Друг",
+            "Знакомый",
+            "Враг",
+            "Сосед"
+          ],
+          "correct": "Друг"
+        },
+        {
+          "exercise_id": "3-8",
+          "type": "word",
+          "word": "Thank you",
+          "options": [
+            "Да",
+            "Спасибо",
+            "Пожалуйста",
+            "Извините"
+          ],
+          "correct": "Спасибо"
+        },
+        {
+          "exercise_id": "6-9",
+          "type": "word",
+          "word": "House",
+          "options": [
+            "Город",
+            "Улица",
+            "Машина",
+            "Дом"
+          ],
+          "correct": "Дом"
+        }
+      ],
+      "answers": []
+    },
+    {
+      "id": "2-1771270452898-17541",
+      "user_id": 2,
+      "status": "completed",
+      "lang": "en",
+      "level": 1,
+      "started_at": "2026-02-16T19:34:12.898Z",
+      "completed_at": "2026-02-16T19:34:35.927Z",
+      "answered_count": 10,
+      "correct_count": 10,
+      "hearts_lost": 0,
+      "xp_awarded": 130,
+      "exercises": [
+        {
+          "exercise_id": "4-0",
+          "type": "word",
+          "word": "Water",
+          "options": [
+            "Вода",
+            "Сок",
+            "Хлеб",
+            "Молоко"
+          ],
+          "correct": "Вода"
+        },
+        {
+          "exercise_id": "1-1",
+          "type": "word",
+          "word": "Hello",
+          "options": [
+            "Привет",
+            "Пока",
+            "Спасибо",
+            "Пожалуйста"
+          ],
+          "correct": "Привет"
+        },
+        {
+          "exercise_id": "6-2",
+          "type": "word",
+          "word": "House",
+          "options": [
+            "Дом",
+            "Машина",
+            "Улица",
+            "Город"
+          ],
+          "correct": "Дом"
+        },
+        {
+          "exercise_id": "8-3",
+          "type": "word",
+          "word": "Dog",
+          "options": [
+            "Собака",
+            "Кошка",
+            "Птица",
+            "Рыба"
+          ],
+          "correct": "Собака"
+        },
+        {
+          "exercise_id": "2-4",
+          "type": "word",
+          "word": "Goodbye",
+          "options": [
+            "Да",
+            "Привет",
+            "Нет",
+            "До свидания"
+          ],
+          "correct": "До свидания"
+        },
+        {
+          "exercise_id": "3-5",
+          "type": "word",
+          "word": "Thank you",
+          "options": [
+            "Да",
+            "Извините",
+            "Пожалуйста",
+            "Спасибо"
+          ],
+          "correct": "Спасибо"
+        },
+        {
+          "exercise_id": "5-6",
+          "type": "word",
+          "word": "Book",
+          "options": [
+            "Стул",
+            "Стол",
+            "Окно",
+            "Книга"
+          ],
+          "correct": "Книга"
+        },
+        {
+          "exercise_id": "9-7",
+          "type": "word",
+          "word": "Sun",
+          "options": [
+            "Небо",
+            "Звезда",
+            "Луна",
+            "Солнце"
+          ],
+          "correct": "Солнце"
+        },
+        {
+          "exercise_id": "10-8",
+          "type": "word",
+          "word": "Friend",
+          "options": [
+            "Друг",
+            "Враг",
+            "Сосед",
+            "Знакомый"
+          ],
+          "correct": "Друг"
+        },
+        {
+          "exercise_id": "7-9",
+          "type": "word",
+          "word": "Apple",
+          "options": [
+            "Яблоко",
+            "Банан",
+            "Груша",
+            "Апельсин"
+          ],
+          "correct": "Яблоко"
+        }
+      ],
+      "answers": [
+        {
+          "exercise_id": "4-0",
+          "answer": "Вода",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:34:14.503Z"
+        },
+        {
+          "exercise_id": "1-1",
+          "answer": "Привет",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:34:16.236Z"
+        },
+        {
+          "exercise_id": "6-2",
+          "answer": "Дом",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:34:17.896Z"
+        },
+        {
+          "exercise_id": "8-3",
+          "answer": "Собака",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:34:20.165Z"
+        },
+        {
+          "exercise_id": "2-4",
+          "answer": "До свидания",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:34:22.615Z"
+        },
+        {
+          "exercise_id": "3-5",
+          "answer": "Спасибо",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:34:25.252Z"
+        },
+        {
+          "exercise_id": "5-6",
+          "answer": "Книга",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:34:27.685Z"
+        },
+        {
+          "exercise_id": "9-7",
+          "answer": "Солнце",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:34:31.557Z"
+        },
+        {
+          "exercise_id": "10-8",
+          "answer": "Друг",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:34:33.401Z"
+        },
+        {
+          "exercise_id": "7-9",
+          "answer": "Яблоко",
+          "is_correct": true,
+          "answered_at": "2026-02-16T19:34:35.104Z"
+        }
+      ]
+    },
+    {
+      "id": "2-1771270492862-40598",
+      "user_id": 2,
+      "status": "in_progress",
+      "lang": "en",
+      "level": 1,
+      "started_at": "2026-02-16T19:34:52.862Z",
+      "completed_at": null,
+      "answered_count": 0,
+      "correct_count": 0,
+      "hearts_lost": 0,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "10-0",
+          "type": "word",
+          "word": "Friend",
+          "options": [
+            "Сосед",
+            "Друг",
+            "Знакомый",
+            "Враг"
+          ],
+          "correct": "Друг"
+        },
+        {
+          "exercise_id": "6-1",
+          "type": "word",
+          "word": "House",
+          "options": [
+            "Машина",
+            "Улица",
+            "Город",
+            "Дом"
+          ],
+          "correct": "Дом"
+        },
+        {
+          "exercise_id": "4-2",
+          "type": "word",
+          "word": "Water",
+          "options": [
+            "Вода",
+            "Хлеб",
+            "Сок",
+            "Молоко"
+          ],
+          "correct": "Вода"
+        },
+        {
+          "exercise_id": "3-3",
+          "type": "word",
+          "word": "Thank you",
+          "options": [
+            "Спасибо",
+            "Да",
+            "Пожалуйста",
+            "Извините"
+          ],
+          "correct": "Спасибо"
+        },
+        {
+          "exercise_id": "9-4",
+          "type": "word",
+          "word": "Sun",
+          "options": [
+            "Луна",
+            "Небо",
+            "Солнце",
+            "Звезда"
+          ],
+          "correct": "Солнце"
+        },
+        {
+          "exercise_id": "2-5",
+          "type": "word",
+          "word": "Goodbye",
+          "options": [
+            "Привет",
+            "Да",
+            "До свидания",
+            "Нет"
+          ],
+          "correct": "До свидания"
+        },
+        {
+          "exercise_id": "8-6",
+          "type": "word",
+          "word": "Dog",
+          "options": [
+            "Рыба",
+            "Птица",
+            "Собака",
+            "Кошка"
+          ],
+          "correct": "Собака"
+        },
+        {
+          "exercise_id": "7-7",
+          "type": "word",
+          "word": "Apple",
+          "options": [
+            "Апельсин",
+            "Банан",
+            "Груша",
+            "Яблоко"
+          ],
+          "correct": "Яблоко"
+        },
+        {
+          "exercise_id": "1-8",
+          "type": "word",
+          "word": "Hello",
+          "options": [
+            "Спасибо",
+            "Пожалуйста",
+            "Привет",
+            "Пока"
+          ],
+          "correct": "Привет"
+        },
+        {
+          "exercise_id": "5-9",
+          "type": "word",
+          "word": "Book",
+          "options": [
+            "Книга",
+            "Стол",
+            "Стул",
+            "Окно"
+          ],
+          "correct": "Книга"
+        }
+      ],
+      "answers": []
+    },
+    {
+      "id": "2-1771270802168-43218",
+      "user_id": 2,
+      "status": "in_progress",
+      "lang": "en",
+      "level": 1,
+      "started_at": "2026-02-16T19:40:02.168Z",
+      "completed_at": null,
+      "answered_count": 0,
+      "correct_count": 0,
+      "hearts_lost": 0,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "5-0",
+          "type": "word",
+          "word": "Book",
+          "options": [
+            "Стул",
+            "Окно",
+            "Стол",
+            "Книга"
+          ],
+          "correct": "Книга"
+        },
+        {
+          "exercise_id": "pairs-1771270802167-1",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "House",
+            "Thank you",
+            "Friend",
+            "Hello"
+          ],
+          "right": [
+            "Спасибо",
+            "Привет",
+            "Друг",
+            "Дом"
+          ],
+          "pairs": [
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            },
+            {
+              "left": "Hello",
+              "right": "Привет"
+            }
+          ]
+        },
+        {
+          "exercise_id": "3-2",
+          "type": "word",
+          "word": "Thank you",
+          "options": [
+            "Спасибо",
+            "Пожалуйста",
+            "Да",
+            "Извините"
+          ],
+          "correct": "Спасибо"
+        },
+        {
+          "exercise_id": "pairs-1771270802167-3",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Apple",
+            "House",
+            "Book",
+            "Sun"
+          ],
+          "right": [
+            "Солнце",
+            "Яблоко",
+            "Дом",
+            "Книга"
+          ],
+          "pairs": [
+            {
+              "left": "Apple",
+              "right": "Яблоко"
+            },
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Book",
+              "right": "Книга"
+            },
+            {
+              "left": "Sun",
+              "right": "Солнце"
+            }
+          ]
+        },
+        {
+          "exercise_id": "10-4",
+          "type": "word",
+          "word": "Friend",
+          "options": [
+            "Сосед",
+            "Друг",
+            "Враг",
+            "Знакомый"
+          ],
+          "correct": "Друг"
+        },
+        {
+          "exercise_id": "pairs-1771270802167-5",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Water",
+            "Thank you",
+            "Friend",
+            "Goodbye"
+          ],
+          "right": [
+            "До свидания",
+            "Друг",
+            "Спасибо",
+            "Вода"
+          ],
+          "pairs": [
+            {
+              "left": "Water",
+              "right": "Вода"
+            },
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            }
+          ]
+        },
+        {
+          "exercise_id": "2-6",
+          "type": "word",
+          "word": "Goodbye",
+          "options": [
+            "Нет",
+            "Да",
+            "Привет",
+            "До свидания"
+          ],
+          "correct": "До свидания"
+        },
+        {
+          "exercise_id": "pairs-1771270802167-7",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "House",
+            "Goodbye",
+            "Sun",
+            "Dog"
+          ],
+          "right": [
+            "До свидания",
+            "Собака",
+            "Дом",
+            "Солнце"
+          ],
+          "pairs": [
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            },
+            {
+              "left": "Sun",
+              "right": "Солнце"
+            },
+            {
+              "left": "Dog",
+              "right": "Собака"
+            }
+          ]
+        },
+        {
+          "exercise_id": "9-8",
+          "type": "word",
+          "word": "Sun",
+          "options": [
+            "Небо",
+            "Звезда",
+            "Луна",
+            "Солнце"
+          ],
+          "correct": "Солнце"
+        },
+        {
+          "exercise_id": "pairs-1771270802167-9",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Hello",
+            "Goodbye",
+            "House",
+            "Thank you"
+          ],
+          "right": [
+            "Привет",
+            "До свидания",
+            "Дом",
+            "Спасибо"
+          ],
+          "pairs": [
+            {
+              "left": "Hello",
+              "right": "Привет"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            },
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            }
+          ]
+        }
+      ],
+      "answers": []
+    },
+    {
+      "id": "2-1771270827148-45195",
+      "user_id": 2,
+      "status": "in_progress",
+      "lang": "en",
+      "level": 3,
+      "started_at": "2026-02-16T19:40:27.148Z",
+      "completed_at": null,
+      "answered_count": 1,
+      "correct_count": 0,
+      "hearts_lost": 1,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "16-0",
+          "type": "sentence",
+          "sentence": "The weather is ___ today.",
+          "options": [
+            "beautifully",
+            "beauty",
+            "beautiful",
+            "beautify"
+          ],
+          "correct": "beautiful"
+        },
+        {
+          "exercise_id": "17-1-wb",
+          "type": "word_bank",
+          "prompt": "He has ___ finished his homework.",
+          "options": [
+            "already",
+            "ever",
+            "still",
+            "yet"
+          ],
+          "correct": "already",
+          "lang": "en",
+          "level": 3
+        },
+        {
+          "exercise_id": "reorder-1771270827148-2",
+          "type": "reorder_sentence",
+          "prompt": "Соберите предложение в правильном порядке",
+          "lang": "en",
+          "level": 3,
+          "tokens": [
+            "We",
+            "need",
+            "to",
+            "make",
+            "a",
+            "decision",
+            "soon"
+          ],
+          "target_tokens": [
+            "We",
+            "need",
+            "to",
+            "make",
+            "a",
+            "decision",
+            "soon"
+          ],
+          "target_sentence": "We need to make a decision soon."
+        }
+      ],
+      "answers": [
+        {
+          "exercise_id": "16-0",
+          "answer": "beautifully",
+          "is_correct": false,
+          "answered_at": "2026-02-16T19:40:29.455Z"
+        }
+      ]
+    },
+    {
+      "id": "2-1771495735216-36853",
+      "user_id": 2,
+      "status": "in_progress",
+      "lang": "en",
+      "level": 1,
+      "started_at": "2026-02-19T10:08:55.216Z",
+      "completed_at": null,
+      "answered_count": 1,
+      "correct_count": 1,
+      "hearts_lost": 0,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "1-0",
+          "type": "word",
+          "word": "Hello",
+          "options": [
+            "Привет",
+            "Пока",
+            "Спасибо",
+            "Пожалуйста"
+          ],
+          "correct": "Привет"
+        },
+        {
+          "exercise_id": "pairs-1771495735215-1",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Dog",
+            "Sun",
+            "Thank you",
+            "Book"
+          ],
+          "right": [
+            "Собака",
+            "Солнце",
+            "Спасибо",
+            "Книга"
+          ],
+          "pairs": [
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "Sun",
+              "right": "Солнце"
+            },
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            },
+            {
+              "left": "Book",
+              "right": "Книга"
+            }
+          ]
+        },
+        {
+          "exercise_id": "8-2",
+          "type": "word",
+          "word": "Dog",
+          "options": [
+            "Кошка",
+            "Птица",
+            "Собака",
+            "Рыба"
+          ],
+          "correct": "Собака"
+        },
+        {
+          "exercise_id": "pairs-1771495735215-3",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Apple",
+            "Sun",
+            "Goodbye",
+            "Friend"
+          ],
+          "right": [
+            "До свидания",
+            "Солнце",
+            "Яблоко",
+            "Друг"
+          ],
+          "pairs": [
+            {
+              "left": "Apple",
+              "right": "Яблоко"
+            },
+            {
+              "left": "Sun",
+              "right": "Солнце"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            }
+          ]
+        },
+        {
+          "exercise_id": "9-4",
+          "type": "word",
+          "word": "Sun",
+          "options": [
+            "Небо",
+            "Солнце",
+            "Луна",
+            "Звезда"
+          ],
+          "correct": "Солнце"
+        },
+        {
+          "exercise_id": "pairs-1771495735215-5",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Hello",
+            "Goodbye",
+            "Friend",
+            "Thank you"
+          ],
+          "right": [
+            "Привет",
+            "До свидания",
+            "Друг",
+            "Спасибо"
+          ],
+          "pairs": [
+            {
+              "left": "Hello",
+              "right": "Привет"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            },
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            }
+          ]
+        },
+        {
+          "exercise_id": "7-6",
+          "type": "word",
+          "word": "Apple",
+          "options": [
+            "Яблоко",
+            "Груша",
+            "Банан",
+            "Апельсин"
+          ],
+          "correct": "Яблоко"
+        },
+        {
+          "exercise_id": "pairs-1771495735215-7",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Thank you",
+            "Friend",
+            "Dog",
+            "Goodbye"
+          ],
+          "right": [
+            "Собака",
+            "До свидания",
+            "Друг",
+            "Спасибо"
+          ],
+          "pairs": [
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            },
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            }
+          ]
+        },
+        {
+          "exercise_id": "5-8",
+          "type": "word",
+          "word": "Book",
+          "options": [
+            "Книга",
+            "Окно",
+            "Стол",
+            "Стул"
+          ],
+          "correct": "Книга"
+        },
+        {
+          "exercise_id": "pairs-1771495735215-9",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Sun",
+            "Apple",
+            "Thank you",
+            "House"
+          ],
+          "right": [
+            "Спасибо",
+            "Солнце",
+            "Дом",
+            "Яблоко"
+          ],
+          "pairs": [
+            {
+              "left": "Sun",
+              "right": "Солнце"
+            },
+            {
+              "left": "Apple",
+              "right": "Яблоко"
+            },
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            },
+            {
+              "left": "House",
+              "right": "Дом"
+            }
+          ]
+        }
+      ],
+      "answers": [
+        {
+          "exercise_id": "1-0",
+          "answer": "Привет",
+          "is_correct": true,
+          "answered_at": "2026-02-19T10:08:56.617Z"
+        }
+      ]
+    },
+    {
+      "id": "2-1771495753676-41953",
+      "user_id": 2,
+      "status": "in_progress",
+      "lang": "en",
+      "level": 1,
+      "started_at": "2026-02-19T10:09:13.676Z",
+      "completed_at": null,
+      "answered_count": 0,
+      "correct_count": 0,
+      "hearts_lost": 0,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "3-0",
+          "type": "word",
+          "word": "Thank you",
+          "options": [
+            "Извините",
+            "Пожалуйста",
+            "Да",
+            "Спасибо"
+          ],
+          "correct": "Спасибо"
+        },
+        {
+          "exercise_id": "pairs-1771495753676-1",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Dog",
+            "House",
+            "Water",
+            "Friend"
+          ],
+          "right": [
+            "Собака",
+            "Дом",
+            "Вода",
+            "Друг"
+          ],
+          "pairs": [
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Water",
+              "right": "Вода"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            }
+          ]
+        },
+        {
+          "exercise_id": "1-2",
+          "type": "word",
+          "word": "Hello",
+          "options": [
+            "Привет",
+            "Пожалуйста",
+            "Пока",
+            "Спасибо"
+          ],
+          "correct": "Привет"
+        },
+        {
+          "exercise_id": "pairs-1771495753676-3",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Apple",
+            "Water",
+            "Thank you",
+            "Friend"
+          ],
+          "right": [
+            "Яблоко",
+            "Спасибо",
+            "Вода",
+            "Друг"
+          ],
+          "pairs": [
+            {
+              "left": "Apple",
+              "right": "Яблоко"
+            },
+            {
+              "left": "Water",
+              "right": "Вода"
+            },
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            }
+          ]
+        },
+        {
+          "exercise_id": "4-4",
+          "type": "word",
+          "word": "Water",
+          "options": [
+            "Вода",
+            "Хлеб",
+            "Молоко",
+            "Сок"
+          ],
+          "correct": "Вода"
+        },
+        {
+          "exercise_id": "pairs-1771495753676-5",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Hello",
+            "Goodbye",
+            "Sun",
+            "Friend"
+          ],
+          "right": [
+            "Друг",
+            "Солнце",
+            "До свидания",
+            "Привет"
+          ],
+          "pairs": [
+            {
+              "left": "Hello",
+              "right": "Привет"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            },
+            {
+              "left": "Sun",
+              "right": "Солнце"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            }
+          ]
+        },
+        {
+          "exercise_id": "5-6",
+          "type": "word",
+          "word": "Book",
+          "options": [
+            "Окно",
+            "Стул",
+            "Стол",
+            "Книга"
+          ],
+          "correct": "Книга"
+        },
+        {
+          "exercise_id": "pairs-1771495753676-7",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Water",
+            "Apple",
+            "Hello",
+            "Goodbye"
+          ],
+          "right": [
+            "Привет",
+            "Яблоко",
+            "Вода",
+            "До свидания"
+          ],
+          "pairs": [
+            {
+              "left": "Water",
+              "right": "Вода"
+            },
+            {
+              "left": "Apple",
+              "right": "Яблоко"
+            },
+            {
+              "left": "Hello",
+              "right": "Привет"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            }
+          ]
+        },
+        {
+          "exercise_id": "6-8",
+          "type": "word",
+          "word": "House",
+          "options": [
+            "Дом",
+            "Машина",
+            "Город",
+            "Улица"
+          ],
+          "correct": "Дом"
+        },
+        {
+          "exercise_id": "pairs-1771495753676-9",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Thank you",
+            "House",
+            "Dog",
+            "Water"
+          ],
+          "right": [
+            "Собака",
+            "Дом",
+            "Спасибо",
+            "Вода"
+          ],
+          "pairs": [
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            },
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "Water",
+              "right": "Вода"
+            }
+          ]
+        }
+      ],
+      "answers": []
+    },
+    {
+      "id": "2-1771497127420-62913",
+      "user_id": 2,
+      "status": "in_progress",
+      "lang": "en",
+      "level": 1,
+      "started_at": "2026-02-19T10:32:07.420Z",
+      "completed_at": null,
+      "answered_count": 0,
+      "correct_count": 0,
+      "hearts_lost": 0,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "4-0",
+          "type": "word",
+          "word": "Water",
+          "options": [
+            "Хлеб",
+            "Вода",
+            "Сок",
+            "Молоко"
+          ],
+          "correct": "Вода"
+        },
+        {
+          "exercise_id": "pairs-1771497127419-1",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Hello",
+            "Dog",
+            "Goodbye",
+            "Friend"
+          ],
+          "right": [
+            "Привет",
+            "Собака",
+            "До свидания",
+            "Друг"
+          ],
+          "pairs": [
+            {
+              "left": "Hello",
+              "right": "Привет"
+            },
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            }
+          ]
+        },
+        {
+          "exercise_id": "9-2",
+          "type": "word",
+          "word": "Sun",
+          "options": [
+            "Небо",
+            "Звезда",
+            "Луна",
+            "Солнце"
+          ],
+          "correct": "Солнце"
+        },
+        {
+          "exercise_id": "pairs-1771497127419-3",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Dog",
+            "Apple",
+            "House",
+            "Book"
+          ],
+          "right": [
+            "Собака",
+            "Яблоко",
+            "Дом",
+            "Книга"
+          ],
+          "pairs": [
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "Apple",
+              "right": "Яблоко"
+            },
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Book",
+              "right": "Книга"
+            }
+          ]
+        },
+        {
+          "exercise_id": "1-4",
+          "type": "word",
+          "word": "Hello",
+          "options": [
+            "Спасибо",
+            "Пока",
+            "Привет",
+            "Пожалуйста"
+          ],
+          "correct": "Привет"
+        },
+        {
+          "exercise_id": "pairs-1771497127419-5",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Book",
+            "Dog",
+            "Sun",
+            "Water"
+          ],
+          "right": [
+            "Вода",
+            "Книга",
+            "Собака",
+            "Солнце"
+          ],
+          "pairs": [
+            {
+              "left": "Book",
+              "right": "Книга"
+            },
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "Sun",
+              "right": "Солнце"
+            },
+            {
+              "left": "Water",
+              "right": "Вода"
+            }
+          ]
+        },
+        {
+          "exercise_id": "8-6",
+          "type": "word",
+          "word": "Dog",
+          "options": [
+            "Рыба",
+            "Собака",
+            "Кошка",
+            "Птица"
+          ],
+          "correct": "Собака"
+        },
+        {
+          "exercise_id": "pairs-1771497127419-7",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Hello",
+            "Dog",
+            "Goodbye",
+            "Thank you"
+          ],
+          "right": [
+            "Спасибо",
+            "До свидания",
+            "Собака",
+            "Привет"
+          ],
+          "pairs": [
+            {
+              "left": "Hello",
+              "right": "Привет"
+            },
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            },
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            }
+          ]
+        },
+        {
+          "exercise_id": "10-8",
+          "type": "word",
+          "word": "Friend",
+          "options": [
+            "Знакомый",
+            "Враг",
+            "Друг",
+            "Сосед"
+          ],
+          "correct": "Друг"
+        },
+        {
+          "exercise_id": "pairs-1771497127419-9",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Dog",
+            "Friend",
+            "House",
+            "Book"
+          ],
+          "right": [
+            "Собака",
+            "Друг",
+            "Дом",
+            "Книга"
+          ],
+          "pairs": [
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            },
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Book",
+              "right": "Книга"
+            }
+          ]
+        }
+      ],
+      "answers": []
+    },
+    {
+      "id": "2-1771591998794-81975",
+      "user_id": 2,
+      "status": "in_progress",
+      "lang": "en",
+      "level": 2,
+      "started_at": "2026-02-20T12:53:18.794Z",
+      "completed_at": null,
+      "answered_count": 3,
+      "correct_count": 1,
+      "hearts_lost": 2,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "13-0",
+          "type": "word",
+          "word": "Interesting",
+          "options": [
+            "Грустный",
+            "Странный",
+            "Скучный",
+            "Интересный"
+          ],
+          "correct": "Интересный"
+        },
+        {
+          "exercise_id": "14-1",
+          "type": "sentence",
+          "sentence": "I ___ a book every day.",
+          "options": [
+            "reads",
+            "read",
+            "wrote",
+            "reading"
+          ],
+          "correct": "read"
+        },
+        {
+          "exercise_id": "15-2-wb",
+          "type": "word_bank",
+          "prompt": "She ___ to school by bus.",
+          "options": [
+            "going",
+            "go",
+            "went",
+            "goes"
+          ],
+          "correct": "goes",
+          "lang": "en",
+          "level": 2
+        },
+        {
+          "exercise_id": "pairs-1771591998793-3",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 2,
+          "left": [
+            "Interesting",
+            "Important",
+            "Beautiful"
+          ],
+          "right": [
+            "Интересный",
+            "Важный",
+            "Красивый"
+          ],
+          "pairs": [
+            {
+              "left": "Interesting",
+              "right": "Интересный"
+            },
+            {
+              "left": "Important",
+              "right": "Важный"
+            },
+            {
+              "left": "Beautiful",
+              "right": "Красивый"
+            }
+          ]
+        },
+        {
+          "exercise_id": "15-4",
+          "type": "sentence",
+          "sentence": "She ___ to school by bus.",
+          "options": [
+            "goes",
+            "go",
+            "going",
+            "went"
+          ],
+          "correct": "goes"
+        }
+      ],
+      "answers": [
+        {
+          "exercise_id": "13-0",
+          "answer": "Грустный",
+          "is_correct": false,
+          "answered_at": "2026-02-20T12:53:21.256Z"
+        },
+        {
+          "exercise_id": "14-1",
+          "answer": "read",
+          "is_correct": true,
+          "answered_at": "2026-02-20T12:53:23.065Z"
+        },
+        {
+          "exercise_id": "15-2-wb",
+          "answer": "going",
+          "is_correct": false,
+          "answered_at": "2026-02-20T12:53:24.245Z"
+        }
+      ]
+    },
+    {
+      "id": "2-1772197077761-99285",
+      "user_id": 2,
+      "status": "in_progress",
+      "lang": "en",
+      "level": 1,
+      "started_at": "2026-02-27T12:57:57.761Z",
+      "completed_at": null,
+      "answered_count": 0,
+      "correct_count": 0,
+      "hearts_lost": 0,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "7-0",
+          "type": "word",
+          "word": "Apple",
+          "options": [
+            "Банан",
+            "Яблоко",
+            "Груша",
+            "Апельсин"
+          ],
+          "correct": "Яблоко"
+        },
+        {
+          "exercise_id": "pairs-1772197077760-1",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Water",
+            "Friend",
+            "Hello",
+            "Sun"
+          ],
+          "right": [
+            "Солнце",
+            "Привет",
+            "Друг",
+            "Вода"
+          ],
+          "pairs": [
+            {
+              "left": "Water",
+              "right": "Вода"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            },
+            {
+              "left": "Hello",
+              "right": "Привет"
+            },
+            {
+              "left": "Sun",
+              "right": "Солнце"
+            }
+          ]
+        },
+        {
+          "exercise_id": "5-2",
+          "type": "word",
+          "word": "Book",
+          "options": [
+            "Стол",
+            "Окно",
+            "Книга",
+            "Стул"
+          ],
+          "correct": "Книга"
+        },
+        {
+          "exercise_id": "pairs-1772197077760-3",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Dog",
+            "House",
+            "Friend",
+            "Water"
+          ],
+          "right": [
+            "Вода",
+            "Друг",
+            "Собака",
+            "Дом"
+          ],
+          "pairs": [
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            },
+            {
+              "left": "Water",
+              "right": "Вода"
+            }
+          ]
+        },
+        {
+          "exercise_id": "10-4",
+          "type": "word",
+          "word": "Friend",
+          "options": [
+            "Знакомый",
+            "Сосед",
+            "Враг",
+            "Друг"
+          ],
+          "correct": "Друг"
+        },
+        {
+          "exercise_id": "pairs-1772197077760-5",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Hello",
+            "House",
+            "Dog",
+            "Friend"
+          ],
+          "right": [
+            "Дом",
+            "Друг",
+            "Привет",
+            "Собака"
+          ],
+          "pairs": [
+            {
+              "left": "Hello",
+              "right": "Привет"
+            },
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "Friend",
+              "right": "Друг"
+            }
+          ]
+        },
+        {
+          "exercise_id": "3-6",
+          "type": "word",
+          "word": "Thank you",
+          "options": [
+            "Извините",
+            "Пожалуйста",
+            "Спасибо",
+            "Да"
+          ],
+          "correct": "Спасибо"
+        },
+        {
+          "exercise_id": "pairs-1772197077760-7",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "House",
+            "Goodbye",
+            "Apple",
+            "Water"
+          ],
+          "right": [
+            "Вода",
+            "Яблоко",
+            "До свидания",
+            "Дом"
+          ],
+          "pairs": [
+            {
+              "left": "House",
+              "right": "Дом"
+            },
+            {
+              "left": "Goodbye",
+              "right": "До свидания"
+            },
+            {
+              "left": "Apple",
+              "right": "Яблоко"
+            },
+            {
+              "left": "Water",
+              "right": "Вода"
+            }
+          ]
+        },
+        {
+          "exercise_id": "2-8",
+          "type": "word",
+          "word": "Goodbye",
+          "options": [
+            "Нет",
+            "До свидания",
+            "Привет",
+            "Да"
+          ],
+          "correct": "До свидания"
+        },
+        {
+          "exercise_id": "pairs-1772197077760-9",
+          "type": "match_pairs",
+          "prompt": "Соедините слова и переводы",
+          "lang": "en",
+          "level": 1,
+          "left": [
+            "Thank you",
+            "Apple",
+            "Dog",
+            "Hello"
+          ],
+          "right": [
+            "Спасибо",
+            "Привет",
+            "Яблоко",
+            "Собака"
+          ],
+          "pairs": [
+            {
+              "left": "Thank you",
+              "right": "Спасибо"
+            },
+            {
+              "left": "Apple",
+              "right": "Яблоко"
+            },
+            {
+              "left": "Dog",
+              "right": "Собака"
+            },
+            {
+              "left": "Hello",
+              "right": "Привет"
+            }
+          ]
+        }
+      ],
+      "answers": []
+    },
+    {
+      "id": "3-1772263553440-76006",
+      "user_id": 3,
+      "status": "in_progress",
+      "lang": "uvs",
+      "level": 1,
+      "started_at": "2026-02-28T07:25:53.440Z",
+      "completed_at": null,
+      "answered_count": 4,
+      "correct_count": 1,
+      "hearts_lost": 3,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "4-0",
+          "type": "sentence",
+          "sentence": "Военнослужащий обязан бережно относиться к ___ и военной технике.",
+          "options": [
+            "обмундированию",
+            "документам",
+            "оружию",
+            "инвентарю"
+          ],
+          "correct": "оружию"
+        },
+        {
+          "exercise_id": "pairs-1772263553438-1",
+          "type": "match_pairs",
+          "prompt": "Соедините термин и определение",
+          "lang": "uvs",
+          "level": 1,
+          "left": [
+            "Внутренний порядок",
+            "Суточный наряд",
+            "Военная присяга"
+          ],
+          "right": [
+            "Торжественное обещание на верность народу Республики Беларусь",
+            "Лица, назначенные для поддержания внутреннего порядка и службы",
+            "Установленные правила размещения, быта и службы в подразделении"
+          ],
+          "pairs": [
+            {
+              "left": "Внутренний порядок",
+              "right": "Установленные правила размещения, быта и службы в подразделении"
+            },
+            {
+              "left": "Суточный наряд",
+              "right": "Лица, назначенные для поддержания внутреннего порядка и службы"
+            },
+            {
+              "left": "Военная присяга",
+              "right": "Торжественное обещание на верность народу Республики Беларусь"
+            }
+          ]
+        },
+        {
+          "exercise_id": "5-2",
+          "type": "sentence",
+          "sentence": "День принесения Военной присяги является ___ для воинской части.",
+          "options": [
+            "праздничным",
+            "выходным",
+            "учебным",
+            "строевым"
+          ],
+          "correct": "праздничным"
+        },
+        {
+          "exercise_id": "pairs-1772263553439-3",
+          "type": "match_pairs",
+          "prompt": "Соедините термин и определение",
+          "lang": "uvs",
+          "level": 1,
+          "left": [
+            "Военная присяга",
+            "Суточный наряд",
+            "Внутренний порядок"
+          ],
+          "right": [
+            "Установленные правила размещения, быта и службы в подразделении",
+            "Торжественное обещание на верность народу Республики Беларусь",
+            "Лица, назначенные для поддержания внутреннего порядка и службы"
+          ],
+          "pairs": [
+            {
+              "left": "Военная присяга",
+              "right": "Торжественное обещание на верность народу Республики Беларусь"
+            },
+            {
+              "left": "Суточный наряд",
+              "right": "Лица, назначенные для поддержания внутреннего порядка и службы"
+            },
+            {
+              "left": "Внутренний порядок",
+              "right": "Установленные правила размещения, быта и службы в подразделении"
+            }
+          ]
+        },
+        {
+          "exercise_id": "3-4",
+          "type": "word",
+          "word": "Внутренний порядок",
+          "options": [
+            "Установленные правила размещения, быта и службы в подразделении",
+            "Расписание отпусков",
+            "План строительства",
+            "Штатное расписание"
+          ],
+          "correct": "Установленные правила размещения, быта и службы в подразделении"
+        }
+      ],
+      "answers": [
+        {
+          "exercise_id": "4-0",
+          "answer": "обмундированию",
+          "is_correct": false,
+          "answered_at": "2026-02-28T07:25:57.992Z"
+        },
+        {
+          "exercise_id": "pairs-1772263553438-1",
+          "answer": {},
+          "is_correct": false,
+          "answered_at": "2026-02-28T07:26:01.910Z"
+        },
+        {
+          "exercise_id": "5-2",
+          "answer": "праздничным",
+          "is_correct": true,
+          "answered_at": "2026-02-28T07:26:10.445Z"
+        },
+        {
+          "exercise_id": "pairs-1772263553439-3",
+          "answer": {
+            "Военная присяга": "Торжественное обещание на верность народу Республики Беларусь"
+          },
+          "is_correct": false,
+          "answered_at": "2026-02-28T07:26:17.084Z"
+        }
+      ]
+    },
+    {
+      "id": "3-1772264210605-58353",
+      "user_id": 3,
+      "status": "in_progress",
+      "lang": "du",
+      "level": 1,
+      "started_at": "2026-02-28T07:36:50.605Z",
+      "completed_at": null,
+      "answered_count": 1,
+      "correct_count": 1,
+      "hearts_lost": 0,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "18-0",
+          "type": "word",
+          "word": "Дисциплинарное взыскание",
+          "options": [
+            "Мера ответственности за дисциплинарный проступок",
+            "Очередное увольнение",
+            "Плановый отпуск",
+            "Ежедневный развод"
+          ],
+          "correct": "Мера ответственности за дисциплинарный проступок"
+        },
+        {
+          "exercise_id": "pairs-1772264210602-1",
+          "type": "match_pairs",
+          "prompt": "Соедините термин и определение",
+          "lang": "du",
+          "level": 1,
+          "left": [
+            "Дисциплинарное взыскание",
+            "Поощрение",
+            "Воинская дисциплина"
+          ],
+          "right": [
+            "Строгое и точное соблюдение порядка и требований военной службы",
+            "Мера поощрительного воздействия за образцовую службу",
+            "Мера ответственности за дисциплинарный проступок"
+          ],
+          "pairs": [
+            {
+              "left": "Дисциплинарное взыскание",
+              "right": "Мера ответственности за дисциплинарный проступок"
+            },
+            {
+              "left": "Поощрение",
+              "right": "Мера поощрительного воздействия за образцовую службу"
+            },
+            {
+              "left": "Воинская дисциплина",
+              "right": "Строгое и точное соблюдение порядка и требований военной службы"
+            }
+          ]
+        },
+        {
+          "exercise_id": "20-2",
+          "type": "sentence",
+          "sentence": "Поощрение применяется за отличия в службе и ___ обязанностей.",
+          "options": [
+            "переименование",
+            "перераспределение",
+            "добросовестное выполнение",
+            "сокращение"
+          ],
+          "correct": "добросовестное выполнение"
+        },
+        {
+          "exercise_id": "pairs-1772264210602-3",
+          "type": "match_pairs",
+          "prompt": "Соедините термин и определение",
+          "lang": "du",
+          "level": 1,
+          "left": [
+            "Поощрение",
+            "Воинская дисциплина",
+            "Дисциплинарное взыскание"
+          ],
+          "right": [
+            "Мера поощрительного воздействия за образцовую службу",
+            "Строгое и точное соблюдение порядка и требований военной службы",
+            "Мера ответственности за дисциплинарный проступок"
+          ],
+          "pairs": [
+            {
+              "left": "Поощрение",
+              "right": "Мера поощрительного воздействия за образцовую службу"
+            },
+            {
+              "left": "Воинская дисциплина",
+              "right": "Строгое и точное соблюдение порядка и требований военной службы"
+            },
+            {
+              "left": "Дисциплинарное взыскание",
+              "right": "Мера ответственности за дисциплинарный проступок"
+            }
+          ]
+        },
+        {
+          "exercise_id": "16-4",
+          "type": "word",
+          "word": "Воинская дисциплина",
+          "options": [
+            "Строгое и точное соблюдение порядка и требований военной службы",
+            "Только строевая подготовка",
+            "Физическая подготовка",
+            "Спортивный режим"
+          ],
+          "correct": "Строгое и точное соблюдение порядка и требований военной службы"
+        }
+      ],
+      "answers": [
+        {
+          "exercise_id": "18-0",
+          "answer": "Мера ответственности за дисциплинарный проступок",
+          "is_correct": true,
+          "answered_at": "2026-02-28T07:36:52.992Z"
+        }
+      ]
+    },
+    {
+      "id": "3-1772269302079-88433",
+      "user_id": 3,
+      "status": "completed",
+      "lang": "uvs",
+      "level": 1,
+      "started_at": "2026-02-28T09:01:42.079Z",
+      "completed_at": "2026-02-28T09:01:50.341Z",
+      "answered_count": 5,
+      "correct_count": 1,
+      "hearts_lost": 4,
+      "xp_awarded": 20,
+      "exercises": [
+        {
+          "exercise_id": "1-0",
+          "type": "word",
+          "word": "Военная присяга",
+          "options": [
+            "План занятий",
+            "Торжественное обещание на верность народу Республики Беларусь",
+            "Приказ командира",
+            "Учебная тревога"
+          ],
+          "correct": "Торжественное обещание на верность народу Республики Беларусь"
+        },
+        {
+          "exercise_id": "pairs-1772269302076-1",
+          "type": "match_pairs",
+          "prompt": "Соедините термин и определение",
+          "lang": "uvs",
+          "level": 1,
+          "left": [
+            "Суточный наряд",
+            "Военная присяга",
+            "Внутренний порядок"
+          ],
+          "right": [
+            "Лица, назначенные для поддержания внутреннего порядка и службы",
+            "Установленные правила размещения, быта и службы в подразделении",
+            "Торжественное обещание на верность народу Республики Беларусь"
+          ],
+          "pairs": [
+            {
+              "left": "Суточный наряд",
+              "right": "Лица, назначенные для поддержания внутреннего порядка и службы"
+            },
+            {
+              "left": "Военная присяга",
+              "right": "Торжественное обещание на верность народу Республики Беларусь"
+            },
+            {
+              "left": "Внутренний порядок",
+              "right": "Установленные правила размещения, быта и службы в подразделении"
+            }
+          ]
+        },
+        {
+          "exercise_id": "5-2",
+          "type": "sentence",
+          "sentence": "День принесения Военной присяги является ___ для воинской части.",
+          "options": [
+            "праздничным",
+            "учебным",
+            "строевым",
+            "выходным"
+          ],
+          "correct": "праздничным"
+        },
+        {
+          "exercise_id": "pairs-1772269302076-3",
+          "type": "match_pairs",
+          "prompt": "Соедините термин и определение",
+          "lang": "uvs",
+          "level": 1,
+          "left": [
+            "Военная присяга",
+            "Внутренний порядок",
+            "Суточный наряд"
+          ],
+          "right": [
+            "Лица, назначенные для поддержания внутреннего порядка и службы",
+            "Установленные правила размещения, быта и службы в подразделении",
+            "Торжественное обещание на верность народу Республики Беларусь"
+          ],
+          "pairs": [
+            {
+              "left": "Военная присяга",
+              "right": "Торжественное обещание на верность народу Республики Беларусь"
+            },
+            {
+              "left": "Внутренний порядок",
+              "right": "Установленные правила размещения, быта и службы в подразделении"
+            },
+            {
+              "left": "Суточный наряд",
+              "right": "Лица, назначенные для поддержания внутреннего порядка и службы"
+            }
+          ]
+        },
+        {
+          "exercise_id": "4-4",
+          "type": "sentence",
+          "sentence": "Военнослужащий обязан бережно относиться к ___ и военной технике.",
+          "options": [
+            "оружию",
+            "обмундированию",
+            "документам",
+            "инвентарю"
+          ],
+          "correct": "оружию"
+        }
+      ],
+      "answers": [
+        {
+          "exercise_id": "1-0",
+          "answer": "План занятий",
+          "is_correct": false,
+          "answered_at": "2026-02-28T09:01:43.907Z"
+        },
+        {
+          "exercise_id": "pairs-1772269302076-1",
+          "answer": {},
+          "is_correct": false,
+          "answered_at": "2026-02-28T09:01:45.575Z"
+        },
+        {
+          "exercise_id": "5-2",
+          "answer": "учебным",
+          "is_correct": false,
+          "answered_at": "2026-02-28T09:01:46.885Z"
+        },
+        {
+          "exercise_id": "pairs-1772269302076-3",
+          "answer": {},
+          "is_correct": false,
+          "answered_at": "2026-02-28T09:01:48.297Z"
+        },
+        {
+          "exercise_id": "4-4",
+          "answer": "оружию",
+          "is_correct": true,
+          "answered_at": "2026-02-28T09:01:49.516Z"
+        }
+      ]
+    },
+    {
+      "id": "3-1772269805458-84827",
+      "user_id": 3,
+      "status": "in_progress",
+      "lang": "uvs",
+      "level": 1,
+      "started_at": "2026-02-28T09:10:05.458Z",
+      "completed_at": null,
+      "answered_count": 0,
+      "correct_count": 0,
+      "hearts_lost": 0,
+      "xp_awarded": 0,
+      "exercises": [
+        {
+          "exercise_id": "4-0",
+          "type": "sentence",
+          "sentence": "Военнослужащий обязан бережно относиться к ___ и военной технике.",
+          "options": [
+            "документам",
+            "обмундированию",
+            "оружию",
+            "инвентарю"
+          ],
+          "correct": "оружию"
+        },
+        {
+          "exercise_id": "pairs-1772269805457-1",
+          "type": "match_pairs",
+          "prompt": "Соедините термин и определение",
+          "lang": "uvs",
+          "level": 1,
+          "left": [
+            "Военная присяга",
+            "Суточный наряд",
+            "Внутренний порядок"
+          ],
+          "right": [
+            "Торжественное обещание на верность народу Республики Беларусь",
+            "Лица, назначенные для поддержания внутреннего порядка и службы",
+            "Установленные правила размещения, быта и службы в подразделении"
+          ],
+          "pairs": [
+            {
+              "left": "Военная присяга",
+              "right": "Торжественное обещание на верность народу Республики Беларусь"
+            },
+            {
+              "left": "Суточный наряд",
+              "right": "Лица, назначенные для поддержания внутреннего порядка и службы"
+            },
+            {
+              "left": "Внутренний порядок",
+              "right": "Установленные правила размещения, быта и службы в подразделении"
+            }
+          ]
+        },
+        {
+          "exercise_id": "3-2",
+          "type": "word",
+          "word": "Внутренний порядок",
+          "options": [
+            "План строительства",
+            "Штатное расписание",
+            "Расписание отпусков",
+            "Установленные правила размещения, быта и службы в подразделении"
+          ],
+          "correct": "Установленные правила размещения, быта и службы в подразделении"
+        },
+        {
+          "exercise_id": "pairs-1772269805457-3",
+          "type": "match_pairs",
+          "prompt": "Соедините термин и определение",
+          "lang": "uvs",
+          "level": 1,
+          "left": [
+            "Внутренний порядок",
+            "Военная присяга",
+            "Суточный наряд"
+          ],
+          "right": [
+            "Лица, назначенные для поддержания внутреннего порядка и службы",
+            "Торжественное обещание на верность народу Республики Беларусь",
+            "Установленные правила размещения, быта и службы в подразделении"
+          ],
+          "pairs": [
+            {
+              "left": "Внутренний порядок",
+              "right": "Установленные правила размещения, быта и службы в подразделении"
+            },
+            {
+              "left": "Военная присяга",
+              "right": "Торжественное обещание на верность народу Республики Беларусь"
+            },
+            {
+              "left": "Суточный наряд",
+              "right": "Лица, назначенные для поддержания внутреннего порядка и службы"
+            }
+          ]
+        },
+        {
+          "exercise_id": "1-4",
+          "type": "word",
+          "word": "Военная присяга",
+          "options": [
+            "Учебная тревога",
+            "План занятий",
+            "Торжественное обещание на верность народу Республики Беларусь",
+            "Приказ командира"
+          ],
+          "correct": "Торжественное обещание на верность народу Республики Беларусь"
+        }
+      ],
+      "answers": []
+    }
+  ],
+  "review_queue": [
+    {
+      "user_id": 2,
+      "attempt_id": "2-1771269733826-13274",
+      "exercise_id": "2-3",
+      "due_at": "2026-02-16T21:22:30.709Z"
+    },
+    {
+      "user_id": 2,
+      "attempt_id": "2-1771269733826-13274",
+      "exercise_id": "9-4",
+      "due_at": "2026-02-16T21:22:30.710Z"
+    },
+    {
+      "user_id": 2,
+      "attempt_id": "2-1771269733826-13274",
+      "exercise_id": "6-6",
+      "due_at": "2026-02-16T21:22:30.712Z"
+    },
+    {
+      "user_id": 2,
+      "attempt_id": "2-1771269733826-13274",
+      "exercise_id": "5-9",
+      "due_at": "2026-02-16T21:22:30.713Z"
+    },
+    {
+      "user_id": 3,
+      "attempt_id": "3-1772269302079-88433",
+      "exercise_id": "1-0",
+      "due_at": "2026-02-28T11:01:50.353Z"
+    },
+    {
+      "user_id": 3,
+      "attempt_id": "3-1772269302079-88433",
+      "exercise_id": "pairs-1772269302076-1",
+      "due_at": "2026-02-28T11:01:50.357Z"
+    },
+    {
+      "user_id": 3,
+      "attempt_id": "3-1772269302079-88433",
+      "exercise_id": "5-2",
+      "due_at": "2026-02-28T11:01:50.360Z"
+    },
+    {
+      "user_id": 3,
+      "attempt_id": "3-1772269302079-88433",
+      "exercise_id": "pairs-1772269302076-3",
+      "due_at": "2026-02-28T11:01:50.364Z"
+    }
+  ],
+  "analytics_events": [
+    {
+      "id": "1771269733827-69380",
+      "created_at": "2026-02-16T19:22:13.827Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "lang": "en",
+        "level": 1,
+        "exercises": 10
+      }
+    },
+    {
+      "id": "1771269735174-17212",
+      "created_at": "2026-02-16T19:22:15.174Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "exercise_id": "3-0",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771269736600-62837",
+      "created_at": "2026-02-16T19:22:16.600Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "exercise_id": "1-1",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771269739164-7453",
+      "created_at": "2026-02-16T19:22:19.164Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "exercise_id": "4-2",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771269740851-61677",
+      "created_at": "2026-02-16T19:22:20.851Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "exercise_id": "2-3",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1771269743950-91712",
+      "created_at": "2026-02-16T19:22:23.950Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "exercise_id": "9-4",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1771269745476-86400",
+      "created_at": "2026-02-16T19:22:25.476Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "exercise_id": "8-5",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771269746614-20944",
+      "created_at": "2026-02-16T19:22:26.614Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "exercise_id": "6-6",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1771269747636-44486",
+      "created_at": "2026-02-16T19:22:27.636Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "exercise_id": "7-7",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771269748733-75809",
+      "created_at": "2026-02-16T19:22:28.733Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "exercise_id": "10-8",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771269749885-7660",
+      "created_at": "2026-02-16T19:22:29.885Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "exercise_id": "5-9",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1771269750717-51873",
+      "created_at": "2026-02-16T19:22:30.717Z",
+      "user_id": 2,
+      "event_name": "lesson_complete",
+      "payload": {
+        "attempt_id": "2-1771269733826-13274",
+        "xp_awarded": 70,
+        "correct_count": 6,
+        "total_count": 10
+      }
+    },
+    {
+      "id": "1771269787765-81861",
+      "created_at": "2026-02-16T19:23:07.765Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1771269787764-66920",
+        "lang": "en",
+        "level": 1,
+        "exercises": 10
+      }
+    },
+    {
+      "id": "1771270452900-72326",
+      "created_at": "2026-02-16T19:34:12.900Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "lang": "en",
+        "level": 1,
+        "exercises": 10
+      }
+    },
+    {
+      "id": "1771270454505-29534",
+      "created_at": "2026-02-16T19:34:14.505Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "exercise_id": "4-0",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771270456238-38774",
+      "created_at": "2026-02-16T19:34:16.238Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "exercise_id": "1-1",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771270457899-68804",
+      "created_at": "2026-02-16T19:34:17.899Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "exercise_id": "6-2",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771270460167-44835",
+      "created_at": "2026-02-16T19:34:20.167Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "exercise_id": "8-3",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771270462622-58140",
+      "created_at": "2026-02-16T19:34:22.622Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "exercise_id": "2-4",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771270465255-6396",
+      "created_at": "2026-02-16T19:34:25.255Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "exercise_id": "3-5",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771270467688-87253",
+      "created_at": "2026-02-16T19:34:27.688Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "exercise_id": "5-6",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771270471559-55095",
+      "created_at": "2026-02-16T19:34:31.559Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "exercise_id": "9-7",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771270473404-14470",
+      "created_at": "2026-02-16T19:34:33.404Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "exercise_id": "10-8",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771270475107-24629",
+      "created_at": "2026-02-16T19:34:35.107Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "exercise_id": "7-9",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771270475936-20935",
+      "created_at": "2026-02-16T19:34:35.936Z",
+      "user_id": 2,
+      "event_name": "lesson_complete",
+      "payload": {
+        "attempt_id": "2-1771270452898-17541",
+        "xp_awarded": 130,
+        "correct_count": 10,
+        "total_count": 10
+      }
+    },
+    {
+      "id": "1771270481591-98212",
+      "created_at": "2026-02-16T19:34:41.591Z",
+      "user_id": 2,
+      "event_name": "quest_claimed",
+      "payload": {
+        "quest_id": "q-perfect-1",
+        "bonus_xp": 20
+      }
+    },
+    {
+      "id": "1771270482964-15920",
+      "created_at": "2026-02-16T19:34:42.964Z",
+      "user_id": 2,
+      "event_name": "quest_claimed",
+      "payload": {
+        "quest_id": "q-xp-120",
+        "bonus_xp": 20
+      }
+    },
+    {
+      "id": "1771270492864-22433",
+      "created_at": "2026-02-16T19:34:52.864Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1771270492862-40598",
+        "lang": "en",
+        "level": 1,
+        "exercises": 10
+      }
+    },
+    {
+      "id": "1771270786188-23574",
+      "created_at": "2026-02-16T19:39:46.188Z",
+      "user_id": 2,
+      "event_name": "placement_start",
+      "payload": {
+        "attempt_id": "pl-2-1771270786186-20307",
+        "lang": "en",
+        "count": 6
+      }
+    },
+    {
+      "id": "1771270792008-96062",
+      "created_at": "2026-02-16T19:39:52.008Z",
+      "user_id": 2,
+      "event_name": "placement_complete",
+      "payload": {
+        "attempt_id": "pl-2-1771270786186-20307",
+        "lang": "en",
+        "recommended_level": 3,
+        "ratio": 0.75
+      }
+    },
+    {
+      "id": "1771270802170-65861",
+      "created_at": "2026-02-16T19:40:02.170Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1771270802168-43218",
+        "lang": "en",
+        "level": 1,
+        "exercises": 10
+      }
+    },
+    {
+      "id": "1771270827150-83662",
+      "created_at": "2026-02-16T19:40:27.150Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1771270827148-45195",
+        "lang": "en",
+        "level": 3,
+        "exercises": 3
+      }
+    },
+    {
+      "id": "1771495735218-52156",
+      "created_at": "2026-02-19T10:08:55.218Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1771495735216-36853",
+        "lang": "en",
+        "level": 1,
+        "exercises": 10
+      }
+    },
+    {
+      "id": "1771495753678-19001",
+      "created_at": "2026-02-19T10:09:13.678Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1771495753676-41953",
+        "lang": "en",
+        "level": 1,
+        "exercises": 10
+      }
+    },
+    {
+      "id": "1771497127422-6772",
+      "created_at": "2026-02-19T10:32:07.422Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1771497127420-62913",
+        "lang": "en",
+        "level": 1,
+        "exercises": 10
+      }
+    },
+    {
+      "id": "1771591998796-80769",
+      "created_at": "2026-02-20T12:53:18.796Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1771591998794-81975",
+        "lang": "en",
+        "level": 2,
+        "exercises": 5
+      }
+    },
+    {
+      "id": "1771592001259-67179",
+      "created_at": "2026-02-20T12:53:21.259Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771591998794-81975",
+        "exercise_id": "13-0",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1771592003068-47108",
+      "created_at": "2026-02-20T12:53:23.068Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771591998794-81975",
+        "exercise_id": "14-1",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1771592004249-3991",
+      "created_at": "2026-02-20T12:53:24.249Z",
+      "user_id": 2,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "2-1771591998794-81975",
+        "exercise_id": "15-2-wb",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1772197077763-81976",
+      "created_at": "2026-02-27T12:57:57.763Z",
+      "user_id": 2,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "2-1772197077761-99285",
+        "lang": "en",
+        "level": 1,
+        "exercises": 10
+      }
+    },
+    {
+      "id": "1772263553444-72912",
+      "created_at": "2026-02-28T07:25:53.444Z",
+      "user_id": 3,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "3-1772263553440-76006",
+        "lang": "uvs",
+        "level": 1,
+        "exercises": 5
+      }
+    },
+    {
+      "id": "1772263558000-83309",
+      "created_at": "2026-02-28T07:25:58.000Z",
+      "user_id": 3,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "3-1772263553440-76006",
+        "exercise_id": "4-0",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1772263561918-60636",
+      "created_at": "2026-02-28T07:26:01.918Z",
+      "user_id": 3,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "3-1772263553440-76006",
+        "exercise_id": "pairs-1772263553438-1",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1772263570453-14060",
+      "created_at": "2026-02-28T07:26:10.453Z",
+      "user_id": 3,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "3-1772263553440-76006",
+        "exercise_id": "5-2",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1772263577091-85424",
+      "created_at": "2026-02-28T07:26:17.091Z",
+      "user_id": 3,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "3-1772263553440-76006",
+        "exercise_id": "pairs-1772263553439-3",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1772264210610-51453",
+      "created_at": "2026-02-28T07:36:50.610Z",
+      "user_id": 3,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "3-1772264210605-58353",
+        "lang": "du",
+        "level": 1,
+        "exercises": 5
+      }
+    },
+    {
+      "id": "1772264213000-46492",
+      "created_at": "2026-02-28T07:36:53.000Z",
+      "user_id": 3,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "3-1772264210605-58353",
+        "exercise_id": "18-0",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1772269302083-61590",
+      "created_at": "2026-02-28T09:01:42.083Z",
+      "user_id": 3,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "3-1772269302079-88433",
+        "lang": "uvs",
+        "level": 1,
+        "exercises": 5
+      }
+    },
+    {
+      "id": "1772269303918-10239",
+      "created_at": "2026-02-28T09:01:43.918Z",
+      "user_id": 3,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "3-1772269302079-88433",
+        "exercise_id": "1-0",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1772269305585-59507",
+      "created_at": "2026-02-28T09:01:45.585Z",
+      "user_id": 3,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "3-1772269302079-88433",
+        "exercise_id": "pairs-1772269302076-1",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1772269306894-77469",
+      "created_at": "2026-02-28T09:01:46.894Z",
+      "user_id": 3,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "3-1772269302079-88433",
+        "exercise_id": "5-2",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1772269308305-52138",
+      "created_at": "2026-02-28T09:01:48.305Z",
+      "user_id": 3,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "3-1772269302079-88433",
+        "exercise_id": "pairs-1772269302076-3",
+        "is_correct": false
+      }
+    },
+    {
+      "id": "1772269309525-59103",
+      "created_at": "2026-02-28T09:01:49.525Z",
+      "user_id": 3,
+      "event_name": "exercise_answered",
+      "payload": {
+        "attempt_id": "3-1772269302079-88433",
+        "exercise_id": "4-4",
+        "is_correct": true
+      }
+    },
+    {
+      "id": "1772269310373-26753",
+      "created_at": "2026-02-28T09:01:50.373Z",
+      "user_id": 3,
+      "event_name": "lesson_complete",
+      "payload": {
+        "attempt_id": "3-1772269302079-88433",
+        "xp_awarded": 20,
+        "correct_count": 1,
+        "total_count": 5
+      }
+    },
+    {
+      "id": "1772269805462-18802",
+      "created_at": "2026-02-28T09:10:05.462Z",
+      "user_id": 3,
+      "event_name": "lesson_start",
+      "payload": {
+        "attempt_id": "3-1772269805458-84827",
+        "lang": "uvs",
+        "level": 1,
+        "exercises": 5
+      }
+    }
+  ],
+  "user_profiles": {
+    "2": {
+      "en": {
+        "placement_level": 3,
+        "mastery_by_level": {
+          "1": 20,
+          "2": 0,
+          "3": 0
+        },
+        "lessons_completed": 1
+      }
+    },
+    "3": {
+      "uvs": {
+        "placement_level": 1,
+        "mastery_by_level": {
+          "1": 5,
+          "2": 0,
+          "3": 0
+        },
+        "lessons_completed": 1
+      }
+    }
+  },
+  "placement_attempts": [
+    {
+      "id": "pl-2-1771270786186-20307",
+      "user_id": 2,
+      "lang": "en",
+      "created_at": "2026-02-16T19:39:46.186Z",
+      "completed_at": "2026-02-16T19:39:52.005Z",
+      "questions": [
+        {
+          "idx": 0,
+          "id": 8,
+          "level": 1,
+          "type": "word",
+          "prompt": "Dog",
+          "correct": "Собака",
+          "options": [
+            "Собака",
+            "Кошка",
+            "Птица",
+            "Рыба"
+          ]
+        },
+        {
+          "idx": 1,
+          "id": 17,
+          "level": 3,
+          "type": "sentence",
+          "prompt": "He has ___ finished his homework.",
+          "correct": "already",
+          "options": [
+            "already",
+            "yet",
+            "ever",
+            "still"
+          ]
+        },
+        {
+          "idx": 2,
+          "id": 13,
+          "level": 2,
+          "type": "word",
+          "prompt": "Interesting",
+          "correct": "Интересный",
+          "options": [
+            "Грустный",
+            "Странный",
+            "Скучный",
+            "Интересный"
+          ]
+        },
+        {
+          "idx": 3,
+          "id": 9,
+          "level": 1,
+          "type": "word",
+          "prompt": "Sun",
+          "correct": "Солнце",
+          "options": [
+            "Солнце",
+            "Луна",
+            "Небо",
+            "Звезда"
+          ]
+        },
+        {
+          "idx": 4,
+          "id": 16,
+          "level": 3,
+          "type": "sentence",
+          "prompt": "The weather is ___ today.",
+          "correct": "beautiful",
+          "options": [
+            "beautify",
+            "beauty",
+            "beautiful",
+            "beautifully"
+          ]
+        },
+        {
+          "idx": 5,
+          "id": 11,
+          "level": 2,
+          "type": "word",
+          "prompt": "Beautiful",
+          "correct": "Красивый",
+          "options": [
+            "Скучный",
+            "Страшный",
+            "Уродливый",
+            "Красивый"
+          ]
+        }
+      ],
+      "result": {
+        "weighted_score": 9,
+        "weighted_max": 12,
+        "ratio": 0.75,
+        "recommended_level": 3,
+        "details": [
+          {
+            "idx": 0,
+            "level": 1,
+            "is_correct": true
+          },
+          {
+            "idx": 1,
+            "level": 3,
+            "is_correct": true
+          },
+          {
+            "idx": 2,
+            "level": 2,
+            "is_correct": false
+          },
+          {
+            "idx": 3,
+            "level": 1,
+            "is_correct": false
+          },
+          {
+            "idx": 4,
+            "level": 3,
+            "is_correct": true
+          },
+          {
+            "idx": 5,
+            "level": 2,
+            "is_correct": true
+          }
+        ]
+      }
+    }
+  ],
+  "daily_quests": {
+    "2:2026-02-16": [
+      {
+        "id": "q-lessons-3",
+        "type": "lessons_completed",
+        "target": 3,
+        "progress": 1,
+        "claimed": false
+      },
+      {
+        "id": "q-perfect-1",
+        "type": "perfect_lessons",
+        "target": 1,
+        "progress": 1,
+        "claimed": true
+      },
+      {
+        "id": "q-xp-120",
+        "type": "xp_earned",
+        "target": 120,
+        "progress": 120,
+        "claimed": true
+      }
+    ],
+    "2:2026-02-19": [
+      {
+        "id": "q-lessons-3",
+        "type": "lessons_completed",
+        "target": 3,
+        "progress": 0,
+        "claimed": false
+      },
+      {
+        "id": "q-perfect-1",
+        "type": "perfect_lessons",
+        "target": 1,
+        "progress": 0,
+        "claimed": false
+      },
+      {
+        "id": "q-xp-120",
+        "type": "xp_earned",
+        "target": 120,
+        "progress": 0,
+        "claimed": false
+      }
+    ],
+    "2:2026-02-27": [
+      {
+        "id": "q-lessons-3",
+        "type": "lessons_completed",
+        "target": 3,
+        "progress": 0,
+        "claimed": false
+      },
+      {
+        "id": "q-perfect-1",
+        "type": "perfect_lessons",
+        "target": 1,
+        "progress": 0,
+        "claimed": false
+      },
+      {
+        "id": "q-xp-120",
+        "type": "xp_earned",
+        "target": 120,
+        "progress": 0,
+        "claimed": false
+      }
+    ],
+    "3:2026-02-28": [
+      {
+        "id": "q-lessons-3",
+        "type": "lessons_completed",
+        "target": 3,
+        "progress": 1,
+        "claimed": false
+      },
+      {
+        "id": "q-perfect-1",
+        "type": "perfect_lessons",
+        "target": 1,
+        "progress": 0,
+        "claimed": false
+      },
+      {
+        "id": "q-xp-120",
+        "type": "xp_earned",
+        "target": 120,
+        "progress": 20,
+        "claimed": false
+      }
+    ]
+  },
+  "user_points": {}
+}

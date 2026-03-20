@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Уставы ВС РБ — Изучение уставов Вооружённых Сил РБ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <a href="#" class="logo" data-nav="home">
+        УСТАВЫ ВС РБ
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#" data-nav="path">Путь</a>
+        <a href="#" data-nav="quiz">Квиз</a>
+        <a href="#" data-nav="leaderboard">Рейтинг</a>
+        <a href="#" data-nav="profile">Профиль</a>
+      </nav>
+    </header>
+
+    <aside class="sidebar" aria-label="Меню">
+      <div class="sidebar-top">
+        <a href="#" class="sidebar-brand" data-nav="home">
+          <span class="sidebar-brand-title">УСТАВЫ</span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Разделы">
+        <a href="#" class="sidebar-item" data-nav="path" id="sidebar-nav-path">
+          <span class="sidebar-icon icon-learn" aria-hidden="true">🏠</span>
+          <span class="sidebar-label">Обучение</span>
+        </a>
+        <a href="#" class="sidebar-item" data-nav="leaderboard" id="sidebar-nav-leaderboard">
+          <span class="sidebar-icon icon-rank" aria-hidden="true">🛡️</span>
+          <span class="sidebar-label">Рейтинги</span>
+        </a>
+        <a href="#" class="sidebar-item" data-nav="quiz" id="sidebar-nav-quiz">
+          <span class="sidebar-icon icon-quests" aria-hidden="true">🪖</span>
+          <span class="sidebar-label">Задания</span>
+        </a>
+        <a href="#" class="sidebar-item" data-nav="profile" id="sidebar-nav-profile">
+          <span class="sidebar-icon icon-profile" aria-hidden="true">🕒</span>
+          <span class="sidebar-label">Профиль</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-auth">
+        <a href="#" class="sidebar-item hidden" data-nav="login" id="nav-login">
+          <span class="sidebar-icon" aria-hidden="true">🔑</span>
+          <span class="sidebar-label">Вход</span>
+        </a>
+        <a href="#" class="sidebar-item hidden" data-nav="register" id="nav-register">
+          <span class="sidebar-icon" aria-hidden="true">✍️</span>
+          <span class="sidebar-label">Регистрация</span>
+        </a>
+
+        <span id="user-info" class="sidebar-user hidden" aria-live="polite"></span>
+        <button id="logout-btn" class="sidebar-item btn-logout hidden" type="button">
+          <span class="sidebar-label">Выйти</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section id="screen-home" class="screen active">
+        <div class="hero">
+          <h1>Уставы Вооружённых Сил Республики Беларусь</h1>
+          <p class="hero-subtitle">Проверьте знания по УВС, ДУ, УГиКС и СУ. Решайте задания, зарабатывайте XP, поднимайтесь в рейтинге.</p>
+          <div id="home-buttons" class="home-buttons">
+            <button class="btn btn-primary" data-nav="login">Войти</button>
+            <button class="btn btn-outline" data-nav="register">Регистрация</button>
+          </div>
+          <div id="home-authenticated" class="home-authenticated hidden">
+            <p class="hero-greeting">Привет, <strong id="welcome-name"></strong>! Готовы к тренировке?</p>
+            <button class="btn btn-primary" data-nav="quiz">В БОЙ!</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-login" class="screen">
+        <div class="auth-card">
+          <h2>Вход</h2>
+          <form id="login-form" class="auth-form">
+            <div class="field">
+              <label for="login-email">Email</label>
+              <input type="email" id="login-email" name="email" placeholder="example@mail.com" autocomplete="email" required aria-invalid="false" aria-describedby="login-email-err">
+              <span class="field-error" id="login-email-err" role="alert"></span>
+            </div>
+            <div class="field">
+              <label for="login-password">Пароль</label>
+              <input type="password" id="login-password" name="password" placeholder="••••••••" autocomplete="current-password" required aria-invalid="false" aria-describedby="login-password-err">
+              <span class="field-error" id="login-password-err" role="alert"></span>
+            </div>
+            <div class="form-error" id="login-form-err" role="alert" aria-live="polite"></div>
+            <button type="submit" class="btn btn-primary btn-block">Войти</button>
+          </form>
+          <p class="auth-footer">Нет аккаунта? <a href="#" data-nav="register">Зарегистрироваться</a></p>
+        </div>
+      </section>
+
+      <section id="screen-register" class="screen">
+        <div class="auth-card">
+          <h2>Регистрация</h2>
+          <form id="register-form" class="auth-form">
+            <div class="field">
+              <label for="reg-email">Email</label>
+              <input type="email" id="reg-email" name="email" placeholder="example@mail.com" autocomplete="email" required aria-invalid="false" aria-describedby="reg-email-err">
+              <span class="field-error" id="reg-email-err" role="alert"></span>
+            </div>
+            <div class="field">
+              <label for="reg-username">Имя пользователя</label>
+              <input type="text" id="reg-username" name="username" placeholder="Ваше имя" autocomplete="username" required minlength="2" maxlength="30" aria-invalid="false" aria-describedby="reg-username-err">
+              <span class="field-error" id="reg-username-err" role="alert"></span>
+            </div>
+            <div class="field">
+              <label for="reg-password">Пароль</label>
+              <input type="password" id="reg-password" name="password" placeholder="Не менее 6 символов, буквы и цифры" autocomplete="new-password" required minlength="6" aria-invalid="false" aria-describedby="reg-password-err">
+              <span class="field-error" id="reg-password-err" role="alert"></span>
+            </div>
+            <div class="field">
+              <label for="reg-password2">Повторите пароль</label>
+              <input type="password" id="reg-password2" name="password2" placeholder="••••••••" autocomplete="new-password" required aria-invalid="false" aria-describedby="reg-password2-err">
+              <span class="field-error" id="reg-password2-err" role="alert"></span>
+            </div>
+            <div class="form-error" id="register-form-err" role="alert" aria-live="polite"></div>
+            <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+          </form>
+          <p class="auth-footer">Уже есть аккаунт? <a href="#" data-nav="login">Войти</a></p>
+        </div>
+      </section>
+
+      <section id="screen-quiz" class="screen">
+        <div class="quiz-container" id="quiz-container">
+          <div class="quiz-header" id="quiz-header">
+            <span class="quiz-progress" id="quiz-progress">1 / 10</span>
+            <span class="quiz-meta" id="quiz-meta">❤️ 5 · 🔥 0 · XP 0</span>
+            <span class="quiz-score" id="quiz-score">0 очков</span>
+          </div>
+          <div id="quiz-question" class="quiz-question hidden">
+            <p class="quiz-word" id="quiz-word"></p>
+            <p class="quiz-sentence" id="quiz-sentence"></p>
+            <p class="quiz-hint" id="quiz-hint">Выберите правильный ответ:</p>
+            <div class="quiz-options" id="quiz-options"></div>
+            <div id="quiz-answer-feedback" class="quiz-answer-feedback hidden">
+              <p class="quiz-feedback-title" id="quiz-feedback-title">Правильный ответ</p>
+              <p class="quiz-feedback-correct" id="quiz-feedback-correct"></p>
+              <p class="quiz-feedback-explanation" id="quiz-feedback-explanation"></p>
+              <p class="quiz-feedback-article" id="quiz-feedback-article"></p>
+              <button type="button" class="btn btn-primary btn-feedback-next" id="quiz-feedback-next">Дальше</button>
+            </div>
+          </div>
+          <div id="quiz-start" class="quiz-start">
+            <div id="quiz-step-lang" class="quiz-step section-picker">
+              <p class="section-picker-subtitle">Выберите раздел устава</p>
+              <h2 class="section-picker-title">Какой раздел изучаем?</h2>
+              <div class="section-cards" id="lang-cards">
+                <button type="button" class="section-card selected" data-lang="uvs">
+                  <span class="section-card-badge">УВС</span>
+                  <span class="section-card-title">Устав внутренней службы</span>
+                  <span class="section-card-desc">Порядок, дисциплина, обязанности</span>
+                </button>
+                <button type="button" class="section-card" data-lang="du">
+                  <span class="section-card-badge">ДУ</span>
+                  <span class="section-card-title">Дисциплинарный устав</span>
+                  <span class="section-card-desc">Поощрения и взыскания</span>
+                </button>
+                <button type="button" class="section-card" data-lang="gks">
+                  <span class="section-card-badge">УГиКС</span>
+                  <span class="section-card-title">Устав гарнизонной и караульной служб</span>
+                  <span class="section-card-desc">Караулы, посты, часовые</span>
+                </button>
+                <button type="button" class="section-card" data-lang="su">
+                  <span class="section-card-badge">СУ</span>
+                  <span class="section-card-title">Строевой устав</span>
+                  <span class="section-card-desc">Строй, команды, построения</span>
+                </button>
+              </div>
+              <input type="hidden" id="quiz-lang" value="uvs">
+              <button class="btn btn-cta btn-section-next" id="quiz-lang-next">Продолжить</button>
+            </div>
+            <div id="quiz-step-level" class="quiz-step hidden">
+              <div class="proficiency-wrap">
+                <p class="proficiency-subtitle">УРОВЕНЬ СЛОЖНОСТИ</p>
+                <h3 class="proficiency-title">Какие вопросы показывать?</h3>
+                <div class="level-cards" id="proficiency-options"></div>
+                <div class="step-actions">
+                  <button class="btn btn-back" id="quiz-level-back">Назад</button>
+                  <button class="btn btn-cta" id="quiz-level-next">В БОЙ!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="quiz-result" class="quiz-result hidden">
+            <h2>Результат: <span id="result-score">0</span> очков</h2>
+            <p id="result-message"></p>
+            <div class="quiz-result-actions">
+              <button class="btn btn-primary" id="quiz-retry">Выбрать уровень снова</button>
+              <a href="#" class="btn btn-outline" data-nav="leaderboard">Рейтинг</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-path" class="screen">
+        <div class="path-container">
+          <div class="path-map-tabs-wrap">
+            <div class="path-section-tabs" id="path-section-tabs">
+              <button type="button" class="section-tab active" data-lang="uvs">УВС</button>
+              <button type="button" class="section-tab" data-lang="du">ДУ</button>
+              <button type="button" class="section-tab" data-lang="gks">УГиКС</button>
+              <button type="button" class="section-tab" data-lang="su">СУ</button>
+            </div>
+          </div>
+          <div id="path-list" class="path-list"></div>
+        </div>
+      </section>
+
+      <section id="screen-placement" class="screen">
+        <div class="quiz-container">
+          <div class="quiz-header">
+            <span class="quiz-progress" id="placement-progress">1 / 6</span>
+            <span class="quiz-score" id="placement-title">Входной тест</span>
+          </div>
+          <div id="placement-start">
+            <p>Пройдите короткий тест по уставам, чтобы подобрать стартовый уровень.</p>
+            <button class="btn btn-primary" id="placement-start-btn">Начать тест</button>
+          </div>
+          <div id="placement-question" class="hidden">
+            <p class="quiz-word" id="placement-prompt"></p>
+            <div class="quiz-options" id="placement-options"></div>
+          </div>
+          <div id="placement-result" class="quiz-result hidden">
+            <h2>Рекомендованный уровень: <span id="placement-level-result"></span></h2>
+            <p id="placement-result-message"></p>
+            <button class="btn btn-primary" id="placement-finish-btn">К пути</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-leaderboard" class="screen">
+        <div class="leaderboard-container">
+          <h2>Рейтинг по суммарным очкам (XP)</h2>
+          <div class="my-best" id="my-best">Ваши суммарные очки: —</div>
+          <div class="table-wrap">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Пользователь</th>
+                  <th>Очки</th>
+                  <th>Дата</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-profile" class="screen">
+        <div class="profile-layout">
+          <div class="profile-main">
+            <div class="profile-card">
+              <div class="profile-avatar-wrap">
+                <div class="profile-avatar" id="profile-avatar" aria-hidden="true">👤</div>
+                <input type="file" id="profile-avatar-input" accept="image/png,image/jpeg,image/webp" class="hidden">
+                <button type="button" class="btn btn-outline profile-avatar-btn" id="profile-avatar-btn">Изменить фото</button>
+              </div>
+              <div class="profile-meta">
+                <h2 id="profile-name">Профиль</h2>
+                <p id="profile-joined" class="profile-sub">Данные пользователя</p>
+                <div class="profile-rank-line">
+                  <span class="profile-rank-label">Звание:</span>
+                  <strong id="profile-rank">Рядовой</strong>
+                </div>
+                <div class="profile-rank-progress">
+                  <div class="profile-rank-progress-bar">
+                    <span id="profile-rank-progress-fill" style="width: 0%;"></span>
+                  </div>
+                  <small id="profile-rank-progress-text">0 / 100 XP до следующего звания</small>
+                </div>
+                <div class="profile-flags">
+                  <span class="profile-flag">🇧🇾</span>
+                </div>
+                <button type="button" class="btn btn-outline profile-change-password-btn" id="open-achievements-btn">Достижения</button>
+                <button type="button" class="btn btn-outline profile-change-password-btn" id="open-change-password-btn">Сменить пароль</button>
+              </div>
+            </div>
+
+            <div class="profile-stats-grid" id="profile-stats">
+              <div class="profile-stat-card">
+                <span class="stat-title">XP</span>
+                <strong id="profile-xp">0</strong>
+              </div>
+              <div class="profile-stat-card">
+                <span class="stat-title">Текущий стрик</span>
+                <strong id="profile-streak">0</strong>
+              </div>
+              <div class="profile-stat-card">
+                <span class="stat-title">Макс. стрик ответов</span>
+                <strong id="profile-qstreak">0</strong>
+              </div>
+              <div class="profile-stat-card">
+                <span class="stat-title">Лучший результат</span>
+                <strong id="profile-best">0</strong>
+              </div>
+            </div>
+
+          </div>
+
+          <aside class="profile-side">
+            <div class="profile-side-card">
+              <h3>Краткая сводка</h3>
+              <p id="profile-side-summary">Развивайте навыки и закрывайте достижения.</p>
+            </div>
+            <div class="profile-side-card">
+              <h3>Совет дня</h3>
+              <p>Держите серию ответов и выполняйте ежедневные задачи для роста XP.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="change-password-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="change-password-title">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="change-password-title">Смена пароля</h3>
+        <button type="button" class="modal-close" id="close-change-password-btn" aria-label="Закрыть">✕</button>
+      </div>
+      <form id="change-password-form" class="auth-form profile-password-form">
+        <div class="field">
+          <label for="old-password">Текущий пароль</label>
+          <input type="password" id="old-password" name="oldPassword" required autocomplete="current-password" placeholder="Текущий пароль">
+        </div>
+        <div class="field">
+          <label for="new-password">Новый пароль</label>
+          <input type="password" id="new-password" name="newPassword" required minlength="6" autocomplete="new-password" placeholder="Новый пароль">
+        </div>
+        <div class="field">
+          <label for="new-password2">Повторите новый пароль</label>
+          <input type="password" id="new-password2" name="newPassword2" required autocomplete="new-password" placeholder="Повторите новый пароль">
+        </div>
+        <div id="change-password-err" class="form-error"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" id="cancel-change-password-btn">Отмена</button>
+          <button type="submit" class="btn btn-primary">Сохранить пароль</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="achievements-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="achievements-title">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="achievements-title">Достижения</h3>
+        <button type="button" class="modal-close" id="close-achievements-btn" aria-label="Закрыть">✕</button>
+      </div>
+      <div id="achievements-list" class="achievements-list"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="ok-achievements-btn">Понятно</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

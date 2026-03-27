@@ -14,6 +14,9 @@ function getSetCookie(headers) {
 test('path, placement and lesson flow integration', async (t) => {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'polyglot-test-'));
   const dataFile = path.join(tmpDir, 'data.json');
+  const savedDbUrl = process.env.DATABASE_URL;
+  // Пустая строка: server.js видит falsy и берёт data.json (dotenv не перезапишет уже заданную переменную)
+  process.env.DATABASE_URL = '';
   process.env.DATA_FILE = dataFile;
 
   // eslint-disable-next-line global-require
@@ -43,6 +46,7 @@ test('path, placement and lesson flow integration', async (t) => {
     const pathData = await pathRes.json();
     assert.ok(Array.isArray(pathData.units));
     assert.ok(pathData.units.length > 0);
+    assert.ok(pathData.mastery_by_lesson && typeof pathData.mastery_by_lesson === 'object');
 
     const placementStart = await fetch(`${base}/api/placement/start`, {
       method: 'POST',
@@ -71,7 +75,7 @@ test('path, placement and lesson flow integration', async (t) => {
     const lessonStart = await fetch(`${base}/api/lesson/start`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Cookie: cookie },
-      body: JSON.stringify({ lang: 'uvs', level: 1, question_count: 1 }),
+      body: JSON.stringify({ lang: 'uvs', level: 1, question_count: 1, lesson_slot: 2 }),
     });
     assert.equal(lessonStart.status, 200);
     const lessonData = await lessonStart.json();
@@ -100,6 +104,11 @@ test('path, placement and lesson flow integration', async (t) => {
     const completeData = await completeRes.json();
     assert.ok(Number(completeData.xp_awarded) >= 0);
 
+    const pathAfter = await fetch(`${base}/api/path?lang=uvs`, { headers: { Cookie: cookie } });
+    assert.equal(pathAfter.status, 200);
+    const pathAfterData = await pathAfter.json();
+    assert.ok(Number(pathAfterData.mastery_by_lesson['uvs:2']) > 0);
+
     const questsRes = await fetch(`${base}/api/quests/daily`, {
       headers: { Cookie: cookie },
     });
@@ -110,5 +119,7 @@ test('path, placement and lesson flow integration', async (t) => {
     await new Promise((resolve) => server.close(resolve));
     fs.rmSync(tmpDir, { recursive: true, force: true });
     delete process.env.DATA_FILE;
+    if (savedDbUrl != null && savedDbUrl !== '') process.env.DATABASE_URL = savedDbUrl;
+    else delete process.env.DATABASE_URL;
   }
 });

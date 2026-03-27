@@ -13,13 +13,15 @@
   <div id="app">
     <header class="header">
       <a href="#" class="logo" data-nav="home">
-        УСТАВЫ ВС РБ
+        <img src="logo-emblem.png" alt="Герб Республики Беларусь" class="logo-emblem" width="40" height="40" decoding="async" />
+        <span class="logo-text">УСТАВЫ ВС РБ</span>
       </a>
       <nav class="nav" id="nav">
         <a href="#" data-nav="path">Путь</a>
         <a href="#" data-nav="quiz">Квиз</a>
         <a href="#" data-nav="leaderboard">Рейтинг</a>
         <a href="#" data-nav="profile">Профиль</a>
+        <a href="#" class="hidden nav-admin-link" data-nav="admin" id="header-nav-admin">Админ</a>
       </nav>
     </header>
 
@@ -32,30 +34,86 @@
 
       <nav class="sidebar-nav" aria-label="Разделы">
         <a href="#" class="sidebar-item" data-nav="path" id="sidebar-nav-path">
-          <span class="sidebar-icon icon-learn" aria-hidden="true">🏠</span>
+          <span class="sidebar-icon icon-learn" aria-hidden="true">
+            <svg class="sidebar-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M4 19V6a2 2 0 0 1 2-2h4.5a1 1 0 0 1 1 1v15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M20 19V6a2 2 0 0 0-2-2h-4.5a1 1 0 0 0-1 1v15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 5v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M9 9h3M9 12h3M15 9h2M15 12h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M11 3.5V2M13 3.5V2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </span>
           <span class="sidebar-label">Обучение</span>
         </a>
         <a href="#" class="sidebar-item" data-nav="leaderboard" id="sidebar-nav-leaderboard">
-          <span class="sidebar-icon icon-rank" aria-hidden="true">🛡️</span>
+          <span class="sidebar-icon icon-rank" aria-hidden="true">
+            <svg class="sidebar-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6 9h2l1 8h6l1-8h2" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M8 9V7a4 4 0 0 1 8 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M5 9h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M9 17h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M12 5v1.5M10.5 4.5l1 .87M13.5 4.5l-1 .87" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <circle cx="12" cy="3" r="1.2" fill="currentColor"/>
+            </svg>
+          </span>
           <span class="sidebar-label">Рейтинги</span>
         </a>
         <a href="#" class="sidebar-item" data-nav="quiz" id="sidebar-nav-quiz">
-          <span class="sidebar-icon icon-quests" aria-hidden="true">🪖</span>
+          <span class="sidebar-icon icon-quests" aria-hidden="true">
+            <svg class="sidebar-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 4c-3 0-5.5 2-5.5 5v3.5c0 .8-.3 1.6-.9 2.2L4 16.5V18h16v-1.5l-1.6-2.3c-.6-.6-.9-1.4-.9-2.2V9c0-3-2.5-5-5.5-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M10 18v1a2 2 0 0 0 4 0v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M9 9.5h1.5M13.5 9.5H15M10.5 12h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M12 4V3M10 3.5h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </span>
           <span class="sidebar-label">Задания</span>
         </a>
         <a href="#" class="sidebar-item" data-nav="profile" id="sidebar-nav-profile">
-          <span class="sidebar-icon icon-profile" aria-hidden="true">🕒</span>
+          <span class="sidebar-icon icon-profile" aria-hidden="true">
+            <svg class="sidebar-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="9" r="3.2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M6.5 20.5v-1.2c0-2.5 2-4.3 5.5-4.3s5.5 1.8 5.5 4.3v1.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M8 12.5h-.5c-1.1 0-2 .9-2 2v1M16 12.5h.5c1.1 0 2 .9 2 2v1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <rect x="9" y="14" width="6" height="2.2" rx="0.5" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M10 14v-1M14 14v-1" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+          </span>
           <span class="sidebar-label">Профиль</span>
+        </a>
+        <a href="#" class="sidebar-item hidden" data-nav="admin" id="sidebar-nav-admin">
+          <span class="sidebar-icon icon-admin" aria-hidden="true">
+            <svg class="sidebar-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M12 1v2.5M12 20.5V23M4.2 4.2l1.8 1.8M18 18l1.8 1.8M1 12h2.5M20.5 12H23M4.2 19.8l1.8-1.8M18 6l1.8-1.8" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2.2 2.8"/>
+            </svg>
+          </span>
+          <span class="sidebar-label">Админ</span>
         </a>
       </nav>
 
       <div class="sidebar-auth">
         <a href="#" class="sidebar-item hidden" data-nav="login" id="nav-login">
-          <span class="sidebar-icon" aria-hidden="true">🔑</span>
+          <span class="sidebar-icon icon-login" aria-hidden="true">
+            <svg class="sidebar-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="10" cy="14" r="4" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M13.5 11.5L19 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M16 6h3v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 20h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
           <span class="sidebar-label">Вход</span>
         </a>
         <a href="#" class="sidebar-item hidden" data-nav="register" id="nav-register">
-          <span class="sidebar-icon" aria-hidden="true">✍️</span>
+          <span class="sidebar-icon icon-register" aria-hidden="true">
+            <svg class="sidebar-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M4 20h11M15 20l3-12H8l-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 14h6M9 17h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M17.5 3.5l2 2M19.5 1.5l-6 6" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>
+              <path d="M14 8l3-3" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>
+            </svg>
+          </span>
           <span class="sidebar-label">Регистрация</span>
         </a>
 
@@ -69,7 +127,10 @@
     <main class="main">
       <section id="screen-home" class="screen active">
         <div class="hero">
-          <h1>Уставы Вооружённых Сил Республики Беларусь</h1>
+          <div class="hero-title-row">
+            <img src="hero-emblem.png" alt="Эмблема военного факультета БГУИР" class="hero-title-emblem" width="96" height="96" decoding="async" />
+            <h1>Уставы Вооружённых Сил Республики Беларусь</h1>
+          </div>
           <p class="hero-subtitle">Проверьте знания по УВС, ДУ, УГиКС и СУ. Решайте задания, зарабатывайте XP, поднимайтесь в рейтинге.</p>
           <div id="home-buttons" class="home-buttons">
             <button class="btn btn-primary" data-nav="login">Войти</button>
@@ -141,6 +202,115 @@
             <span class="quiz-meta" id="quiz-meta">❤️ 5 · 🔥 0 · XP 0</span>
             <span class="quiz-score" id="quiz-score">0 очков</span>
           </div>
+          <div class="quiz-dashboard" id="quiz-dashboard">
+            <div id="quiz-start" class="quiz-start">
+              <div id="quiz-step-lang" class="quiz-step quiz-step-lang-duo">
+                <div class="quiz-course-toolbar">
+                  <div class="quiz-course-bar-inner">
+                    <button type="button" class="quiz-course-trigger" id="quiz-course-trigger" aria-expanded="false" aria-haspopup="listbox" aria-controls="quiz-course-dropdown">
+                      <span class="quiz-course-trigger-icon" aria-hidden="true">
+                        <span class="quiz-course-trigger-badge" id="quiz-course-trigger-badge">УВС</span>
+                      </span>
+                      <span class="quiz-course-trigger-text">
+                        <span class="quiz-course-trigger-label" id="quiz-course-trigger-label">Устав внутренней службы</span>
+                        <span class="quiz-course-trigger-desc" id="quiz-course-trigger-desc">Порядок, дисциплина, обязанности</span>
+                      </span>
+                      <span class="quiz-course-trigger-chevron" aria-hidden="true"></span>
+                    </button>
+                    <div id="quiz-course-dropdown" class="quiz-course-dropdown hidden" role="listbox" aria-label="Выбор устава">
+                      <div class="quiz-course-dropdown-kicker">Мои уставы</div>
+                      <div class="quiz-course-list" id="quiz-course-list">
+                        <button type="button" role="option" class="quiz-course-option selected" data-lang="uvs" data-badge="УВС" data-title="Устав внутренней службы" data-desc="Порядок, дисциплина, обязанности" aria-selected="true">
+                          <span class="quiz-course-opt-badge">УВС</span>
+                          <span class="quiz-course-opt-main">
+                            <span class="quiz-course-opt-title">Устав внутренней службы</span>
+                            <span class="quiz-course-opt-desc">Порядок, дисциплина, обязанности</span>
+                          </span>
+                          <span class="quiz-course-opt-check" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" role="option" class="quiz-course-option" data-lang="du" data-badge="ДУ" data-title="Дисциплинарный устав" data-desc="Поощрения и взыскания" aria-selected="false">
+                          <span class="quiz-course-opt-badge">ДУ</span>
+                          <span class="quiz-course-opt-main">
+                            <span class="quiz-course-opt-title">Дисциплинарный устав</span>
+                            <span class="quiz-course-opt-desc">Поощрения и взыскания</span>
+                          </span>
+                          <span class="quiz-course-opt-check" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" role="option" class="quiz-course-option" data-lang="gks" data-badge="УГиКС" data-title="Устав гарнизонной и караульной служб" data-desc="Караулы, посты, часовые" aria-selected="false">
+                          <span class="quiz-course-opt-badge">УГиКС</span>
+                          <span class="quiz-course-opt-main">
+                            <span class="quiz-course-opt-title">Устав гарнизонной и караульной служб</span>
+                            <span class="quiz-course-opt-desc">Караулы, посты, часовые</span>
+                          </span>
+                          <span class="quiz-course-opt-check" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" role="option" class="quiz-course-option" data-lang="su" data-badge="СУ" data-title="Строевой устав" data-desc="Строй, команды, построения" aria-selected="false">
+                          <span class="quiz-course-opt-badge">СУ</span>
+                          <span class="quiz-course-opt-main">
+                            <span class="quiz-course-opt-title">Строевой устав</span>
+                            <span class="quiz-course-opt-desc">Строй, команды, построения</span>
+                          </span>
+                          <span class="quiz-course-opt-check" aria-hidden="true"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-cta quiz-lang-next-btn" id="quiz-lang-next">Продолжить</button>
+                </div>
+                <input type="hidden" id="quiz-lang" value="uvs">
+              </div>
+              <div id="quiz-step-level" class="quiz-step hidden">
+                <div class="proficiency-wrap">
+                  <p class="proficiency-subtitle">УРОВЕНЬ СЛОЖНОСТИ</p>
+                  <h3 class="proficiency-title">Какие вопросы показывать?</h3>
+                  <div class="level-cards" id="proficiency-options"></div>
+                  <div class="step-actions">
+                    <button type="button" class="btn btn-back" id="quiz-level-back">Назад</button>
+                    <button type="button" class="btn btn-cta" id="quiz-level-next">В БОЙ!</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="quiz-quests-hub" class="quiz-quests-hub" aria-label="Задания">
+              <div class="quests-layout">
+                <div class="quests-main">
+                  <article class="quest-monthly-card">
+                    <div class="quest-monthly-badge" id="quest-monthly-badge">—</div>
+                    <div class="quest-monthly-head">
+                      <h2 class="quest-monthly-title">Задания месяца</h2>
+                      <span class="quest-monthly-eta" id="quest-monthly-eta"><span class="quest-eta-icon" aria-hidden="true">⏱</span> <span id="quest-monthly-days-left">—</span></span>
+                    </div>
+                    <p class="quest-monthly-task" id="quest-monthly-task">Заберите награду за 5 ежедневных заданий в этом месяце</p>
+                    <div class="quest-monthly-track-wrap">
+                      <div class="quest-monthly-track">
+                        <div class="quest-monthly-fill" id="quest-monthly-fill" style="width:0%"></div>
+                      </div>
+                      <span class="quest-monthly-count" id="quest-monthly-count">0 / 5</span>
+                    </div>
+                  </article>
+                  <section class="quest-daily-section" aria-labelledby="quest-daily-heading">
+                    <div class="quest-daily-head">
+                      <h3 class="quest-daily-title" id="quest-daily-heading">Задания дня</h3>
+                      <span class="quest-daily-eta" id="quest-daily-eta"><span class="quest-eta-icon" aria-hidden="true">⏱</span> <span id="quest-daily-reset">—</span></span>
+                    </div>
+                    <p class="quest-daily-hint">Выполняйте условия в уроках и квизе, затем нажмите награду.</p>
+                    <div id="quests-list" class="quests-list"></div>
+                  </section>
+                </div>
+                <aside class="quests-aside" aria-label="Награды">
+                  <div class="quest-medals-card">
+                    <div class="quest-medals-kicker">Награды</div>
+                    <h4 class="quest-medals-title">Копите успехи</h4>
+                    <p class="quest-medals-text">Выполняйте задания дня и месяца — получайте бонусный XP и поднимайтесь в рейтинге.</p>
+                    <div class="quest-medals-emblem" aria-hidden="true">
+                      <span class="quest-medals-star">★</span>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </div>
+          <p class="quiz-lesson-context hidden" id="quiz-lesson-context" aria-live="polite"></p>
           <div id="quiz-question" class="quiz-question hidden">
             <p class="quiz-word" id="quiz-word"></p>
             <p class="quiz-sentence" id="quiz-sentence"></p>
@@ -152,47 +322,6 @@
               <p class="quiz-feedback-explanation" id="quiz-feedback-explanation"></p>
               <p class="quiz-feedback-article" id="quiz-feedback-article"></p>
               <button type="button" class="btn btn-primary btn-feedback-next" id="quiz-feedback-next">Дальше</button>
-            </div>
-          </div>
-          <div id="quiz-start" class="quiz-start">
-            <div id="quiz-step-lang" class="quiz-step section-picker">
-              <p class="section-picker-subtitle">Выберите раздел устава</p>
-              <h2 class="section-picker-title">Какой раздел изучаем?</h2>
-              <div class="section-cards" id="lang-cards">
-                <button type="button" class="section-card selected" data-lang="uvs">
-                  <span class="section-card-badge">УВС</span>
-                  <span class="section-card-title">Устав внутренней службы</span>
-                  <span class="section-card-desc">Порядок, дисциплина, обязанности</span>
-                </button>
-                <button type="button" class="section-card" data-lang="du">
-                  <span class="section-card-badge">ДУ</span>
-                  <span class="section-card-title">Дисциплинарный устав</span>
-                  <span class="section-card-desc">Поощрения и взыскания</span>
-                </button>
-                <button type="button" class="section-card" data-lang="gks">
-                  <span class="section-card-badge">УГиКС</span>
-                  <span class="section-card-title">Устав гарнизонной и караульной служб</span>
-                  <span class="section-card-desc">Караулы, посты, часовые</span>
-                </button>
-                <button type="button" class="section-card" data-lang="su">
-                  <span class="section-card-badge">СУ</span>
-                  <span class="section-card-title">Строевой устав</span>
-                  <span class="section-card-desc">Строй, команды, построения</span>
-                </button>
-              </div>
-              <input type="hidden" id="quiz-lang" value="uvs">
-              <button class="btn btn-cta btn-section-next" id="quiz-lang-next">Продолжить</button>
-            </div>
-            <div id="quiz-step-level" class="quiz-step hidden">
-              <div class="proficiency-wrap">
-                <p class="proficiency-subtitle">УРОВЕНЬ СЛОЖНОСТИ</p>
-                <h3 class="proficiency-title">Какие вопросы показывать?</h3>
-                <div class="level-cards" id="proficiency-options"></div>
-                <div class="step-actions">
-                  <button class="btn btn-back" id="quiz-level-back">Назад</button>
-                  <button class="btn btn-cta" id="quiz-level-next">В БОЙ!</button>
-                </div>
-              </div>
             </div>
           </div>
           <div id="quiz-result" class="quiz-result hidden">
@@ -323,6 +452,103 @@
               <p>Держите серию ответов и выполняйте ежедневные задачи для роста XP.</p>
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section id="screen-admin" class="screen">
+        <div class="admin-panel">
+          <h1>Админ-панель: материалы лекций</h1>
+          <p class="admin-intro">
+            Загрузите файл лекции (PDF, DOCX, PPTX, HTML, TXT) или вставьте текст. Система извлечёт содержимое и сформирует вопросы.
+            Кнопка «Скачать тест (HTML)» выдаёт один файл — автономное мини-приложение с вопросами, оценкой из 10, числом ошибок и разбором ответов (открывается в браузере без сервера).
+            «Сохранить в приложении» добавляет те же вопросы в раздел устава внутри сайта.
+          </p>
+          <div class="admin-grid">
+            <div class="admin-card">
+              <h2>Загрузка файла</h2>
+              <form id="admin-upload-form" class="admin-form">
+                <div class="field">
+                  <label for="admin-title">Название материала</label>
+                  <input type="text" id="admin-title" name="title" placeholder="Например: Лекция 5 — Внутренний порядок" required>
+                </div>
+                <div class="field">
+                  <label for="admin-lang">Раздел (дисциплина)</label>
+                  <select id="admin-lang" name="lang">
+                    <option value="uvs">УВС</option>
+                    <option value="du">ДУ</option>
+                    <option value="gks">УГиКС</option>
+                    <option value="su">СУ</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="admin-level">Уровень вопросов</label>
+                  <select id="admin-level" name="level">
+                    <option value="1">1 — базовый</option>
+                    <option value="2">2 — средний</option>
+                    <option value="3">3 — эксперт</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="admin-max-q">Число вопросов (макс. 20)</label>
+                  <input type="number" id="admin-max-q" name="max_questions" min="3" max="20" value="12">
+                </div>
+                <div class="field">
+                  <label for="admin-file">Файл</label>
+                  <input type="file" id="admin-file" name="file" accept=".pdf,.docx,.pptx,.html,.htm,.txt,.md,.csv,.json,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation">
+                </div>
+                <div class="form-error" id="admin-upload-err" role="alert"></div>
+                <div class="admin-form-actions">
+                  <button type="button" class="btn btn-primary" id="admin-btn-download-file">Скачать тест (HTML)</button>
+                  <button type="submit" class="btn btn-outline">Сохранить в приложении</button>
+                </div>
+              </form>
+            </div>
+            <div class="admin-card">
+              <h2>Текст вручную</h2>
+              <form id="admin-text-form" class="admin-form">
+                <div class="field">
+                  <label for="admin-text-title">Название</label>
+                  <input type="text" id="admin-text-title" name="title" placeholder="Название лекции" required>
+                </div>
+                <div class="field">
+                  <label for="admin-text-lang">Раздел</label>
+                  <select id="admin-text-lang" name="lang">
+                    <option value="uvs">УВС</option>
+                    <option value="du">ДУ</option>
+                    <option value="gks">УГиКС</option>
+                    <option value="su">СУ</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="admin-text-level">Уровень</label>
+                  <select id="admin-text-level" name="level">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="admin-text-max">Число вопросов</label>
+                  <input type="number" id="admin-text-max" name="max_questions" min="3" max="20" value="12">
+                </div>
+                <div class="field">
+                  <label for="admin-text-body">Текст лекции</label>
+                  <textarea id="admin-text-body" name="text" rows="14" placeholder="Вставьте конспект или содержимое документа (не менее ~120 символов)." required></textarea>
+                </div>
+                <div class="form-error" id="admin-text-err" role="alert"></div>
+                <div class="admin-form-actions">
+                  <button type="button" class="btn btn-primary" id="admin-btn-download-text">Скачать тест (HTML)</button>
+                  <button type="submit" class="btn btn-outline">Сохранить в приложении</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="admin-card admin-card-wide">
+            <h2>Последние загрузки</h2>
+            <div id="admin-materials-list" class="admin-materials-list">
+              <p class="text-muted">Загрузка списка…</p>
+            </div>
+          </div>
         </div>
       </section>
     </main>

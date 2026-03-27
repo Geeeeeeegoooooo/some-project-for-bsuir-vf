@@ -27,6 +27,8 @@ function createInitialGameState() {
     streak_last_day: null,
     question_streak_current: 0,
     question_streak_best: 0,
+    /** @type {Record<string, string[]>} ключи вопросов, уже использованные в завершённых уроках (lang:level) */
+    question_coverage: {},
     freeze_count: 1,
     daily_goal_xp: 50,
   };

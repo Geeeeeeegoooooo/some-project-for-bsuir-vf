@@ -99,12 +99,14 @@ async function updateUserGameState(userId, updater) {
 
 async function createLessonAttempt(userId, payload) {
   const id = `les-${userId}-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+  const slot = Math.max(0, Math.min(99, Number(payload.lesson_slot) || 0));
   const attempt = {
     id,
     user_id: userId,
     status: 'in_progress',
     lang: payload.lang,
     level: payload.level,
+    lesson_slot: slot,
     started_at: new Date().toISOString(),
     completed_at: null,
     answered_count: 0,
@@ -115,9 +117,9 @@ async function createLessonAttempt(userId, payload) {
     answers: [],
   };
   await db.run(
-    `INSERT INTO lesson_attempts (id, user_id, status, lang, level, exercises, answers)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-    [id, userId, 'in_progress', payload.lang, payload.level, JSON.stringify(attempt.exercises), JSON.stringify([])]
+    `INSERT INTO lesson_attempts (id, user_id, status, lang, level, lesson_slot, exercises, answers)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+    [id, userId, 'in_progress', payload.lang, payload.level, slot, JSON.stringify(attempt.exercises), JSON.stringify([])]
   );
   return attempt;
 }
@@ -131,6 +133,7 @@ async function getLessonAttempt(userId, attemptId) {
     status: row.status,
     lang: row.lang,
     level: row.level,
+    lesson_slot: row.lesson_slot != null ? Number(row.lesson_slot) : 0,
     started_at: row.started_at,
     completed_at: row.completed_at,
     answered_count: row.answered_count || 0,
@@ -222,9 +225,6 @@ const LEARNING_PATH_TEMPLATES = {
 };
 
 async function buildLearningPath(lang) {
-  const questions = (await getQuestions(lang, 1))
-    .concat(await getQuestions(lang, 2))
-    .concat(await getQuestions(lang, 3));
   const template = LEARNING_PATH_TEMPLATES[lang] || {
     unitTitle: 'Нормы и порядок службы',
     skills: ['Базовые положения', 'Обязанности и дисциплина', 'Ситуационные задачи'],
@@ -235,20 +235,24 @@ async function buildLearningPath(lang) {
       title: template.unitTitle,
       order: 1,
       skills: [
-        { skill_id: `${lang}-skill-1`, title: template.skills[0], level: 1, locked: false, mastery: 0, lessons: questions.filter(q => Number(q.level) === 1).length },
-        { skill_id: `${lang}-skill-2`, title: template.skills[1], level: 2, locked: false, mastery: 0, lessons: questions.filter(q => Number(q.level) === 2).length },
-        { skill_id: `${lang}-skill-3`, title: template.skills[2], level: 3, locked: false, mastery: 0, lessons: questions.filter(q => Number(q.level) === 3).length },
+        { skill_id: `${lang}-skill-1`, title: template.skills[0], level: 1, locked: false, mastery: 0, lessons: 20 },
+        { skill_id: `${lang}-skill-2`, title: template.skills[1], level: 2, locked: false, mastery: 0, lessons: 20 },
+        { skill_id: `${lang}-skill-3`, title: template.skills[2], level: 3, locked: false, mastery: 0, lessons: 20 },
       ],
     },
   ];
 }
 
 async function getUserProfile(userId, lang) {
-  const row = await db.get('SELECT placement_level, mastery_by_level, lessons_completed FROM user_profiles WHERE user_id = $1 AND lang = $2', [userId, lang]);
+  const row = await db.get(
+    'SELECT placement_level, mastery_by_level, mastery_by_lesson, lessons_completed FROM user_profiles WHERE user_id = $1 AND lang = $2',
+    [userId, lang]
+  );
   if (row) {
     return {
       placement_level: row.placement_level,
       mastery_by_level: row.mastery_by_level || { 1: 0, 2: 0, 3: 0 },
+      mastery_by_lesson: row.mastery_by_lesson && typeof row.mastery_by_lesson === 'object' ? row.mastery_by_lesson : {},
       lessons_completed: row.lessons_completed || 0,
     };
   }
@@ -256,18 +260,30 @@ async function getUserProfile(userId, lang) {
     'INSERT INTO user_profiles (user_id, lang) VALUES ($1, $2) ON CONFLICT (user_id, lang) DO NOTHING',
     [userId, lang]
   );
-  return { placement_level: 1, mastery_by_level: { 1: 0, 2: 0, 3: 0 }, lessons_completed: 0 };
+  return {
+    placement_level: 1,
+    mastery_by_level: { 1: 0, 2: 0, 3: 0 },
+    mastery_by_lesson: {},
+    lessons_completed: 0,
+  };
 }
 
 async function updateUserProfile(userId, lang, updater) {
   let current = await getUserProfile(userId, lang);
   const next = updater({ ...current }) || current;
   await db.run(
-    `INSERT INTO user_profiles (user_id, lang, placement_level, mastery_by_level, lessons_completed, updated_at)
-     VALUES ($1, $2, $3, $4, $5, NOW())
+    `INSERT INTO user_profiles (user_id, lang, placement_level, mastery_by_level, mastery_by_lesson, lessons_completed, updated_at)
+     VALUES ($1, $2, $3, $4, $5, $6, NOW())
      ON CONFLICT (user_id, lang) DO UPDATE SET
-       placement_level = $3, mastery_by_level = $4, lessons_completed = $5, updated_at = NOW()`,
-    [userId, lang, next.placement_level, JSON.stringify(next.mastery_by_level || {}), next.lessons_completed || 0]
+       placement_level = $3, mastery_by_level = $4, mastery_by_lesson = $5, lessons_completed = $6, updated_at = NOW()`,
+    [
+      userId,
+      lang,
+      next.placement_level,
+      JSON.stringify(next.mastery_by_level || {}),
+      JSON.stringify(next.mastery_by_lesson && typeof next.mastery_by_lesson === 'object' ? next.mastery_by_lesson : {}),
+      next.lessons_completed || 0,
+    ]
   );
   return next;
 }
@@ -517,12 +533,129 @@ async function updateUserPassword(userId, passwordHash) {
   return true;
 }
 
+async function ensureUserProgressSchema() {
+  try {
+    await db.run("ALTER TABLE user_profiles ADD COLUMN IF NOT EXISTS mastery_by_lesson JSONB DEFAULT '{}'::jsonb");
+    await db.run('ALTER TABLE lesson_attempts ADD COLUMN IF NOT EXISTS lesson_slot SMALLINT NOT NULL DEFAULT 0');
+  } catch (e) {
+    console.warn('ensureUserProgressSchema:', e.message || e);
+  }
+}
+
+async function ensureLessonAdminSchema() {
+  await db.run('ALTER TABLE users ADD COLUMN IF NOT EXISTS is_admin BOOLEAN DEFAULT FALSE');
+  await db.run("UPDATE users SET is_admin = TRUE WHERE LOWER(TRIM(email)) = 'admin@test.com'");
+  await db.run(`
+    CREATE TABLE IF NOT EXISTS lesson_materials (
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(500) NOT NULL,
+      lang VARCHAR(10) NOT NULL,
+      level SMALLINT NOT NULL,
+      original_filename VARCHAR(500),
+      mime VARCHAR(200),
+      storage_path TEXT,
+      text_preview TEXT,
+      text_length INT DEFAULT 0,
+      question_count INT DEFAULT 0,
+      created_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+  await db.run('ALTER TABLE questions ADD COLUMN IF NOT EXISTS lesson_material_id INTEGER');
+}
+
+function adminEmailList() {
+  const raw = process.env.ADMIN_EMAILS;
+  const src = raw != null && String(raw).trim() !== '' ? String(raw) : 'admin@test.com';
+  return src
+    .split(',')
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+async function isUserAdmin(userId) {
+  let row;
+  try {
+    row = await db.get(
+      'SELECT email, COALESCE(is_admin, false) AS is_admin FROM users WHERE id = $1',
+      [userId]
+    );
+  } catch {
+    row = await db.get('SELECT email FROM users WHERE id = $1', [userId]);
+  }
+  if (!row) return false;
+  if (row.is_admin) return true;
+  return adminEmailList().includes(String(row.email || '').toLowerCase());
+}
+
+async function listLessonMaterials(limit = 50) {
+  try {
+    const rows = await db.all(
+      'SELECT id, title, lang, level, original_filename, mime, text_length, question_count, created_at, created_by FROM lesson_materials ORDER BY id DESC LIMIT $1',
+      [limit]
+    );
+    return rows || [];
+  } catch {
+    return [];
+  }
+}
+
+async function importLessonBundle(userId, bundle) {
+  const client = await pool.connect();
+  try {
+    const ins = await client.query(
+      `INSERT INTO lesson_materials (title, lang, level, original_filename, mime, storage_path, text_preview, text_length, question_count, created_by)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`,
+      [
+        bundle.title,
+        bundle.lang,
+        bundle.level,
+        bundle.original_filename,
+        bundle.mime,
+        bundle.storage_path,
+        String(bundle.extracted_text || '').slice(0, 800),
+        String(bundle.extracted_text || '').length,
+        bundle.questions.length,
+        userId,
+      ]
+    );
+    const mid = ins.rows[0].id;
+    for (const q of bundle.questions) {
+      await client.query(
+        `INSERT INTO questions (content_theme, lang, level, type, word, translation, wrong1, wrong2, wrong3, sentence, correct, explanation, article_ref, lesson_material_id)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
+        [
+          q.content_theme || 'lesson-import-v1',
+          q.lang,
+          q.level,
+          q.type,
+          q.word || null,
+          q.translation || null,
+          q.wrong1 || null,
+          q.wrong2 || null,
+          q.wrong3 || null,
+          q.sentence || null,
+          q.correct || null,
+          q.explanation || null,
+          q.article_ref || null,
+          mid,
+        ]
+      );
+    }
+    return { material_id: mid, questions_added: bundle.questions.length };
+  } finally {
+    client.release();
+  }
+}
+
 async function initDb() {
+  await ensureUserProgressSchema();
+  await ensureLessonAdminSchema();
   const count = await db.get('SELECT COUNT(*) as c FROM users');
   if (count && Number(count.c) === 0) {
     const bcrypt = require('bcryptjs');
     await db.run(
-      'INSERT INTO users (email, password, username) VALUES ($1, $2, $3)',
+      'INSERT INTO users (email, password, username, is_admin) VALUES ($1, $2, $3, TRUE)',
       ['admin@test.com', bcrypt.hashSync('admin123', 10), 'Admin']
     );
   }
@@ -558,6 +691,9 @@ async function initDb() {
 module.exports = {
   db,
   initDb,
+  isUserAdmin,
+  listLessonMaterials,
+  importLessonBundle,
   getQuestions,
   getUserGameState,
   updateUserGameState,

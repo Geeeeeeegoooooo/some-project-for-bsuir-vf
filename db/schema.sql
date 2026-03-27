@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS user_profiles (
   lang VARCHAR(10) NOT NULL,
   placement_level SMALLINT DEFAULT 1,
   mastery_by_level JSONB DEFAULT '{"1":0,"2":0,"3":0}',
+  mastery_by_lesson JSONB DEFAULT '{}',
   lessons_completed INTEGER DEFAULT 0,
   updated_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(user_id, lang)
@@ -101,7 +102,7 @@ CREATE TABLE IF NOT EXISTS user_profiles (
 
 -- VIEW: Профили с логином
 CREATE OR REPLACE VIEW v_user_profiles AS
-  SELECT p.id, u.email AS login, p.lang AS section, p.placement_level, p.mastery_by_level, p.lessons_completed, p.updated_at
+  SELECT p.id, u.email AS login, p.lang AS section, p.placement_level, p.mastery_by_level, p.mastery_by_lesson, p.lessons_completed, p.updated_at
   FROM user_profiles p JOIN users u ON u.id = p.user_id
   ORDER BY u.email, p.lang;
 
@@ -112,6 +113,7 @@ CREATE TABLE IF NOT EXISTS lesson_attempts (
   status VARCHAR(20) NOT NULL,
   lang VARCHAR(10) NOT NULL,
   level SMALLINT NOT NULL,
+  lesson_slot SMALLINT NOT NULL DEFAULT 0,
   started_at TIMESTAMPTZ DEFAULT NOW(),
   completed_at TIMESTAMPTZ,
   answered_count INTEGER DEFAULT 0,
@@ -164,3 +166,23 @@ CREATE TABLE IF NOT EXISTS analytics_events (
 );
 
 CREATE INDEX IF NOT EXISTS idx_analytics_created ON analytics_events(created_at);
+
+-- Админ: загрузка лекций и связь с вопросами
+ALTER TABLE users ADD COLUMN IF NOT EXISTS is_admin BOOLEAN DEFAULT FALSE;
+
+CREATE TABLE IF NOT EXISTS lesson_materials (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(500) NOT NULL,
+  lang VARCHAR(10) NOT NULL,
+  level SMALLINT NOT NULL,
+  original_filename VARCHAR(500),
+  mime VARCHAR(200),
+  storage_path TEXT,
+  text_preview TEXT,
+  text_length INT DEFAULT 0,
+  question_count INT DEFAULT 0,
+  created_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE questions ADD COLUMN IF NOT EXISTS lesson_material_id INTEGER REFERENCES lesson_materials(id) ON DELETE SET NULL;

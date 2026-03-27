@@ -6,10 +6,14 @@ let currentIndex = 0;
 let score = 0;
 let pointsPerQuestion = 10;
 let lessonAttemptId = null;
+/** Индекс узла в STATUTE_SECTIONS для выбранного языка; задаёт слот урока и подпись в квизе. */
+let lessonSlotIndex = 0;
 /** Урок уровня 1: сердца не списываются (сервер hearts_unlimited). */
 let lessonHeartsUnlimited = false;
 let gameState = { hearts_current: 5, streak_current: 0, xp_total: 0 };
 let uiTickerStarted = false;
+/** Урок запущен с карты «Обучение»; по «Выбрать уровень снова» возвращаем на путь, а не остаёмся в «Задания». */
+let quizLaunchedFromPath = false;
 
 const screens = {
   home: 'screen-home',
@@ -19,7 +23,8 @@ const screens = {
   quiz: 'screen-quiz',
   placement: 'screen-placement',
   leaderboard: 'screen-leaderboard',
-  profile: 'screen-profile'
+  profile: 'screen-profile',
+  admin: 'screen-admin',
 };
 
 const LANG_NAMES = {
@@ -82,7 +87,7 @@ function getRankByXp(xpTotal) {
   };
 }
 
-function showScreen(name) {
+function showScreen(name, opts = {}) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById(screens[name]);
   if (el) {
@@ -105,9 +110,10 @@ function showScreen(name) {
 
   if (name === 'leaderboard') loadLeaderboard();
   if (name === 'path') loadPathScreen();
-  if (name === 'quiz') resetQuizUI();
+  if (name === 'quiz' && !opts.skipQuizReset) resetQuizUI();
   if (name === 'placement') resetPlacementUI();
   if (name === 'profile') loadProfileScreen();
+  if (name === 'admin') loadAdminScreen();
 }
 
 function updateSidebarActive(name) {
@@ -154,6 +160,12 @@ function setFieldError(inputId, errSpanId, message) {
   if (input) input.setAttribute('aria-invalid', message ? 'true' : 'false');
 }
 
+function userIsAdmin() {
+  if (!currentUser) return false;
+  const v = currentUser.is_admin;
+  return v === true || v === 1 || v === '1' || v === 'true';
+}
+
 function setAuthUI() {
   const homeAuth = document.getElementById('home-buttons');
   const homeUser = document.getElementById('home-authenticated');
@@ -178,6 +190,17 @@ function setAuthUI() {
     }
     navLogin?.classList.add('hidden');
     navRegister?.classList.add('hidden');
+    const showAdmin = userIsAdmin();
+    const navAdmin = document.getElementById('sidebar-nav-admin');
+    const headerAdmin = document.getElementById('header-nav-admin');
+    if (navAdmin) {
+      if (showAdmin) navAdmin.classList.remove('hidden');
+      else navAdmin.classList.add('hidden');
+    }
+    if (headerAdmin) {
+      if (showAdmin) headerAdmin.classList.remove('hidden');
+      else headerAdmin.classList.add('hidden');
+    }
   } else {
     homeAuth?.classList.remove('hidden');
     homeUser?.classList.add('hidden');
@@ -185,6 +208,8 @@ function setAuthUI() {
     userInfo?.classList.add('hidden');
     navLogin?.classList.remove('hidden');
     navRegister?.classList.remove('hidden');
+    document.getElementById('sidebar-nav-admin')?.classList.add('hidden');
+    document.getElementById('header-nav-admin')?.classList.add('hidden');
   }
 }
 
@@ -256,6 +281,8 @@ async function fetchMe() {
   setAuthUI();
   if (currentUser) {
     await refreshGameState();
+    const hub = document.getElementById('quiz-quests-hub');
+    if (hub && !hub.classList.contains('hidden')) refreshQuestsHub();
   } else {
     updateQuizMeta();
   }
@@ -644,6 +671,204 @@ async function handleLogout() {
   showScreen('home');
 }
 
+async function loadAdminScreen() {
+  const wrap = document.getElementById('admin-materials-list');
+  if (!wrap || !userIsAdmin()) return;
+  wrap.innerHTML = '<p class="text-muted">Загрузка…</p>';
+  try {
+    const res = await fetch(`${API}/admin/lessons`, { credentials: 'include' });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      wrap.innerHTML = `<p class="text-muted">${escapeHtml(data.error || 'Нет доступа')}</p>`;
+      return;
+    }
+    const rows = data.materials || [];
+    if (!rows.length) {
+      wrap.innerHTML = '<p class="text-muted">Пока нет загруженных материалов.</p>';
+      return;
+    }
+    wrap.innerHTML = '';
+    rows.forEach((r) => {
+      const div = document.createElement('div');
+      div.className = 'admin-material-row';
+      const dt = r.created_at ? new Date(r.created_at).toLocaleString('ru-RU') : '—';
+      div.innerHTML = `
+        <div>
+          <div class="admin-material-title">${escapeHtml(r.title || '')}</div>
+          <div class="admin-material-meta">${escapeHtml(String(r.lang || '').toUpperCase())} · ур. ${escapeHtml(String(r.level))} · ${dt}</div>
+        </div>
+        <span class="admin-material-meta">${escapeHtml(r.original_filename || '')}</span>
+        <span class="admin-material-meta">${r.text_length || 0} зн.</span>
+        <span class="admin-material-meta">+${r.question_count || 0} вопр.</span>
+      `;
+      wrap.appendChild(div);
+    });
+  } catch {
+    wrap.innerHTML = '<p class="text-muted">Ошибка загрузки списка.</p>';
+  }
+}
+
+function parseContentDispositionFilename(cd) {
+  if (!cd) return 'test.html';
+  const star = /filename\*\s*=\s*UTF-8''([^;]+)/i.exec(cd);
+  if (star) {
+    try {
+      return decodeURIComponent(star[1].trim().replace(/^["']|["']$/g, ''));
+    } catch {
+      /* fall through */
+    }
+  }
+  const quoted = /filename\s*=\s*"([^"]+)"/i.exec(cd);
+  if (quoted) return quoted[1].trim();
+  const plain = /filename\s*=\s*([^;]+)/i.exec(cd);
+  return plain ? plain[1].trim().replace(/^["']|["']$/g, '') : 'test.html';
+}
+
+async function downloadAdminHtmlExport(url, options) {
+  const res = await fetch(url, { ...options, credentials: 'include' });
+  const ct = (res.headers.get('content-type') || '').toLowerCase();
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    const msg = data.error || `Ошибка ${res.status}`;
+    throw new Error(msg);
+  }
+  if (!ct.includes('text/html')) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error || 'Сервер вернул не HTML');
+  }
+  const blob = await res.blob();
+  const name = parseContentDispositionFilename(res.headers.get('Content-Disposition'));
+  const href = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = href;
+  a.download = name;
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(href);
+}
+
+async function handleAdminExportFile() {
+  const errEl = document.getElementById('admin-upload-err');
+  if (errEl) errEl.textContent = '';
+  const fileInput = document.getElementById('admin-file');
+  const file = fileInput?.files?.[0];
+  if (!file) {
+    if (errEl) errEl.textContent = 'Выберите файл';
+    return;
+  }
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('title', document.getElementById('admin-title')?.value?.trim() || '');
+  fd.append('lang', document.getElementById('admin-lang')?.value || 'uvs');
+  fd.append('level', document.getElementById('admin-level')?.value || '1');
+  fd.append('max_questions', document.getElementById('admin-max-q')?.value || '12');
+  try {
+    await downloadAdminHtmlExport(`${API}/admin/lessons/export-upload`, { method: 'POST', body: fd });
+    showToast('Файл теста скачан — откройте его в браузере', 'success');
+  } catch (e) {
+    const msg = e.message || 'Ошибка сети';
+    if (errEl) errEl.textContent = msg;
+    showToast(msg, 'error');
+  }
+}
+
+async function handleAdminExportText() {
+  const errEl = document.getElementById('admin-text-err');
+  if (errEl) errEl.textContent = '';
+  const body = {
+    title: document.getElementById('admin-text-title')?.value?.trim() || '',
+    lang: document.getElementById('admin-text-lang')?.value || 'uvs',
+    level: Number(document.getElementById('admin-text-level')?.value || 1),
+    max_questions: Number(document.getElementById('admin-text-max')?.value || 12),
+    text: document.getElementById('admin-text-body')?.value || '',
+  };
+  try {
+    await downloadAdminHtmlExport(`${API}/admin/lessons/export-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    showToast('Файл теста скачан — откройте его в браузере', 'success');
+  } catch (e) {
+    const msg = e.message || 'Ошибка сети';
+    if (errEl) errEl.textContent = msg;
+    showToast(msg, 'error');
+  }
+}
+
+async function handleAdminUpload(e) {
+  e.preventDefault();
+  const errEl = document.getElementById('admin-upload-err');
+  if (errEl) errEl.textContent = '';
+  const fileInput = document.getElementById('admin-file');
+  const file = fileInput?.files?.[0];
+  if (!file) {
+    if (errEl) errEl.textContent = 'Выберите файл';
+    return;
+  }
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('title', document.getElementById('admin-title')?.value?.trim() || '');
+  fd.append('lang', document.getElementById('admin-lang')?.value || 'uvs');
+  fd.append('level', document.getElementById('admin-level')?.value || '1');
+  fd.append('max_questions', document.getElementById('admin-max-q')?.value || '12');
+  try {
+    const res = await fetch(`${API}/admin/lessons/upload`, {
+      method: 'POST',
+      body: fd,
+      credentials: 'include',
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      if (errEl) errEl.textContent = data.error || 'Ошибка загрузки';
+      showToast(data.error || 'Ошибка загрузки', 'error');
+      return;
+    }
+    const hint = data.hint ? ` ${data.hint}` : '';
+    showToast(`Добавлено вопросов: ${data.questions_added}.${hint}`, 'success');
+    fileInput.value = '';
+    loadAdminScreen();
+  } catch {
+    if (errEl) errEl.textContent = 'Ошибка сети';
+    showToast('Ошибка сети', 'error');
+  }
+}
+
+async function handleAdminText(e) {
+  e.preventDefault();
+  const errEl = document.getElementById('admin-text-err');
+  if (errEl) errEl.textContent = '';
+  const body = {
+    title: document.getElementById('admin-text-title')?.value?.trim() || '',
+    lang: document.getElementById('admin-text-lang')?.value || 'uvs',
+    level: Number(document.getElementById('admin-text-level')?.value || 1),
+    max_questions: Number(document.getElementById('admin-text-max')?.value || 12),
+    text: document.getElementById('admin-text-body')?.value || '',
+  };
+  try {
+    const res = await fetch(`${API}/admin/lessons/from-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      if (errEl) errEl.textContent = data.error || 'Ошибка';
+      showToast(data.error || 'Ошибка', 'error');
+      return;
+    }
+    const hint = data.hint ? ` ${data.hint}` : '';
+    showToast(`Добавлено вопросов: ${data.questions_added}.${hint}`, 'success');
+    loadAdminScreen();
+  } catch {
+    if (errEl) errEl.textContent = 'Ошибка сети';
+    showToast('Ошибка сети', 'error');
+  }
+}
+
 async function handleChangePassword(e) {
   e.preventDefault();
   const errEl = document.getElementById('change-password-err');
@@ -711,40 +936,165 @@ function getSelectedLang() {
 
 let pathLang = 'uvs';
 
+/** SVG для узлов пути (военная тематика, цвет через currentColor) */
+const PATH_ORBIT_ICONS = {
+  star: '<svg class="path-orbit-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2.2l2.6 6.5 7 .6-5.4 4.2 2 6.7L12 17.5 5.8 20.2l2-6.7L2.4 9.3l7-.6L12 2.2z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/><path d="M12 7.2v3.2M12 14.2v.1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>',
+  check: '<svg class="path-orbit-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.5 12.2l3.5 3.5 7.5-8.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  advance: '<svg class="path-orbit-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 6l5 6-5 6M14 6l5 6-5 6" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  lock: '<svg class="path-orbit-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="6" y="10" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 10V8a4 4 0 0 1 8 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="14.5" r="1.3" fill="currentColor"/></svg>',
+};
+
+const PATH_MILESTONE_ICONS = {
+  crate: '<svg class="path-milestone-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12l11-4 11 4v14l-11 4-11-4V12z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M5 12l11 4 11-4M16 16v14" stroke="currentColor" stroke-width="1.2"/><path d="M10 9l6 2.2 6-2.2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>',
+  medal: '<svg class="path-milestone-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 4h7l2.5 6H8V4zm9 0h7v6h-7.5L17 4z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><circle cx="16" cy="20" r="6.5" stroke="currentColor" stroke-width="1.3"/><path d="M16 17.2l1.3 2.7 2.9.4-2.1 2 0.5 2.9-2.6-1.4-2.6 1.4.5-2.9-2.1-2 2.9-.4 1.3-2.7z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>',
+  banner: '<svg class="path-milestone-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 5v20M10 6h12l-3 4 3 4H10" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M8 26h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  trophy: '<svg class="path-milestone-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 8h14v3a5 5 0 0 1-5 5h-4a5 5 0 0 1-5-5V8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M7 9H5a2 2 0 0 0 0 4h2M25 9h2a2 2 0 0 1 0 4h-2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M12 16v3h8v-3M11 26h10v2H11v-2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>',
+};
+
 const STATUTE_SECTIONS = {
   uvs: [
-    { id: 'uvs-m1-r1', module: 1, section: 1, title: 'Воинские ритуалы', level: 1 },
-    { id: 'uvs-m1-r2', module: 1, section: 2, title: 'Боевое знамя части: хранение и охрана', level: 1 },
+    { id: 'uvs-m1-r1', module: 1, section: 1, title: 'Военная присяга: порядок и значение', level: 1 },
+    { id: 'uvs-m1-r2', module: 1, section: 2, title: 'Государственный флаг и торжественные церемонии', level: 1 },
+    { id: 'uvs-m1-r3', module: 1, section: 3, title: 'Праздничные дни и символика части', level: 1 },
+    { id: 'uvs-m1-r4', module: 1, section: 4, title: 'Воинское приветствие и обращение в строю', level: 1 },
+    { id: 'uvs-m1-r5', module: 1, section: 5, title: 'Боевое Знамя: статус и содержание', level: 1 },
+    { id: 'uvs-m1-r6', module: 1, section: 6, title: 'Хранение, охрана и учёт Боевого Знамени', level: 1 },
+    { id: 'uvs-m1-r7', module: 1, section: 7, title: 'Учёт личного состава и поверки', level: 1 },
+    { id: 'uvs-m1-r8', module: 1, section: 8, title: 'Размещение, казарма и оружейная комната', level: 1 },
+    { id: 'uvs-m1-r9', module: 1, section: 9, title: 'Распорядок дня, сон и питание', level: 1 },
+    { id: 'uvs-m1-r10', module: 1, section: 10, title: 'Санитария, быт и сохранность помещений', level: 1 },
     { id: 'uvs-m2-r1', module: 2, section: 1, title: 'Права и обязанности военнослужащих', level: 2 },
     { id: 'uvs-m2-r2', module: 2, section: 2, title: 'Взаимоотношения между военнослужащими', level: 2 },
+    { id: 'uvs-m2-r3', module: 2, section: 3, title: 'Воинская часть: общие обязанности и распорядок', level: 2 },
     { id: 'uvs-m3-r1', module: 3, section: 1, title: 'Распределение времени и внутренний порядок', level: 3 },
     { id: 'uvs-m3-r2', module: 3, section: 2, title: 'Суточный наряд и обязанности лиц наряда', level: 3 },
+    { id: 'uvs-m3-r3', module: 3, section: 3, title: 'Пожарная безопасность и охрана труда на службе', level: 3 },
+    { id: 'uvs-m4-r1', module: 4, section: 1, title: 'Имущество части: учёт и материальная ответственность', level: 1 },
+    { id: 'uvs-m4-r2', module: 4, section: 2, title: 'Служебные помещения: допуск и санитарное состояние', level: 2 },
+    { id: 'uvs-m4-r3', module: 4, section: 3, title: 'Наряды вне расположения части', level: 3 },
+    { id: 'uvs-m5-r1', module: 5, section: 1, title: 'Взаимодействие с гражданскими лицами', level: 2 },
+    { id: 'uvs-m5-r2', module: 5, section: 2, title: 'Особые случаи нарушения распорядка', level: 3 },
+    { id: 'uvs-m5-r3', module: 5, section: 3, title: 'Итоговая проверка: типовые ситуации УВС', level: 3 },
+    { id: 'uvs-m6-r1', module: 6, section: 1, title: 'Служебные журналы и учёт в подразделении', level: 1 },
+    { id: 'uvs-m6-r2', module: 6, section: 2, title: 'Комендантский час и порядок посещений', level: 2 },
+    { id: 'uvs-m6-r3', module: 6, section: 3, title: 'Взаимодействие дежурных служб части', level: 2 },
+    { id: 'uvs-m6-r4', module: 6, section: 4, title: 'Типовые нарушения распорядка и реакция наряда', level: 3 },
+    { id: 'uvs-m6-r5', module: 6, section: 5, title: 'Смешанные ситуации: закрепление УВС', level: 3 },
   ],
   du: [
     { id: 'du-m1-r1', module: 1, section: 1, title: 'Основы воинской дисциплины', level: 1 },
     { id: 'du-m1-r2', module: 1, section: 2, title: 'Подчиненность и единоначалие', level: 1 },
+    { id: 'du-m1-r3', module: 1, section: 3, title: 'Статус военнослужащего и субординация в быту', level: 1 },
     { id: 'du-m2-r1', module: 2, section: 1, title: 'Поощрения в подразделении', level: 2 },
     { id: 'du-m2-r2', module: 2, section: 2, title: 'Дисциплинарные взыскания', level: 2 },
+    { id: 'du-m2-r3', module: 2, section: 3, title: 'Взыскания: виды и последствия для службы', level: 2 },
     { id: 'du-m3-r1', module: 3, section: 1, title: 'Права и порядок обжалования', level: 3 },
     { id: 'du-m3-r2', module: 3, section: 2, title: 'Разбор дисциплинарных кейсов', level: 3 },
+    { id: 'du-m3-r3', module: 3, section: 3, title: 'Документооборот при проведении разбирательств', level: 3 },
+    { id: 'du-m4-r1', module: 4, section: 1, title: 'Нарушения сроков и регламента в подразделении', level: 1 },
+    { id: 'du-m4-r2', module: 4, section: 2, title: 'Дисциплинарный комитет: практика', level: 2 },
+    { id: 'du-m4-r3', module: 4, section: 3, title: 'Ответственность командира за воспитание', level: 3 },
+    { id: 'du-m5-r1', module: 5, section: 1, title: 'Конфликт приказов и исполнение', level: 2 },
+    { id: 'du-m5-r2', module: 5, section: 2, title: 'Тяжёлые нарушения и особый порядок', level: 3 },
+    { id: 'du-m5-r3', module: 5, section: 3, title: 'Итоговая проверка: кейсы ДУ', level: 3 },
+    { id: 'du-m6-r1', module: 6, section: 1, title: 'Сроки наложения взысканий и погашение', level: 1 },
+    { id: 'du-m6-r2', module: 6, section: 2, title: 'Поощрения: порядок объявления и учёт', level: 2 },
+    { id: 'du-m6-r3', module: 6, section: 3, title: 'Взыскания и служебное положение военнослужащего', level: 2 },
+    { id: 'du-m6-r4', module: 6, section: 4, title: 'Сложные случаи подчинённости и приказа', level: 3 },
+    { id: 'du-m6-r5', module: 6, section: 5, title: 'Итог: смешанные кейсы ДУ', level: 3 },
   ],
   gks: [
     { id: 'gks-m1-r1', module: 1, section: 1, title: 'Организация караульной службы', level: 1 },
     { id: 'gks-m1-r2', module: 1, section: 2, title: 'Пост и обязанности часового', level: 1 },
+    { id: 'gks-m1-r3', module: 1, section: 3, title: 'Порядок заступления и смены на посту', level: 1 },
     { id: 'gks-m2-r1', module: 2, section: 1, title: 'Развод и смена караула', level: 2 },
     { id: 'gks-m2-r2', module: 2, section: 2, title: 'Сигналы и меры безопасности', level: 2 },
+    { id: 'gks-m2-r3', module: 2, section: 3, title: 'Патрули и передвижение по объекту', level: 2 },
     { id: 'gks-m3-r1', module: 3, section: 1, title: 'Действия при тревоге', level: 3 },
     { id: 'gks-m3-r2', module: 3, section: 2, title: 'Оборона объекта: практика', level: 3 },
+    { id: 'gks-m3-r3', module: 3, section: 3, title: 'Взаимодействие караула и внутреннего наряда', level: 3 },
+    { id: 'gks-m4-r1', module: 4, section: 1, title: 'Охрана периметра и контрольно-пропускной режим', level: 1 },
+    { id: 'gks-m4-r2', module: 4, section: 2, title: 'Разоружение и задержание нарушителя', level: 2 },
+    { id: 'gks-m4-r3', module: 4, section: 3, title: 'Служба в ночных условиях', level: 3 },
+    { id: 'gks-m5-r1', module: 5, section: 1, title: 'Пожарная тревога на посту', level: 2 },
+    { id: 'gks-m5-r2', module: 5, section: 2, title: 'Неординарные посетители и переговоры', level: 3 },
+    { id: 'gks-m5-r3', module: 5, section: 3, title: 'Итоговая проверка: УГиКС', level: 3 },
+    { id: 'gks-m6-r1', module: 6, section: 1, title: 'Пропускной режим и документы на КПП', level: 1 },
+    { id: 'gks-m6-r2', module: 6, section: 2, title: 'Взаимодействие караула и внутреннего наряда', level: 2 },
+    { id: 'gks-m6-r3', module: 6, section: 3, title: 'Действия при ЧС на объекте охраны', level: 2 },
+    { id: 'gks-m6-r4', module: 6, section: 4, title: 'Смена на посту в сложных условиях', level: 3 },
+    { id: 'gks-m6-r5', module: 6, section: 5, title: 'Итог: смешанные сценарии УГиКС', level: 3 },
   ],
   su: [
     { id: 'su-m1-r1', module: 1, section: 1, title: 'Строй и строевая стойка', level: 1 },
     { id: 'su-m1-r2', module: 1, section: 2, title: 'Команды и строевые приемы', level: 1 },
+    { id: 'su-m1-r3', module: 1, section: 3, title: 'Равнение, интервалы и дистанции', level: 1 },
     { id: 'su-m2-r1', module: 2, section: 1, title: 'Движение строевым шагом', level: 2 },
     { id: 'su-m2-r2', module: 2, section: 2, title: 'Повороты и перестроения', level: 2 },
+    { id: 'su-m2-r3', module: 2, section: 3, title: 'Снятие, ходьба и остановки по команде', level: 2 },
     { id: 'su-m3-r1', module: 3, section: 1, title: 'Торжественный марш', level: 3 },
     { id: 'su-m3-r2', module: 3, section: 2, title: 'Сложные строевые сценарии', level: 3 },
+    { id: 'su-m3-r3', module: 3, section: 3, title: 'Рапорты в строю и обращение к начальнику', level: 3 },
+    { id: 'su-m4-r1', module: 4, section: 1, title: 'Строевой смотр и внешний вид', level: 1 },
+    { id: 'su-m4-r2', module: 4, section: 2, title: 'Команды управления и строевые песни', level: 2 },
+    { id: 'su-m4-r3', module: 4, section: 3, title: 'Марш на плацу с разворотами', level: 3 },
+    { id: 'su-m5-r1', module: 5, section: 1, title: 'Строевые сценарии на торжественных мероприятиях', level: 2 },
+    { id: 'su-m5-r2', module: 5, section: 2, title: 'Флаг, знамёна и почётный караул в строю', level: 3 },
+    { id: 'su-m5-r3', module: 5, section: 3, title: 'Итоговая проверка: СУ', level: 3 },
+    { id: 'su-m6-r1', module: 6, section: 1, title: 'Построение и проверка внешнего вида', level: 1 },
+    { id: 'su-m6-r2', module: 6, section: 2, title: 'Сложные перестроения и марш в колонне', level: 2 },
+    { id: 'su-m6-r3', module: 6, section: 3, title: 'Торжественный выход и рапортование', level: 2 },
+    { id: 'su-m6-r4', module: 6, section: 4, title: 'Ошибки в строю и их исправление', level: 3 },
+    { id: 'su-m6-r5', module: 6, section: 5, title: 'Итог: смешанные задания СУ', level: 3 },
   ],
 };
+
+/** Подписи узла в духе Duolingo: урок внутри модуля + волна (УВС мод. 1) или сложность. */
+function pathLessonMeta(section, lang) {
+  const list = STATUTE_SECTIONS[lang] || [];
+  const mod = Number(section.module) || 1;
+  const secNum = Number(section.section) || 1;
+  const inMod = list.filter((s) => Number(s.module) === mod);
+  const total = Math.max(1, inMod.length);
+  const main = `Урок ${secNum} из ${total}`;
+  let sub = null;
+  if (lang === 'uvs' && mod === 1 && total >= 8) {
+    sub = `Волна ${Math.min(5, Math.ceil(secNum / 2))}`;
+  } else {
+    sub = `Ур. ${Number(section.level) || 1}`;
+  }
+  return { main, sub };
+}
+
+function formatQuizLessonContextLine(lang) {
+  const list = STATUTE_SECTIONS[lang] || [];
+  const sec = list[lessonSlotIndex];
+  if (!sec) return '';
+  const m = pathLessonMeta(sec, lang);
+  const parts = [`Модуль ${Number(sec.module) || 1}`, m.main];
+  if (m.sub) parts.push(m.sub);
+  return parts.join(' · ');
+}
+
+function updateQuizLessonContext() {
+  const el = document.getElementById('quiz-lesson-context');
+  if (!el) return;
+  const qBlock = document.getElementById('quiz-question');
+  if (!qBlock || qBlock.classList.contains('hidden')) {
+    el.classList.add('hidden');
+    el.textContent = '';
+    return;
+  }
+  const langSelect = document.getElementById('quiz-lang');
+  const lang = langSelect ? langSelect.value : pathLang || 'uvs';
+  const line = formatQuizLessonContextLine(lang);
+  if (!line) {
+    el.classList.add('hidden');
+    return;
+  }
+  el.textContent = line;
+  el.classList.remove('hidden');
+}
 
 const HANDBOOK_BY_LANG = {
   uvs: {
@@ -817,25 +1167,34 @@ function renderPath(pathData) {
   const lang = pathData?.language || pathLang || 'uvs';
   const unit = (pathData.units || [])[0] || { title: 'Путь по уставу', skills: [] };
   const skillByLevel = new Map((unit.skills || []).map((s) => [Number(s.level), s]));
-  const moduleCompletion = {
-    1: Number(skillByLevel.get(1)?.mastery || 0) >= 100,
-    2: Number(skillByLevel.get(2)?.mastery || 0) >= 100,
-    3: Number(skillByLevel.get(3)?.mastery || 0) >= 100,
-  };
-  const moduleUnlocked = {
-    1: true,
-    2: moduleCompletion[1],
-    3: moduleCompletion[2],
-  };
-  const sections = (STATUTE_SECTIONS[lang] || []).map((s, idx) => {
+  const mbl = pathData.mastery_by_lesson && typeof pathData.mastery_by_lesson === 'object'
+    ? pathData.mastery_by_lesson
+    : {};
+  const lessonKey = (idx) => `${lang}:${idx}`;
+  const rawSections = (STATUTE_SECTIONS[lang] || []).map((s, idx) => ({
+    ...s,
+    idx,
+    mastery: Number(mbl[lessonKey(idx)] || 0),
+  }));
+  const moduleComplete = {};
+  for (const s of rawSections) {
+    if (moduleComplete[s.module] === undefined) moduleComplete[s.module] = true;
+  }
+  for (const s of rawSections) {
+    if (s.mastery < 100) moduleComplete[s.module] = false;
+  }
+  const maxModuleNum = rawSections.reduce((acc, s) => Math.max(acc, Number(s.module) || 1), 1);
+  const moduleUnlocked = { 1: true };
+  for (let m = 2; m <= maxModuleNum; m += 1) {
+    moduleUnlocked[m] = Boolean(moduleComplete[m - 1]);
+  }
+  const sections = rawSections.map((s) => {
     const skill = skillByLevel.get(Number(s.level)) || {};
     const baseLocked = Boolean(skill.locked);
     const lockByModule = !moduleUnlocked[Number(s.module) || 1];
     return {
       ...s,
-      idx,
-      mastery: Number(skill.mastery || 0),
-      lessons: Number(skill.lessons || 0),
+      lessons: Number(skill.lessons || 20),
       locked: baseLocked || lockByModule,
     };
   });
@@ -856,18 +1215,27 @@ function renderPath(pathData) {
     .map((p) => `<li class="path-handbook-item">${escapeHtml(p)}</li>`)
     .join('');
 
+  const heroSection = mascotTarget || firstOpen;
+  const heroIdx = sections.findIndex((s) => s.idx === heroSection.idx);
+  const nextSection = heroIdx >= 0 ? sections[heroIdx + 1] : null;
+  const footerNextText = nextSection
+    ? `Далее: ${nextSection.title}`
+    : doneCount >= sections.length && sections.length
+      ? 'Разделы курса пройдены — закрепите материал или повторите модуль.'
+      : 'Продолжайте узлы пути по порядку.';
+
   const shell = document.createElement('div');
   shell.className = 'path-map-shell';
   shell.innerHTML = `
     <div class="path-hero">
       <div class="path-hero-row">
         <div class="path-hero-head">
-          <div class="path-hero-top">Модуль ${Number(firstOpen.module) || 1}, раздел ${Number(firstOpen.section) || 1}</div>
-          <h3>${escapeHtml(firstOpen.title || unit.title || 'Путь обучения')}</h3>
+          <div class="path-hero-top">Модуль ${Number(heroSection.module) || 1}, раздел ${Number(heroSection.section) || 1}</div>
+          <h3>${escapeHtml(heroSection.title || unit.title || 'Путь обучения')}</h3>
         </div>
         <button type="button" class="btn path-handbook-btn" id="path-handbook-btn">Справочник</button>
       </div>
-      <p>Изучайте разделы по порядку и переходите к следующему узлу после закрепления темы.</p>
+      <p class="path-hero-hint">Изучайте разделы по порядку и переходите к следующему узлу после закрепления темы.</p>
       <div class="path-handbook hidden" id="path-handbook">
         <div class="path-handbook-title">${escapeHtml(handbook.title)}</div>
         <div class="path-handbook-subtitle">${escapeHtml(handbook.subtitle)}</div>
@@ -877,22 +1245,13 @@ function renderPath(pathData) {
     <div class="path-map">
       <div class="path-track" id="path-track"></div>
       <div class="path-mascot ${soldierRank}" id="path-mascot" aria-hidden="true">
-        <div class="soldier">
-          <div class="soldier-shadow"></div>
-          <div class="soldier-helmet"></div>
-          <div class="soldier-visor"></div>
-          <div class="soldier-head"></div>
-          <div class="soldier-body"></div>
-          <div class="soldier-vest"></div>
-          <div class="soldier-pack"></div>
-          <div class="soldier-arm"></div>
-          <div class="soldier-arm second"></div>
-          <div class="soldier-rifle"></div>
-          <div class="soldier-legs"></div>
-          <div class="soldier-boots"></div>
-        </div>
+        <img class="path-mascot-img" src="/path-mascot.png" width="110" height="110" alt="" decoding="async" />
       </div>
     </div>
+    <footer class="path-next-footer">
+      <div class="path-next-footer-rule"></div>
+      <p class="path-next-footer-text">${escapeHtml(footerNextText)}</p>
+    </footer>
   `;
   container.appendChild(shell);
   const handbookBtn = shell.querySelector('#path-handbook-btn');
@@ -906,10 +1265,41 @@ function renderPath(pathData) {
   let prevModule = null;
   sections.forEach((section, i) => {
     if (section.module !== prevModule) {
+      const m = Number(section.module) || 1;
+      const moduleRow = document.createElement('div');
+      moduleRow.className = 'path-module-title-row';
       const moduleTitle = document.createElement('div');
       moduleTitle.className = 'path-module-title';
-      moduleTitle.textContent = `Модуль ${section.module}`;
-      track?.appendChild(moduleTitle);
+      moduleTitle.textContent = `Модуль ${m}`;
+      moduleRow.appendChild(moduleTitle);
+      if (moduleComplete[m]) {
+        const repeatBtn = document.createElement('button');
+        repeatBtn.type = 'button';
+        repeatBtn.className = 'btn btn-outline path-module-repeat-btn';
+        repeatBtn.textContent = 'Повторить модуль';
+        repeatBtn.addEventListener('click', async (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const res = await fetch(`${API}/path/module/clear-coverage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ lang, module: m }),
+            credentials: 'include',
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            showToast(data.error || 'Не удалось сбросить учёт пройденных вопросов', 'error');
+            return;
+          }
+          showToast(
+            `Модуль ${m}: уроки можно пройти снова — подберутся другие вопросы из темы.`,
+            'success',
+          );
+          await loadPathScreen();
+        });
+        moduleRow.appendChild(repeatBtn);
+      }
+      track?.appendChild(moduleRow);
       if (section.module > 1 && !moduleUnlocked[section.module]) {
         const gate = document.createElement('div');
         gate.className = 'path-module-gate';
@@ -923,108 +1313,292 @@ function renderPath(pathData) {
       }
       prevModule = section.module;
     }
-    const node = document.createElement('button');
-    node.type = 'button';
-    node.className = `path-node ${section.locked ? 'locked' : 'open'} ${section.mastery >= 100 ? 'done' : ''} ${i % 2 ? 'right' : 'left'}`;
-    node.dataset.sectionIdx = String(section.idx);
-    node.disabled = section.locked;
-    node.innerHTML = `
-      <span class="path-node-badge">Ур. ${section.level}</span>
-      <strong>${escapeHtml(section.title)}</strong>
-      <small>Освоение ${Math.max(0, Math.min(100, section.mastery))}% · уроков ${section.lessons}</small>
+    const side = i % 2 === 0 ? 'left' : 'right';
+    const isCurrent = Boolean(!section.locked && mascotTarget && section.idx === mascotTarget.idx);
+    const row = document.createElement('div');
+    row.className = `path-duo-row path-duo-row--${side}`;
+    row.dataset.pathRow = String(i);
+
+    const stack = document.createElement('div');
+    stack.className = 'path-duo-stack';
+
+    const callout = document.createElement('div');
+    callout.className = isCurrent ? 'path-callout' : 'path-callout path-callout--hidden';
+    callout.textContent = section.mastery >= 100 && isCurrent ? 'Закрепить' : 'В БОЙ!';
+
+    const orbit = document.createElement('button');
+    orbit.type = 'button';
+    orbit.className = 'path-orbit-btn';
+    if (section.locked) orbit.classList.add('path-orbit-btn--locked');
+    else if (section.mastery >= 100) orbit.classList.add('path-orbit-btn--done');
+    else if (isCurrent) orbit.classList.add('path-orbit-btn--current');
+    else orbit.classList.add('path-orbit-btn--open');
+    orbit.dataset.sectionIdx = String(section.idx);
+    const lessonMeta = pathLessonMeta(section, lang);
+    orbit.setAttribute(
+      'aria-label',
+      `${section.title}. ${lessonMeta.main}${lessonMeta.sub ? `, ${lessonMeta.sub}` : ''}. Освоение ${section.mastery}%`,
+    );
+    orbit.disabled = section.locked;
+    let orbitSvg;
+    if (section.locked) orbitSvg = PATH_ORBIT_ICONS.lock;
+    else if (section.mastery >= 100) orbitSvg = PATH_ORBIT_ICONS.check;
+    else if (isCurrent) orbitSvg = PATH_ORBIT_ICONS.advance;
+    else orbitSvg = PATH_ORBIT_ICONS.star;
+    orbit.innerHTML = `<span class="path-orbit-face">${orbitSvg}</span>`;
+
+    const meta = document.createElement('div');
+    meta.className = 'path-lesson-meta';
+    const lm = pathLessonMeta(section, lang);
+    meta.innerHTML = `
+      <span class="path-meta-row">
+        <span class="path-meta-badge">${escapeHtml(lm.main)}</span>
+        ${lm.sub ? `<span class="path-meta-wave">${escapeHtml(lm.sub)}</span>` : ''}
+      </span>
+      <strong class="path-meta-title">${escapeHtml(section.title)}</strong>
+      <small class="path-meta-sub">Освоение ${Math.max(0, Math.min(100, section.mastery))}% · 20 вопросов</small>
     `;
-    if (!section.locked && mascotTarget && section.idx === mascotTarget.idx) {
-      const launchWrap = document.createElement('div');
-      launchWrap.className = 'path-node-launch';
-      launchWrap.innerHTML = `
-        <span class="path-node-launch-label">В БОЙ!</span>
-        <span class="path-node-launch-btn" aria-hidden="true">
-          <span class="tank-icon">
-            <span class="tank-body"></span>
-            <span class="tank-turret"></span>
-            <span class="tank-barrel"></span>
-            <span class="tank-track"></span>
-          </span>
-        </span>
-      `;
-      node.appendChild(launchWrap);
-    }
+
+    stack.appendChild(callout);
+    stack.appendChild(orbit);
+    stack.appendChild(meta);
+    row.appendChild(stack);
+    track?.appendChild(row);
+
     if (!section.locked) {
-      node.addEventListener('click', () => {
+      orbit.addEventListener('click', () => {
         selectedProficiency = Number(section.level);
+        lessonSlotIndex = Number(section.idx) || 0;
         startQuizWithPreset(lang, Number(section.level));
       });
     }
-    track?.appendChild(node);
+
+    const milestoneAfter = lang === 'uvs' && Number(section.module) === 1 && [3, 6, 9].includes(Number(section.section));
+    if (milestoneAfter) {
+      const kinds = { 3: 'crate', 6: 'medal', 9: 'banner' };
+      const labels = { 3: 'Ящик снаряжения', 6: 'Награда за рубеж', 9: 'Боевое знамя — рубеж' };
+      const sec = Number(section.section);
+      const k = kinds[sec];
+      const mile = document.createElement('div');
+      mile.className = 'path-duo-row path-duo-row--center path-milestone-row';
+      mile.innerHTML = `
+        <div class="path-milestone path-milestone--${k}">
+          <div class="path-milestone-icon" aria-hidden="true">${PATH_MILESTONE_ICONS[k]}</div>
+          <span class="path-milestone-label">${labels[sec]}</span>
+        </div>
+      `;
+      track?.appendChild(mile);
+    }
+
+    const nextSec = sections[i + 1];
+    const isLastInModule = !nextSec || Number(nextSec.module) !== Number(section.module);
+    if (isLastInModule) {
+      const mod = Number(section.module) || 1;
+      const done = Boolean(moduleComplete[mod]);
+      const trophyRow = document.createElement('div');
+      trophyRow.className = 'path-duo-row path-duo-row--center path-milestone-row path-milestone-trophy-row';
+      trophyRow.innerHTML = `
+        <div class="path-milestone path-milestone--trophy ${done ? 'path-milestone--trophy-done' : 'path-milestone--trophy-pending'}">
+          <div class="path-milestone-icon" aria-hidden="true">${PATH_MILESTONE_ICONS.trophy}</div>
+          <span class="path-milestone-label">${done ? `Модуль ${mod} пройден` : `Финиш модуля ${mod}`}</span>
+        </div>
+      `;
+      track?.appendChild(trophyRow);
+    }
   });
 
   const mascot = shell.querySelector('#path-mascot');
   const mapEl = shell.querySelector('.path-map');
-  const targetNode = shell.querySelector(`.path-node[data-section-idx="${mascotTarget?.idx}"]`);
+  const trackEl = shell.querySelector('#path-track');
+  const targetNode = shell.querySelector(`.path-orbit-btn[data-section-idx="${mascotTarget?.idx}"]`);
   if (mascot && mapEl && targetNode) {
-    const padding = 8;
-    const gap = 18;
-    const mapW = mapEl.clientWidth;
+    const padding = 10;
     const mapH = mapEl.clientHeight;
-    const mW = mascot.offsetWidth;
-    const mH = mascot.offsetHeight;
-    const nodeX = targetNode.offsetLeft;
-    const nodeY = targetNode.offsetTop;
-    const nodeW = targetNode.offsetWidth;
-    const nodeH = targetNode.offsetHeight;
+    const mH = mascot.offsetHeight || 110;
+    const mapRect = mapEl.getBoundingClientRect();
+    const nodeRect = targetNode.getBoundingClientRect();
+    const nodeY = nodeRect.top - mapRect.top;
+    const nodeH = nodeRect.height;
     const nodeCenterY = nodeY + nodeH / 2;
-    const wantsLeft = targetNode.classList.contains('right');
 
-    const candidates = [
-      {
-        left: wantsLeft ? nodeX - mW - gap : nodeX + nodeW + gap,
-        top: nodeCenterY - mH / 2,
-      },
-      {
-        left: wantsLeft ? nodeX + nodeW + gap : nodeX - mW - gap,
-        top: nodeCenterY - mH / 2,
-      },
-      {
-        left: nodeX + nodeW / 2 - mW / 2,
-        top: nodeY + nodeH + 10,
-      },
-      {
-        left: nodeX + nodeW / 2 - mW / 2,
-        top: nodeY - mH - 10,
-      },
-    ];
-
-    const clampPos = (p) => ({
-      left: Math.max(padding, Math.min(mapW - mW - padding, p.left)),
-      top: Math.max(padding, Math.min(mapH - mH - padding, p.top)),
-    });
-    const overlapsNode = (p) => {
-      const aL = p.left;
-      const aT = p.top;
-      const aR = aL + mW;
-      const aB = aT + mH;
-      const bL = nodeX;
-      const bT = nodeY;
-      const bR = bL + nodeW;
-      const bB = bT + nodeH;
-      return aL < bR && aR > bL && aT < bB && aB > bT;
-    };
-
-    let chosen = null;
-    for (const raw of candidates) {
-      const p = clampPos(raw);
-      if (!overlapsNode(p)) {
-        chosen = p;
-        break;
+    const rowEl = targetNode.closest('.path-duo-row');
+    let minTopRel = padding + 4;
+    if (trackEl && rowEl) {
+      const kids = [...trackEl.children];
+      const rowIdx = kids.indexOf(rowEl);
+      for (let i = 0; i < rowIdx; i += 1) {
+        const ch = kids[i];
+        if (!ch.classList) continue;
+        if (ch.classList.contains('path-module-title-row') || ch.classList.contains('path-module-gate')) {
+          const r = ch.getBoundingClientRect();
+          minTopRel = Math.max(minTopRel, r.bottom - mapRect.top + 14);
+        }
       }
     }
-    if (!chosen) chosen = clampPos(candidates[0]);
-    mascot.style.top = `${Math.round(chosen.top)}px`;
-    mascot.style.left = `${Math.round(chosen.left)}px`;
-    mascot.style.right = 'auto';
+
+    let topPx = nodeCenterY - mH / 2;
+    topPx = Math.max(minTopRel, Math.min(mapH - mH - padding, topPx));
+    mascot.style.left = 'auto';
+    mascot.style.right = `${padding}px`;
+    mascot.style.top = `${Math.round(topPx)}px`;
   } else if (mascot && sections.length > 1) {
     const topPct = Math.round(14 + (focusSafeIndex / (sections.length - 1)) * 66);
+    mascot.style.left = 'auto';
+    mascot.style.right = '10px';
     mascot.style.top = `${topPct}%`;
+  } else if (mascot) {
+    mascot.style.left = 'auto';
+    mascot.style.right = '10px';
+    mascot.style.top = '44%';
+  }
+}
+
+const MONTHLY_QUEST_TARGET = 5;
+const RU_MONTH_SHORT = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];
+
+function monthlyQuestStorageKey() {
+  const d = new Date();
+  return `ustavy_monthly_claims_${d.getFullYear()}_${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+
+function getMonthlyQuestClaimCount() {
+  try {
+    const n = Number(localStorage.getItem(monthlyQuestStorageKey()) || '0');
+    return Number.isFinite(n) ? Math.min(MONTHLY_QUEST_TARGET, Math.max(0, n)) : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function bumpMonthlyQuestClaims() {
+  try {
+    const k = monthlyQuestStorageKey();
+    const next = Math.min(MONTHLY_QUEST_TARGET, getMonthlyQuestClaimCount() + 1);
+    localStorage.setItem(k, String(next));
+  } catch {
+    /* ignore */
+  }
+  updateMonthlyQuestUI();
+}
+
+function daysLeftInMonth() {
+  const d = new Date();
+  const last = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+  return Math.max(0, last.getDate() - d.getDate());
+}
+
+function declDaysRu(n) {
+  const k = n % 10;
+  const k100 = n % 100;
+  if (k100 >= 11 && k100 <= 14) return `${n} дней`;
+  if (k === 1) return `${n} день`;
+  if (k >= 2 && k <= 4) return `${n} дня`;
+  return `${n} дней`;
+}
+
+function formatUntilMidnightLocal() {
+  const d = new Date();
+  d.setHours(24, 0, 0, 0);
+  const ms = d.getTime() - Date.now();
+  if (ms <= 0) return 'скоро';
+  const h = Math.floor(ms / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
+  if (h >= 1) return `${h} ч`;
+  return `${Math.max(1, m)} мин`;
+}
+
+function updateMonthlyQuestUI() {
+  const badge = document.getElementById('quest-monthly-badge');
+  const daysEl = document.getElementById('quest-monthly-days-left');
+  const fill = document.getElementById('quest-monthly-fill');
+  const cnt = document.getElementById('quest-monthly-count');
+  if (!badge || !fill || !cnt) return;
+  const now = new Date();
+  badge.textContent = RU_MONTH_SHORT[now.getMonth()] || '—';
+  if (daysEl) {
+    const left = daysLeftInMonth();
+    daysEl.textContent = left === 0 ? 'последний день' : declDaysRu(left);
+  }
+  const p = getMonthlyQuestClaimCount();
+  const pct = Math.round((p / MONTHLY_QUEST_TARGET) * 100);
+  fill.style.width = `${pct}%`;
+  cnt.textContent = `${p} / ${MONTHLY_QUEST_TARGET}`;
+}
+
+let questHubCountdownTimer = null;
+
+function clearQuestHubTimer() {
+  if (questHubCountdownTimer) {
+    clearInterval(questHubCountdownTimer);
+    questHubCountdownTimer = null;
+  }
+}
+
+function updateQuestDailyCountdownEl() {
+  const el = document.getElementById('quest-daily-reset');
+  if (el) el.textContent = formatUntilMidnightLocal();
+}
+
+function setQuestsHubVisible(visible) {
+  const hub = document.getElementById('quiz-quests-hub');
+  if (!hub) return;
+  hub.classList.toggle('hidden', !visible);
+  if (visible) {
+    updateMonthlyQuestUI();
+    updateQuestDailyCountdownEl();
+    clearQuestHubTimer();
+    questHubCountdownTimer = setInterval(() => {
+      const h = document.getElementById('quiz-quests-hub');
+      if (h && !h.classList.contains('hidden')) updateQuestDailyCountdownEl();
+    }, 60000);
+    refreshQuestsHub();
+  } else {
+    clearQuestHubTimer();
+  }
+}
+
+async function refreshQuestsHub() {
+  const hub = document.getElementById('quiz-quests-hub');
+  if (!hub || hub.classList.contains('hidden')) return;
+  updateQuestDailyCountdownEl();
+  const wrap = document.getElementById('quests-list');
+  if (!currentUser) {
+    if (wrap) wrap.innerHTML = '<p class="quest-daily-hint" style="margin:0">Войдите в аккаунт, чтобы видеть задания дня.</p>';
+    return;
+  }
+  const lang = document.getElementById('quiz-lang')?.value || pathLang || getSelectedLang() || 'uvs';
+  try {
+    const res = await fetch(`${API}/quests/daily?lang=${encodeURIComponent(lang)}`, { credentials: 'include' });
+    if (!res.ok) {
+      if (wrap) wrap.innerHTML = '<p class="quest-daily-hint" style="margin:0">Не удалось загрузить задания.</p>';
+      return;
+    }
+    const quests = await res.json();
+    renderQuests(Array.isArray(quests) ? quests : []);
+  } catch {
+    if (wrap) wrap.innerHTML = '<p class="quest-daily-hint" style="margin:0">Ошибка сети при загрузке заданий.</p>';
+  }
+}
+
+function questDailyIconClass(type) {
+  switch (type) {
+    case 'xp_earned': return 'quest-daily-icon--xp';
+    case 'question_streak': return 'quest-daily-icon--streak';
+    case 'lessons_completed':
+    case 'perfect_lessons': return 'quest-daily-icon--book';
+    default: return 'quest-daily-icon--time';
+  }
+}
+
+function questDailyGlyph(type) {
+  switch (type) {
+    case 'xp_earned': return '✦';
+    case 'correct_answers': return '✓';
+    case 'question_streak': return '🔥';
+    case 'perfect_lessons': return '★';
+    case 'lessons_completed': return '📘';
+    case 'answers_given': return '⚡';
+    default: return '🎯';
   }
 }
 
@@ -1032,33 +1606,41 @@ function renderQuests(quests) {
   const wrap = document.getElementById('quests-list');
   if (!wrap) return;
   wrap.innerHTML = '';
-  quests.forEach((q) => {
+  const langPick = document.getElementById('quiz-lang')?.value || pathLang || getSelectedLang() || 'uvs';
+  (quests || []).forEach((q) => {
     const row = document.createElement('div');
-    row.className = 'quest-row';
-    const done = q.progress >= q.target;
+    row.className = 'quest-daily-row';
+    const tgt = Math.max(1, Number(q.target) || 1);
+    const prog = Math.min(tgt, Number(q.progress) || 0);
+    const done = prog >= tgt;
+    const pct = Math.min(100, Math.round((prog / tgt) * 100));
     const title = q.title || q.id;
+    const iconC = questDailyIconClass(q.type);
+    const glyph = questDailyGlyph(q.type);
+    const claimed = Boolean(q.claimed);
     row.innerHTML = `
-      <div>
-        <div><strong>${escapeHtml(title)}</strong></div>
-        <small>${q.progress}/${q.target}</small>
+      <span class="quest-daily-icon ${iconC}" aria-hidden="true">${glyph}</span>
+      <div class="quest-daily-body">
+        <div class="quest-daily-label">${escapeHtml(title)}</div>
+        <div class="quest-daily-track"><div class="quest-daily-fill" style="width:${pct}%"></div></div>
+        <div class="quest-daily-meta">${prog} / ${tgt}</div>
       </div>
-      <button class="btn ${done && !q.claimed ? 'btn-primary' : 'btn-outline'}" ${(!done || q.claimed) ? 'disabled' : ''}>
-        ${q.claimed ? 'Получено' : done ? 'Забрать +20 XP' : 'В процессе'}
-      </button>
+      <button type="button" class="quest-chest-btn${done && !claimed ? ' quest-chest-btn--ready' : ''}" aria-label="${claimed ? 'Награда получена' : done ? 'Забрать награду +20 XP' : 'Награда пока недоступна'}" ${(!done || claimed) ? 'disabled' : ''}>🎁</button>
     `;
-    const btn = row.querySelector('button');
-    if (btn && done && !q.claimed) {
+    const btn = row.querySelector('.quest-chest-btn');
+    if (btn && done && !claimed) {
       btn.addEventListener('click', async () => {
         const res = await fetch(`${API}/quests/claim`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ quest_id: q.id, lang: pathLang || getSelectedLang() }),
+          body: JSON.stringify({ quest_id: q.id, lang: langPick }),
           credentials: 'include',
         });
         if (!res.ok) return;
         const data = await res.json();
         gameState = data.game_state || gameState;
         updateQuizMeta();
+        bumpMonthlyQuestClaims();
         renderQuests(data.quests || []);
       });
     }
@@ -1067,9 +1649,15 @@ function renderQuests(quests) {
 }
 
 async function startQuizWithPreset(lang, level) {
-  showScreen('quiz');
+  showScreen('quiz', { skipQuizReset: true });
+  quizLaunchedFromPath = true;
+  syncQuizLangCards(lang);
+  setQuestsHubVisible(false);
   await loadQuestions(lang, level);
-  if (!questions.length) return;
+  if (!questions.length) {
+    setQuestsHubVisible(true);
+    return;
+  }
   currentIndex = 0;
   score = 0;
   document.getElementById('quiz-start').classList.add('hidden');
@@ -1163,16 +1751,22 @@ async function completePlacement() {
     `Мы рекомендуем начать с уровня ${selectedProficiency}. Это можно изменить в любой момент.`;
 }
 
-async function loadQuestions(lang, level) {
+async function loadQuestions(lang, level, slotIdx) {
   const l = lang || document.getElementById('quiz-lang')?.value || 'uvs';
   const lev = level ?? selectedProficiency ?? 1;
+  const slot = slotIdx != null ? Number(slotIdx) : lessonSlotIndex;
   // Сразу включаем UI-режим бесконечных жизней для лёгкого уровня.
   lessonHeartsUnlimited = Number(lev) === 1;
   updateQuizMeta();
   const res = await fetch(`${API}/lesson/start`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ lang: l, level: lev, question_count: 24 }),
+    body: JSON.stringify({
+      lang: l,
+      level: lev,
+      question_count: 20,
+      lesson_slot: Number.isFinite(slot) ? slot : 0,
+    }),
     credentials: 'include'
   });
   if (!res.ok) {
@@ -1196,18 +1790,79 @@ async function loadQuestions(lang, level) {
   updateQuizMeta();
 }
 
+function setQuizCourseDropdownOpen(open) {
+  const dd = document.getElementById('quiz-course-dropdown');
+  const tr = document.getElementById('quiz-course-trigger');
+  if (!dd || !tr) return;
+  dd.classList.toggle('hidden', !open);
+  tr.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function closeQuizCourseDropdown() {
+  setQuizCourseDropdownOpen(false);
+}
+
+function syncQuizLangCards(langValue) {
+  const v = String(langValue || 'uvs').trim() || 'uvs';
+  const input = document.getElementById('quiz-lang');
+  if (input) input.value = v;
+  document.querySelectorAll('.quiz-course-option').forEach((btn) => {
+    const on = btn.dataset.lang === v;
+    btn.classList.toggle('selected', on);
+    btn.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  const sel = document.querySelector(`.quiz-course-option[data-lang="${v}"]`);
+  const badgeEl = document.getElementById('quiz-course-trigger-badge');
+  const labelEl = document.getElementById('quiz-course-trigger-label');
+  const descEl = document.getElementById('quiz-course-trigger-desc');
+  if (sel && badgeEl && labelEl && descEl) {
+    badgeEl.textContent = sel.dataset.badge || '';
+    labelEl.textContent = sel.dataset.title || '';
+    descEl.textContent = sel.dataset.desc || '';
+  }
+}
+
 function resetQuizUI() {
+  quizLaunchedFromPath = false;
   document.getElementById('quiz-start').classList.remove('hidden');
   document.getElementById('quiz-question').classList.add('hidden');
   document.getElementById('quiz-result').classList.add('hidden');
   document.getElementById('quiz-step-lang').classList.remove('hidden');
   document.getElementById('quiz-step-level').classList.add('hidden');
-  document.querySelectorAll('#lang-cards .section-card, #lang-cards .lang-card').forEach((c, i) => c.classList.toggle('selected', i === 0));
-  document.getElementById('quiz-lang').value = 'uvs';
+  syncQuizLangCards('uvs');
+  const lessonCtx = document.getElementById('quiz-lesson-context');
+  if (lessonCtx) {
+    lessonCtx.textContent = '';
+    lessonCtx.classList.add('hidden');
+  }
   selectedProficiency = null;
   lessonAttemptId = null;
   lessonHeartsUnlimited = false;
   answerInFlight = false;
+  setQuestsHubVisible(true);
+  closeQuizCourseDropdown();
+}
+
+/** После результата свободного квиза: снова выбор уровня, язык не сбрасываем. */
+function resetQuizToLevelStep() {
+  document.getElementById('quiz-start').classList.remove('hidden');
+  document.getElementById('quiz-question').classList.add('hidden');
+  document.getElementById('quiz-result').classList.add('hidden');
+  document.getElementById('quiz-step-lang').classList.add('hidden');
+  document.getElementById('quiz-step-level').classList.remove('hidden');
+  syncQuizLangCards(document.getElementById('quiz-lang')?.value || 'uvs');
+  const lessonCtx = document.getElementById('quiz-lesson-context');
+  if (lessonCtx) {
+    lessonCtx.textContent = '';
+    lessonCtx.classList.add('hidden');
+  }
+  selectedProficiency = null;
+  lessonAttemptId = null;
+  lessonHeartsUnlimited = false;
+  answerInFlight = false;
+  renderProficiencyOptions();
+  setQuestsHubVisible(true);
+  closeQuizCourseDropdown();
 }
 
 let selectedProficiency = null;
@@ -1237,6 +1892,8 @@ function renderProficiencyOptions() {
 }
 
 async function startQuiz() {
+  quizLaunchedFromPath = false;
+  setQuestsHubVisible(false);
   const langSelect = document.getElementById('quiz-lang');
   const lang = langSelect ? langSelect.value : 'uvs';
   const level = selectedProficiency !== null ? selectedProficiency : 1;
@@ -1244,6 +1901,7 @@ async function startQuiz() {
   await loadQuestions(lang, level);
   if (questions.length === 0) {
     showToast(`Нет вопросов для раздела "${lang}" и уровня ${level}. Попробуйте другой уровень или раздел.`, 'error');
+    setQuestsHubVisible(true);
     return;
   }
 
@@ -1270,6 +1928,7 @@ function renderQuestion() {
   const pts = q.points || pointsPerQuestion;
   document.getElementById('quiz-progress').textContent = `${currentIndex + 1} / ${questions.length}`;
   document.getElementById('quiz-score').textContent = `${score} очков`;
+  updateQuizLessonContext();
   const wordEl = document.getElementById('quiz-word');
   const sentenceEl = document.getElementById('quiz-sentence');
   const hintEl = document.getElementById('quiz-hint');
@@ -1328,7 +1987,7 @@ function renderQuestion() {
     sentenceEl.textContent = q.statement || '';
     hintEl.textContent = q.prompt || 'Выберите ссылку на устав:';
     renderChoiceOptions(q, pts, opts);
-  } else if (qType === 'true_false' || qType === 'true-false') {
+  } else if (qType === 'true_false' || qType === 'true-false' || qType.endsWith('_tf')) {
     wordEl.classList.add('hidden');
     sentenceEl.classList.remove('hidden');
     sentenceEl.textContent = q.statement || '';
@@ -1644,6 +2303,19 @@ async function selectAnswer(selected, question, pts, btn, optsEl) {
   if (data.question_streak_best != null) gameState.question_streak_best = data.question_streak_best;
   updateQuizMeta();
 
+  if (isCorrect) {
+    const st = Number(data.question_streak_current || 0);
+    const praiseToast = {
+      3: 'Три верных подряд — отличный темп!',
+      5: 'Пять подряд без ошибок — так держать!',
+      7: 'Серия из семи — впечатляюще!',
+      10: 'Десять подряд — блестяще!',
+      15: 'Пятнадцать верных — безупречная работа!',
+    };
+    if (praiseToast[st]) showToast(praiseToast[st], 'success');
+    else if (st > 15 && st % 5 === 0) showToast(`${st} верных ответов подряд!`, 'success');
+  }
+
   function advanceToNext() {
     currentIndex++;
     const feedbackEl = document.getElementById('quiz-answer-feedback');
@@ -1663,7 +2335,16 @@ async function selectAnswer(selected, question, pts, btn, optsEl) {
   const titleEl = document.getElementById('quiz-feedback-title');
 
   if (feedbackEl && correctEl) {
-    if (titleEl) titleEl.textContent = isCorrect ? 'Замечательно!' : 'Не совсем...';
+    if (titleEl) {
+      if (!isCorrect) titleEl.textContent = 'Не совсем...';
+      else {
+        const st = Number(data.question_streak_current || 0);
+        if (st >= 10) titleEl.textContent = 'Блестяще!';
+        else if (st >= 5) titleEl.textContent = 'Превосходно!';
+        else if (st >= 3) titleEl.textContent = 'Отлично!';
+        else titleEl.textContent = 'Замечательно!';
+      }
+    }
 
       if (typeof correct === 'object' && Array.isArray(correct)) {
         if (question?.type === 'match_pairs') {
@@ -1776,8 +2457,12 @@ function init() {
     el.addEventListener('click', e => {
       if (el.tagName === 'A') e.preventDefault();
       const nav = el.getAttribute('data-nav');
-      if ((nav === 'quiz' || nav === 'path' || nav === 'placement' || nav === 'profile') && !currentUser) {
+      if ((nav === 'quiz' || nav === 'path' || nav === 'placement' || nav === 'profile' || nav === 'admin') && !currentUser) {
         showScreen('login');
+        return;
+      }
+      if (nav === 'admin' && !userIsAdmin()) {
+        showToast('Нет прав администратора', 'error');
         return;
       }
       showScreen(nav);
@@ -1808,10 +2493,42 @@ function init() {
     if (e.key === 'Escape') {
       closeChangePasswordModal();
       closeAchievementsModal();
+      closeQuizCourseDropdown();
     }
   });
 
+  document.getElementById('quiz-course-trigger')?.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    const dd = document.getElementById('quiz-course-dropdown');
+    const wasOpen = dd && !dd.classList.contains('hidden');
+    setQuizCourseDropdownOpen(!wasOpen);
+  });
+
+  document.getElementById('quiz-course-list')?.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('.quiz-course-option');
+    if (!btn || !btn.dataset.lang) return;
+    document.getElementById('quiz-lang').value = btn.dataset.lang;
+    syncQuizLangCards(btn.dataset.lang);
+    if (!document.getElementById('quiz-step-level').classList.contains('hidden')) {
+      renderProficiencyOptions();
+    }
+    refreshQuestsHub();
+    closeQuizCourseDropdown();
+  });
+
+  document.addEventListener('click', () => {
+    const dd = document.getElementById('quiz-course-dropdown');
+    if (dd && !dd.classList.contains('hidden')) {
+      closeQuizCourseDropdown();
+    }
+  });
+
+  document.querySelector('.quiz-course-bar-inner')?.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+  });
+
   document.getElementById('quiz-lang-next')?.addEventListener('click', () => {
+    closeQuizCourseDropdown();
     document.getElementById('quiz-step-lang').classList.add('hidden');
     document.getElementById('quiz-step-level').classList.remove('hidden');
     renderProficiencyOptions();
@@ -1824,20 +2541,15 @@ function init() {
     document.getElementById('quiz-step-lang').classList.remove('hidden');
   });
 
-  document.querySelectorAll('.section-card, .lang-card').forEach(card => {
-    card.addEventListener('click', () => {
-      document.querySelectorAll('.section-card, .lang-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      document.getElementById('quiz-lang').value = card.dataset.lang;
-      if (!document.getElementById('quiz-step-level').classList.contains('hidden')) {
-        renderProficiencyOptions();
-      }
-    });
-  });
-
   document.getElementById('quiz-retry')?.addEventListener('click', () => {
     document.getElementById('quiz-result').classList.add('hidden');
-    resetQuizUI();
+    if (quizLaunchedFromPath) {
+      quizLaunchedFromPath = false;
+      showScreen('path');
+      resetQuizUI();
+      return;
+    }
+    resetQuizToLevelStep();
   });
 
   document.getElementById('path-placement-btn')?.addEventListener('click', () => {
@@ -1853,6 +2565,7 @@ function init() {
     }
     const lang = pathLang || getSelectedLang();
     selectedProficiency = 1;
+    lessonSlotIndex = 0;
     await startQuizWithPreset(lang, 1);
   });
 
@@ -1860,6 +2573,11 @@ function init() {
   document.getElementById('placement-finish-btn')?.addEventListener('click', () => {
     showScreen('path');
   });
+
+  document.getElementById('admin-upload-form')?.addEventListener('submit', handleAdminUpload);
+  document.getElementById('admin-text-form')?.addEventListener('submit', handleAdminText);
+  document.getElementById('admin-btn-download-file')?.addEventListener('click', handleAdminExportFile);
+  document.getElementById('admin-btn-download-text')?.addEventListener('click', handleAdminExportText);
 
   const hash = window.location.hash.slice(1);
   if (hash && screens[hash]) showScreen(hash);
